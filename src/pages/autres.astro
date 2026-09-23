@@ -1,0 +1,78 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Autres Épreuves - Trail des Mines 2026 | Randonnée & Courses Enfants";
+const description = "Découvrez les formats populaires du Trail des Mines 2026 à Champagney : Randonnée nature solidaire de 10 km et courses enfants Mini-Galibots. Convivialité et patrimoine.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-6xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Pour tous • Solidarité & Famille</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Autres <span class="text-brand">Formats</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-lg font-light leading-relaxed">
+                Le Trail des Mines est une fête populaire accessible à tous : découvrez la marche solidaire et les courses enfants pour célébrer la nature et le sport sans esprit de compétition.
+            </p>
+        </div>
+    </header>
+
+    <!-- 2 Formats Principaux -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- Format 1 : Randonnée du Bassin -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 flex flex-col justify-between group hover:border-brand/40 transition-all duration-300 shadow-xl">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-display uppercase tracking-widest text-brand font-bold">Marche & Nordique</span>
+                        <span class="bg-dark/60 text-xs px-3 py-1 rounded-full text-gray-300 font-mono">Départ 10h00</span>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold uppercase text-white mb-4 group-hover:text-brand transition-colors">La Randonnée du Bassin</h2>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        Une boucle de 10 kilomètres à allure libre, ouverte aux marcheurs, marcheurs nordiques et familles. Le tracé sillonne les sentiers patrimoniaux bordés d'étangs et les bois communaux avec des explications historiques sur les puits miniers.
+                    </p>
+                    <div class="space-y-2 text-xs text-gray-400 mb-6 border-t border-white/10 pt-4">
+                        <p class="flex items-center gap-2"><span class="text-brand">✓</span> 10 km / 250m D+ (accessible avec chaussures de marche)</p>
+                        <p class="flex items-center gap-2"><span class="text-brand">✓</span> 1 ravitaillement gourmand campagnard au km 5</p>
+                        <p class="flex items-center gap-2"><span class="text-brand">✓</span> 6 € par adulte (gratuit pour les moins de 12 ans)</p>
+                        <p class="flex items-center gap-2"><span class="text-brand">♥</span> 100% des fonds reversés à une association caritative locale</p>
+                    </div>
+                </div>
+                <a href="/inscription" class="btn-registration-trigger block w-full text-center bg-brand text-dark hover:bg-white py-3.5 rounded-xl font-display uppercase text-xs tracking-wider font-bold transition-all shadow-md cursor-pointer">
+                    S'inscrire à la Rando Solidaire
+                </a>
+            </div>
+
+            <!-- Format 2 : Mini-Galibots Enfants -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 flex flex-col justify-between group hover:border-brand/40 transition-all duration-300 shadow-xl">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-display uppercase tracking-widest text-blue-400 font-bold">Jeunesse (6 à 12 ans)</span>
+                        <span class="bg-dark/60 text-xs px-3 py-1 rounded-full text-gray-300 font-mono">Départ 14h30</span>
+                    </div>
+                    <h2 class="font-display text-3xl font-bold uppercase text-white mb-4 group-hover:text-blue-400 transition-colors">Les Mini-Galibots</h2>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        Des courses sécurisées en sous-bois et dans le parc communal pour éveiller les plus jeunes aux plaisirs de la course nature. Chaque enfant franchit la même arche que les grands trailers !
+                    </p>
+                    <div class="space-y-2 text-xs text-gray-400 mb-6 border-t border-white/10 pt-4">
+                        <p class="flex items-center gap-2"><span class="text-blue-400">✓</span> Éveil Athlé (6-7 ans) : 800 mètres encadrés</p>
+                        <p class="flex items-center gap-2"><span class="text-blue-400">✓</span> Poussins (8-9 ans) : 1,5 kilomètre</p>
+                        <p class="flex items-center gap-2"><span class="text-blue-400">✓</span> Benjamins (10-12 ans) : 2,5 kilomètres</p>
+                        <p class="flex items-center gap-2"><span class="text-blue-400">✓</span> Gratuit • Médaille finisher et goûter comtois offerts</p>
+                    </div>
+                </div>
+                <a href="/inscription" class="btn-registration-trigger block w-full text-center bg-white/10 hover:bg-blue-400 hover:text-dark text-white py-3.5 rounded-xl font-display uppercase text-xs tracking-wider font-bold transition-all shadow-md cursor-pointer">
+                    Inscrire mon enfant
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

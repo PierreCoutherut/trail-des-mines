@@ -1,0 +1,389 @@
+---
+export const prerender = false;
+
+import Layout from '../../../../layouts/Layout.astro';
+import { getAllEditionsSync, getPhotographerGallery } from '../../../../lib/db';
+import type { Edition, PhotographerGallery } from '../../../../lib/types';
+
+interface Props {
+  edition: Edition;
+  gallery: PhotographerGallery;
+}
+
+const { year, photographer } = Astro.params;
+let edition = Astro.props.edition;
+let gallery = Astro.props.gallery;
+
+if (!edition || !gallery) {
+  const res = await getPhotographerGallery(year || '', photographer || '');
+  if (!res) {
+    return Astro.redirect('/editions-precedentes');
+  }
+  edition = res.edition;
+  gallery = res.gallery;
+}
+
+// Récupérer toutes les photos à plat avec référence de sous-galerie
+const allPhotos = gallery.subGalleries.flatMap(sub => 
+  sub.photos.map(p => ({
+    ...p,
+    subGalleryName: sub.name,
+    race: p.race || sub.race,
+    moment: p.moment || sub.moment
+  }))
+);
+
+// Extraire la liste unique des courses et moments
+const racesList = Array.from(new Set(allPhotos.map(p => p.race).filter(Boolean)));
+const momentsList = Array.from(new Set(allPhotos.map(p => p.moment).filter(Boolean)));
+
+const title = `Galerie Photos ${gallery.photographerName} - Trail des Mines ${edition.year}`;
+const description = `Photos officielles prises par ${gallery.photographerName} lors du Trail des Mines ${edition.year}. Téléchargement gratuit en HD.`;
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+    <!-- Fil d'Ariane -->
+    <div class="pt-28 md:pt-36 pb-4 px-4 max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+        <nav class="flex items-center gap-2 text-gray-400" aria-label="Fil d'Ariane">
+            <a href="/" class="hover:text-brand transition">Accueil</a>
+            <span>/</span>
+            <a href="/editions-precedentes" class="hover:text-brand transition">Éditions</a>
+            <span>/</span>
+            <a href={`/editions-precedentes/${edition.year}`} class="hover:text-brand transition">{edition.year}</a>
+            <span>/</span>
+            <span class="text-brand font-bold">{gallery.photographerName}</span>
+        </nav>
+
+        <a 
+          href={`/editions-precedentes/${edition.year}`}
+          class="text-gray-300 hover:text-brand transition inline-flex items-center gap-1.5"
+        >
+            <i class="fa-solid fa-arrow-left text-[10px]"></i>
+            <span>Retour à l'édition {edition.year}</span>
+        </a>
+    </div>
+
+    <!-- En-tête Photographe & Album -->
+    <header class="py-10 px-4 max-w-7xl mx-auto">
+        <div class="bg-cardBg/80 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            
+            <div class="flex items-center gap-5">
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-dark/80 border-2 border-brand/40 overflow-hidden shadow-xl shrink-0 flex items-center justify-center">
+                    {gallery.avatarUrl ? (
+                        <img src={gallery.avatarUrl} alt={gallery.photographerName} class="w-full h-full object-cover" />
+                    ) : (
+                        <i class="fa-solid fa-camera text-3xl text-brand"></i>
+                    )}
+                </div>
+                <div>
+                    <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-1">
+                        Photographe Officiel • Trail des Mines {edition.year}
+                    </span>
+                    <h1 class="font-display text-3xl sm:text-5xl font-bold uppercase text-white">
+                        {gallery.photographerName}
+                    </h1>
+                    {gallery.bio && (
+                        <p class="text-gray-300 text-xs sm:text-sm max-w-xl mt-2 leading-relaxed">
+                            {gallery.bio}
+                        </p>
+                    )}
+                </div>
+            </div>
+
+            <!-- Badges & Liens réseaux -->
+            <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                <div class="bg-dark/80 px-4 py-2 rounded-xl border border-white/10 text-center">
+                    <span class="font-display text-2xl font-bold text-brand block">{allPhotos.length}</span>
+                    <span class="text-[10px] uppercase tracking-wider text-gray-400 block font-mono">Photos HD</span>
+                </div>
+                {gallery.instagramUrl && (
+                    <a 
+                      href={gallery.instagramUrl.startsWith('http') ? gallery.instagramUrl : `https://instagram.com/${gallery.instagramUrl.replace('@', '')}`}
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-xl border border-white/10 transition text-xs font-semibold inline-flex items-center gap-2"
+                    >
+                        <i class="fa-brands fa-instagram text-pink-400 text-base"></i>
+                        <span>Instagram</span>
+                    </a>
+                )}
+            </div>
+
+        </div>
+    </header>
+
+    <!-- Barre de Filtres Dynamiques (Sous-galeries, Courses, Moments) -->
+    <section class="py-4 px-4 max-w-7xl mx-auto sticky top-20 z-30">
+        <div class="bg-dark/95 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-2xl flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+            
+            <!-- Filtre par Course -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+                <span class="text-xs uppercase tracking-wider text-gray-400 font-display shrink-0 mr-1">
+                    <i class="fa-solid fa-person-running text-brand mr-1"></i> Course :
+                </span>
+                <button 
+                  data-filter-race="all" 
+                  class="filter-race-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-brand text-dark shadow"
+                >
+                    Toutes ({allPhotos.length})
+                </button>
+                {racesList.map(race => {
+                    const count = allPhotos.filter(p => p.race === race).length;
+                    return (
+                        <button 
+                          data-filter-race={race} 
+                          class="filter-race-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-white/5 text-gray-300 hover:text-white hover:bg-white/10"
+                        >
+                            {race} ({count})
+                        </button>
+                    );
+                })}
+            </div>
+
+            <!-- Filtre par Moment -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0 scrollbar-none">
+                <span class="text-xs uppercase tracking-wider text-gray-400 font-display shrink-0 mr-1">
+                    <i class="fa-solid fa-clock text-brand mr-1"></i> Moment :
+                </span>
+                <button 
+                  data-filter-moment="all" 
+                  class="filter-moment-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-brand text-dark shadow"
+                >
+                    Tous
+                </button>
+                {momentsList.map(moment => (
+                    <button 
+                      data-filter-moment={moment} 
+                      class="filter-moment-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-white/5 text-gray-300 hover:text-white hover:bg-white/10"
+                    >
+                        {moment}
+                    </button>
+                ))}
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Grille de Photos -->
+    <section class="py-8 px-4 max-w-7xl mx-auto">
+        {allPhotos.length === 0 ? (
+            <div class="bg-cardBg rounded-3xl p-16 text-center border border-white/10">
+                <i class="fa-solid fa-images text-5xl text-gray-500 mb-4 block"></i>
+                <h3 class="font-display text-2xl uppercase text-white mb-2">Aucune photo dans cette galerie</h3>
+                <p class="text-gray-400 text-sm">Les clichés seront ajoutés très prochainement.</p>
+            </div>
+        ) : (
+            <div id="photos-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                {allPhotos.map((photo, index) => (
+                    <div 
+                      class="photo-card group relative bg-dark rounded-2xl overflow-hidden shadow-lg border border-white/5 hover:border-brand/40 transition-all duration-300 cursor-pointer aspect-square"
+                      data-index={index}
+                      data-race={photo.race}
+                      data-moment={photo.moment}
+                      data-hd={photo.urlHd}
+                      data-caption={photo.caption || ''}
+                    >
+                        <img 
+                          src={photo.urlThumb} 
+                          alt={photo.caption || `Photo Trail des Mines ${edition.year}`} 
+                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/95 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-between">
+                            <span class="self-end bg-dark/80 backdrop-blur-md px-2 py-1 rounded text-[10px] text-brand font-mono">
+                                <i class="fa-solid fa-expand mr-1"></i> HD
+                            </span>
+                            <div>
+                                <span class="text-[10px] text-brand font-mono block truncate">{photo.race}</span>
+                                <span class="text-white text-xs font-semibold block truncate">{photo.moment}</span>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        )}
+    </section>
+
+    <!-- Lightbox Plein Écran Interactive -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl hidden opacity-0 transition-opacity duration-300 flex flex-col justify-between p-4 sm:p-6" role="dialog" aria-modal="true">
+        
+        <!-- Barre Supérieure -->
+        <div class="flex items-center justify-between text-white z-50">
+            <div class="flex items-center gap-3">
+                <span class="font-display font-bold uppercase tracking-wider text-xs sm:text-sm text-brand">
+                    {gallery.photographerName} • {edition.year}
+                </span>
+                <span id="lb-counter" class="bg-white/10 px-2.5 py-0.5 rounded-full text-xs font-mono text-gray-300">
+                    1 / {allPhotos.length}
+                </span>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <a 
+                  id="lb-download" 
+                  href="#" 
+                  download 
+                  class="bg-brand text-dark px-3.5 py-1.5 rounded-lg text-xs font-display font-bold uppercase tracking-wider hover:bg-white transition inline-flex items-center gap-1.5"
+                >
+                    <i class="fa-solid fa-download"></i>
+                    <span class="hidden sm:inline">Télécharger HD</span>
+                </a>
+                <button id="lb-close" class="text-gray-300 hover:text-white text-2xl p-1 focus:outline-none" aria-label="Fermer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Centre Image avec Flèches Suivant / Précédent -->
+        <div class="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
+            <button id="lb-prev" class="absolute left-2 sm:left-6 z-50 text-white hover:text-brand bg-dark/60 hover:bg-dark/90 p-3 sm:p-4 rounded-full text-xl transition shadow-xl" aria-label="Précédent">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            
+            <img id="lb-img" src="" alt="" class="max-h-[80vh] max-w-[92vw] w-auto h-auto object-contain rounded-xl shadow-2xl transition-transform duration-300" />
+
+            <button id="lb-next" class="absolute right-2 sm:right-6 z-50 text-white hover:text-brand bg-dark/60 hover:bg-dark/90 p-3 sm:p-4 rounded-full text-xl transition shadow-xl" aria-label="Suivant">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Barre Inférieure avec Métadonnées -->
+        <div class="text-center text-white z-50 max-w-2xl mx-auto">
+            <h4 id="lb-caption" class="text-sm sm:text-base font-semibold text-gray-200 truncate"></h4>
+            <div class="flex items-center justify-center gap-4 text-xs font-mono text-gray-400 mt-1">
+                <span id="lb-race" class="text-brand"></span>
+                <span>•</span>
+                <span id="lb-moment"></span>
+            </div>
+        </div>
+
+    </div>
+
+</Layout>
+
+<script define:vars={{ photosData: allPhotos }}>
+    document.addEventListener('DOMContentLoaded', () => {
+        let currentRaceFilter = 'all';
+        let currentMomentFilter = 'all';
+        let visiblePhotos = [...photosData];
+        let currentIndex = 0;
+
+        const photoCards = document.querySelectorAll('.photo-card');
+        const raceButtons = document.querySelectorAll('.filter-race-btn');
+        const momentButtons = document.querySelectorAll('.filter-moment-btn');
+
+        const lightbox = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lb-img');
+        const lbCounter = document.getElementById('lb-counter');
+        const lbCaption = document.getElementById('lb-caption');
+        const lbRace = document.getElementById('lb-race');
+        const lbMoment = document.getElementById('lb-moment');
+        const lbDownload = document.getElementById('lb-download');
+        const lbClose = document.getElementById('lb-close');
+        const lbPrev = document.getElementById('lb-prev');
+        const lbNext = document.getElementById('lb-next');
+
+        function applyFilters() {
+            visiblePhotos = photosData.filter(p => {
+                const matchRace = currentRaceFilter === 'all' || p.race === currentRaceFilter;
+                const matchMoment = currentMomentFilter === 'all' || p.moment === currentMomentFilter;
+                return matchRace && matchMoment;
+            });
+
+            photoCards.forEach(card => {
+                const cRace = card.getAttribute('data-race');
+                const cMoment = card.getAttribute('data-moment');
+                const matchRace = currentRaceFilter === 'all' || cRace === currentRaceFilter;
+                const matchMoment = currentMomentFilter === 'all' || cMoment === currentMomentFilter;
+
+                if (matchRace && matchMoment) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        raceButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentRaceFilter = btn.getAttribute('data-filter-race');
+                raceButtons.forEach(b => {
+                    b.classList.remove('bg-brand', 'text-dark', 'shadow');
+                    b.classList.add('bg-white/5', 'text-gray-300');
+                });
+                btn.classList.add('bg-brand', 'text-dark', 'shadow');
+                btn.classList.remove('bg-white/5', 'text-gray-300');
+                applyFilters();
+            });
+        });
+
+        momentButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentMomentFilter = btn.getAttribute('data-filter-moment');
+                momentButtons.forEach(b => {
+                    b.classList.remove('bg-brand', 'text-dark', 'shadow');
+                    b.classList.add('bg-white/5', 'text-gray-300');
+                });
+                btn.classList.add('bg-brand', 'text-dark', 'shadow');
+                btn.classList.remove('bg-white/5', 'text-gray-300');
+                applyFilters();
+            });
+        });
+
+        // Gestion de la Lightbox
+        function updateLightbox(idx) {
+            if (visiblePhotos.length === 0) return;
+            currentIndex = (idx + visiblePhotos.length) % visiblePhotos.length;
+            const photo = visiblePhotos[currentIndex];
+
+            if (lbImg) lbImg.src = photo.urlHd;
+            if (lbCounter) lbCounter.textContent = `${currentIndex + 1} / ${visiblePhotos.length}`;
+            if (lbCaption) lbCaption.textContent = photo.caption || 'Cliché officiel Trail des Mines';
+            if (lbRace) lbRace.textContent = photo.race || '';
+            if (lbMoment) lbMoment.textContent = photo.moment || '';
+            if (lbDownload) {
+                lbDownload.href = photo.urlHd;
+                lbDownload.download = photo.filename || `Photo-${photo.id}.webp`;
+            }
+        }
+
+        function openLightbox(photo) {
+            if (!lightbox) return;
+            const idx = visiblePhotos.findIndex(p => p.id === photo.id);
+            updateLightbox(idx >= 0 ? idx : 0);
+            lightbox.classList.remove('hidden');
+            setTimeout(() => lightbox.classList.remove('opacity-0'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            if (!lightbox) return;
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        photoCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const idx = parseInt(card.getAttribute('data-index') || '0', 10);
+                const photo = photosData[idx];
+                if (photo) openLightbox(photo);
+            });
+        });
+
+        if (lbClose) lbClose.addEventListener('click', closeLightbox);
+        if (lbPrev) lbPrev.addEventListener('click', () => updateLightbox(currentIndex - 1));
+        if (lbNext) lbNext.addEventListener('click', () => updateLightbox(currentIndex + 1));
+
+        document.addEventListener('keydown', (e) => {
+            if (lightbox && !lightbox.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') updateLightbox(currentIndex - 1);
+                if (e.key === 'ArrowRight') updateLightbox(currentIndex + 1);
+            }
+        });
+    });
+</script>

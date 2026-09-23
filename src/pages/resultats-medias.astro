@@ -1,0 +1,156 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Résultats & Médias - Trail des Mines | Classements & Photos Officielles";
+const description = "Consultez les résultats en direct, classements et galeries photos officielles du Trail des Mines à Champagney. Recherche par dossard et vidéos aftermovie.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Chronométrage & Souvenirs</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Résultats & <span class="text-brand">Médias</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Retrouvez vos temps officiels, vos classements par catégorie et plongez dans les albums photos HD capturés par nos photographes bénévoles le long des crêtes et des terrils.
+            </p>
+        </div>
+    </header>
+
+    <!-- Moteur de Recherche de Dossard -->
+    <section class="py-8 px-4 max-w-4xl mx-auto">
+        <div class="bg-cardBg rounded-3xl p-6 md:p-8 border border-white/10 shadow-2xl">
+            <h2 class="font-display text-xl md:text-2xl font-bold uppercase text-white mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-magnifying-glass text-brand"></i> Recherche de Coureur ou Dossard
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="search-runner" placeholder="Entrez un nom ou numéro de dossard (ex: 142, Dupont)..." class="flex-1 bg-dark/80 border border-white/15 rounded-xl px-5 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-brand transition">
+                <select id="select-race" class="bg-dark/80 border border-white/15 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-brand">
+                    <option value="all">Toutes les épreuves</option>
+                    <option value="52">Gueules Noires (52km)</option>
+                    <option value="28">Terrils (28km)</option>
+                    <option value="13">Galibots (13km)</option>
+                </select>
+                <button class="bg-brand text-dark px-6 py-3.5 rounded-xl font-display uppercase tracking-wider font-bold text-xs hover:bg-white transition-all shadow-md">
+                    Rechercher
+                </button>
+            </div>
+
+            <!-- Exemple de Résultats Réalisés -->
+            <div class="mt-8 border-t border-white/10 pt-6">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-xs uppercase tracking-widest text-gray-400 font-display">Derniers Podiums Scratch (Édition 2025)</span>
+                    <a href="/editions-precedentes" class="text-xs text-brand hover:underline inline-flex items-center gap-1 group">
+                        <span>Voir les archives complètes</span>
+                        <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                    </a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-gray-300">
+                        <thead class="text-[10px] uppercase text-gray-400 border-b border-white/10">
+                            <tr>
+                                <th class="pb-3">Place</th>
+                                <th class="pb-3">Coureur</th>
+                                <th class="pb-3">Course</th>
+                                <th class="pb-3">Temps</th>
+                                <th class="pb-3 text-right">Moyenne</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/5 font-mono">
+                            <tr class="hover:bg-white/[0.02] transition">
+                                <td class="py-3 text-yellow-400 font-bold">1er 🥇</td>
+                                <td class="py-3 font-sans font-semibold text-white">Thibaut MARTIN</td>
+                                <td class="py-3 text-cyan-400 font-sans">Gueules Noires (52km)</td>
+                                <td class="py-3 text-brand font-bold">04:48:22</td>
+                                <td class="py-3 text-right">10.8 km/h</td>
+                            </tr>
+                            <tr class="hover:bg-white/[0.02] transition">
+                                <td class="py-3 text-gray-300 font-bold">2ème 🥈</td>
+                                <td class="py-3 font-sans font-semibold text-white">Romain GAUTHIER</td>
+                                <td class="py-3 text-cyan-400 font-sans">Gueules Noires (52km)</td>
+                                <td class="py-3 text-brand">04:54:10</td>
+                                <td class="py-3 text-right">10.6 km/h</td>
+                            </tr>
+                            <tr class="hover:bg-white/[0.02] transition">
+                                <td class="py-3 text-amber-600 font-bold">3ème 🥉</td>
+                                <td class="py-3 font-sans font-semibold text-white">Antoine LEFEBVRE</td>
+                                <td class="py-3 text-cyan-400 font-sans">Gueules Noires (52km)</td>
+                                <td class="py-3 text-brand">05:02:45</td>
+                                <td class="py-3 text-right">10.3 km/h</td>
+                            </tr>
+                            <tr class="hover:bg-white/[0.02] transition">
+                                <td class="py-3 text-yellow-400 font-bold">1ère 🥇 (F)</td>
+                                <td class="py-3 font-sans font-semibold text-white">Camille ROUSSEL</td>
+                                <td class="py-3 text-brand font-sans">Terrils (28km)</td>
+                                <td class="py-3 text-brand font-bold">02:38:15</td>
+                                <td class="py-3 text-right">10.6 km/h</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Galeries Photos Officielles -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+            <h2 class="font-display text-2xl md:text-3xl font-bold uppercase text-white flex items-center gap-3">
+                <span class="w-2 h-8 bg-brand rounded-full"></span> Albums Photos Officiels
+            </h2>
+            <a href="/editions-precedentes" class="text-xs text-brand hover:underline inline-flex items-center gap-1.5 font-mono">
+                <span>Archives & Éditions Précédentes</span>
+                <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <a href="/editions-precedentes/2024/galerie/pierre-coutherut" class="bg-cardBg rounded-2xl overflow-hidden border border-white/5 group hover:border-brand/40 transition-all block">
+                <div class="aspect-video overflow-hidden relative bg-dark">
+                    <img src="/medias/galeries/2024/pierre-coutherut/pc_1-thumb.webp" alt="Pierre Coutherut - Trail des Mines" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <span class="absolute bottom-3 right-3 bg-dark/80 px-2.5 py-1 rounded text-[10px] text-brand font-mono">Édition 2024</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-lg font-bold uppercase text-white mb-1">Pierre Coutherut • L'Épopée</h3>
+                    <p class="text-xs text-gray-400 mb-3">Les sentiers boueux, la brume sur les terrils et l'engagement des trailers.</p>
+                    <span class="text-xs text-brand font-semibold group-hover:underline inline-flex items-center gap-1.5">
+                        Explorer la galerie HD <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                    </span>
+                </div>
+            </a>
+
+            <a href="/editions-precedentes/2024/galerie/elodie-bermond" class="bg-cardBg rounded-2xl overflow-hidden border border-white/5 group hover:border-brand/40 transition-all block">
+                <div class="aspect-video overflow-hidden relative bg-dark">
+                    <img src="/medias/galeries/2024/elodie-bermond/eb_1-thumb.webp" alt="Élodie Bermond - Trail des Mines" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <span class="absolute bottom-3 right-3 bg-dark/80 px-2.5 py-1 rounded text-[10px] text-brand font-mono">Édition 2024</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-lg font-bold uppercase text-white mb-1">Élodie Bermond • Émotions</h3>
+                    <p class="text-xs text-gray-400 mb-3">La ferveur des bénévoles aux ravitaillements et l'allégresse de l'arrivée.</p>
+                    <span class="text-xs text-brand font-semibold group-hover:underline inline-flex items-center gap-1.5">
+                        Explorer la galerie HD <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                    </span>
+                </div>
+            </a>
+
+            <a href="/editions-precedentes/2025" class="bg-cardBg rounded-2xl overflow-hidden border border-white/5 group hover:border-brand/40 transition-all block">
+                <div class="aspect-video overflow-hidden relative bg-dark">
+                    <img src="/medias/affiches/affiche-2025-thumb.webp" alt="Édition 2025 Record" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <span class="absolute bottom-3 right-3 bg-dark/80 px-2.5 py-1 rounded text-[10px] text-cyan-400 font-mono">Édition 2025</span>
+                </div>
+                <div class="p-5">
+                    <h3 class="font-display text-lg font-bold uppercase text-white mb-1">L'Édition Record (2025)</h3>
+                    <p class="text-xs text-gray-400 mb-3">Affiche officielle, records battus et rétrospective complète.</p>
+                    <span class="text-xs text-brand font-semibold group-hover:underline inline-flex items-center gap-1.5">
+                        Découvrir l'édition <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
+                    </span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

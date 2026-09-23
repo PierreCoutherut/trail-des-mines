@@ -1,0 +1,2430 @@
+---
+export const prerender = false;
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+import Layout from '../../layouts/Layout.astro';
+import { getAllEditionsSync } from '../../lib/db';
+import { getAdmins, verifyToken } from '../../lib/auth';
+import { getReglementSync } from '../../lib/reglement';
+
+// Vérification de session côté serveur
+const cookieHeader = Astro.request.headers.get('cookie') || '';
+const tokenMatch = cookieHeader.match(/tdm_admin_token=([^;]+)/);
+const token = tokenMatch ? tokenMatch[1] : null;
+
+let currentUser: { username: string; role: string } | null = null;
+if (token) {
+  const check = verifyToken(token);
+  if (check.valid && check.user) {
+    currentUser = check.user;
+  }
+}
+
+const editions = getAllEditionsSync();
+const reglement = getReglementSync();
+const totalPhotos = editions.reduce(
+  (acc, e) => acc + e.galleries.reduce((gAcc, g) => gAcc + g.subGalleries.reduce((sAcc, s) => sAcc + s.photos.length, 0), 0),
+  0
+);
+const allPhotographers = Array.from(new Set(editions.flatMap(e => e.galleries.map(g => g.photographerSlug))));
+const adminsList = currentUser ? getAdmins().map(a => ({ id: a.id, username: a.username, role: a.role, createdAt: a.createdAt })) : [];
+---
+
+<Layout title="Administration - Trail des Mines" description="Espace d'administration des éditions, résultats et galeries photos" showCta={false} showSponsors={false}>
+
+    <div class="min-h-screen pt-28 pb-20 px-4 max-w-7xl mx-auto">
+        
+        {/* =========================================================================
+            SI NON CONNECTÉ : FORMULAIRE DE CONNEXION ÉLÉGANT
+            ========================================================================= */}
+        {!currentUser ? (
+            <div class="max-w-md mx-auto my-12 bg-cardBg/90 backdrop-blur-xl p-8 rounded-3xl border border-white/10 shadow-2xl">
+                <div class="text-center mb-8">
+                    <img src="/medias/Logo.png" alt="Logo Trail des Mines" class="h-14 w-auto mx-auto mb-4 drop-shadow-lg" />
+                    <h1 class="font-display text-3xl font-bold uppercase tracking-wider text-white">
+                        Espace <span class="text-brand">Admin</span>
+                    </h1>
+                    <p class="text-gray-400 text-xs mt-1">Trail des Mines • Champagney</p>
+                </div>
+
+                <div class="bg-brand/10 border border-brand/20 p-3.5 rounded-2xl mb-6 text-xs text-brand flex items-center gap-3">
+                    <i class="fa-solid fa-circle-info text-base shrink-0"></i>
+                    <span>Accès sécurisé réservé aux organisateurs du Trail des Mines.</span>
+                </div>
+
+                <form id="login-form" class="space-y-4">
+                    <div id="login-error" class="hidden p-3.5 bg-red-500/20 border border-red-500/40 rounded-xl text-xs text-red-300 font-semibold"></div>
+
+                    <div>
+                        <label for="login-username" class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Identifiant</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-user absolute left-4 top-3.5 text-gray-500 text-sm"></i>
+                            <input 
+                              type="text" 
+                              id="login-username" 
+                              name="username" 
+                              placeholder="ex: root" 
+                              required 
+                              class="w-full bg-dark/80 border border-white/15 rounded-xl pl-11 pr-4 py-3 text-sm text-white focus:outline-none focus:border-brand transition"
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="login-password" class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Mot de passe</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-lock absolute left-4 top-3.5 text-gray-500 text-sm"></i>
+                            <input 
+                              type="password" 
+                              id="login-password" 
+                              name="password" 
+                              placeholder="••••••••" 
+                              required 
+                              class="w-full bg-dark/80 border border-white/15 rounded-xl pl-11 pr-4 py-3 text-sm text-white focus:outline-none focus:border-brand transition"
+                            />
+                        </div>
+                    </div>
+
+                    <button 
+                      type="submit" 
+                      id="login-submit-btn"
+                      class="w-full bg-brand text-dark font-display font-bold uppercase tracking-wider text-xs py-3.5 rounded-xl hover:bg-white transition-all shadow-lg shadow-brand/20 mt-2 flex items-center justify-center gap-2"
+                    >
+                        <span>Se Connecter</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </form>
+            </div>
+        ) : (
+            /* =========================================================================
+               SI CONNECTÉ : TABLEAU DE BORD D'ADMINISTRATION
+               ========================================================================= */
+            <div>
+                <!-- En-tête de la console d'administration -->
+                <header class="bg-cardBg/90 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/10 shadow-2xl mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div class="flex items-center gap-4">
+                        <img src="/medias/Logo.png" alt="Logo" class="h-12 w-auto object-contain hidden sm:block" />
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] font-display uppercase tracking-widest text-brand font-bold">
+                                    Console d'Administration
+                                </span>
+                                <span class="text-[9px] font-mono px-2 py-0.5 rounded-full bg-brand/20 text-brand border border-brand/30">
+                                    En direct
+                                </span>
+                            </div>
+                            <h1 class="font-display text-2xl sm:text-3xl font-bold uppercase text-white mt-0.5">
+                                Gestion Trail des Mines
+                            </h1>
+                            <span class="text-xs text-gray-400 font-mono">
+                                Connecté en tant que <strong class="text-brand">{currentUser.username}</strong> ({currentUser.role})
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <a 
+                          href="/editions-precedentes" 
+                          target="_blank" 
+                          class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-xl text-xs font-display uppercase tracking-wider transition border border-white/10 inline-flex items-center gap-2"
+                        >
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            <span>Voir le site</span>
+                        </a>
+                        <button 
+                          id="logout-btn" 
+                          class="bg-red-500/20 hover:bg-red-500/30 text-red-300 border border-red-500/40 px-4 py-2.5 rounded-xl text-xs font-display uppercase tracking-wider transition inline-flex items-center gap-2"
+                        >
+                            <i class="fa-solid fa-power-off text-xs"></i>
+                            <span>Déconnexion</span>
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Statistiques Globales -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-cardBg/70 rounded-2xl p-4 border border-white/5 text-center">
+                        <span class="text-[10px] uppercase text-gray-400 font-mono block mb-1">Éditions Référencées</span>
+                        <span class="font-display text-3xl font-bold text-brand">{editions.length}</span>
+                    </div>
+                    <div class="bg-cardBg/70 rounded-2xl p-4 border border-white/5 text-center">
+                        <span class="text-[10px] uppercase text-gray-400 font-mono block mb-1">Total Photos HD</span>
+                        <span class="font-display text-3xl font-bold text-white">{totalPhotos}</span>
+                    </div>
+                    <div class="bg-cardBg/70 rounded-2xl p-4 border border-white/5 text-center">
+                        <span class="text-[10px] uppercase text-gray-400 font-mono block mb-1">Photographes</span>
+                        <span class="font-display text-3xl font-bold text-cyan-400">{allPhotographers.length}</span>
+                    </div>
+                    <div class="bg-cardBg/70 rounded-2xl p-4 border border-white/5 text-center">
+                        <span class="text-[10px] uppercase text-gray-400 font-mono block mb-1">Administrateurs</span>
+                        <span class="font-display text-3xl font-bold text-brand">{adminsList.length}</span>
+                    </div>
+                </div>
+
+                <!-- Onglets Principaux du Back-Office -->
+                <div class="flex flex-wrap gap-2 mb-8 bg-cardBg/60 p-1.5 rounded-2xl border border-white/10" id="admin-tabs">
+                    <button data-tab="editions" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-brand text-dark shadow">
+                        <i class="fa-solid fa-flag"></i> Éditions & Affiches
+                    </button>
+                    <button data-tab="resultats" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-transparent text-gray-300 hover:text-white hover:bg-white/5">
+                        <i class="fa-solid fa-square-poll-vertical text-brand"></i> Liens Résultats
+                    </button>
+                    <button data-tab="upload" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-transparent text-gray-300 hover:text-white hover:bg-white/5">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Upload Photos
+                    </button>
+                    <button data-tab="galleries" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-transparent text-gray-300 hover:text-white hover:bg-white/5">
+                        <i class="fa-solid fa-camera"></i> Galeries & Photos
+                    </button>
+                    <button data-tab="admins" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-transparent text-gray-300 hover:text-white hover:bg-white/5">
+                        <i class="fa-solid fa-users-gear"></i> Administrateurs
+                    </button>
+                    <button data-tab="reglement" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-transparent text-gray-300 hover:text-white hover:bg-white/5">
+                        <i class="fa-solid fa-file-contract text-brand"></i> Règlement PDF
+                    </button>
+                </div>
+
+                {/* =========================================================================
+                    ONGLET 1 : GESTION DES ÉDITIONS & AFFICHES
+                    ========================================================================= */}
+                <div id="tab-panel-editions" class="tab-panel space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold uppercase text-white">Éditions du Trail des Mines</h2>
+                            <p class="text-xs text-gray-400">Modifiez les textes, dates, affiches officielles et faits marquants de chaque année</p>
+                        </div>
+                        <button id="open-new-edition-btn" class="bg-brand text-dark px-5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold hover:bg-white transition flex items-center gap-2 shadow-lg shadow-brand/20 self-start sm:self-auto">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Créer une Édition</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {editions.map(ed => (
+                            <div class="bg-cardBg rounded-3xl p-6 border border-white/10 shadow-xl flex flex-col justify-between hover:border-brand/30 transition">
+                                <div>
+                                    <div class="flex gap-4 mb-4">
+                                        <div class="w-24 h-32 rounded-xl overflow-hidden bg-dark shrink-0 border border-white/10 relative group">
+                                            <img src={ed.posterUrl} alt={`Affiche ${ed.year}`} class="w-full h-full object-cover" />
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-xs font-display text-brand font-bold uppercase">{ed.subtitle}</span>
+                                                <span class="text-xs font-mono bg-white/10 text-white px-2 py-0.5 rounded font-bold">{ed.year}</span>
+                                            </div>
+                                            <h3 class="font-display text-xl font-bold uppercase text-white mt-1">{ed.title}</h3>
+                                            <span class="text-xs text-gray-400 font-mono block mt-0.5">
+                                                <i class="fa-regular fa-calendar mr-1"></i>{ed.date}
+                                            </span>
+                                            <div class="flex flex-wrap gap-2 text-xs text-gray-300 mt-2 font-mono">
+                                                <span class="bg-dark/80 px-2 py-0.5 rounded border border-white/5">
+                                                    <strong class="text-brand">{ed.races?.length || 0}</strong> course(s)
+                                                </span>
+                                                <span class="bg-dark/80 px-2 py-0.5 rounded border border-white/5">
+                                                    <strong class="text-brand">{ed.galleries?.length || 0}</strong> galerie(s)
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p class="text-gray-300 text-xs leading-relaxed line-clamp-3 mb-4">{ed.description}</p>
+
+                                    {ed.highlights && ed.highlights.length > 0 && (
+                                        <div class="bg-dark/50 p-3 rounded-xl border border-white/5 mb-4 text-[11px] text-gray-300 space-y-1">
+                                            <span class="font-display uppercase text-brand text-[10px] font-bold block">Moments clés :</span>
+                                            {ed.highlights.slice(0, 2).map(h => (
+                                                <div class="flex items-start gap-1.5">
+                                                    <i class="fa-solid fa-check text-brand text-[10px] mt-1 shrink-0"></i>
+                                                    <span class="line-clamp-1">{h}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                                    <a href={`/editions-precedentes/${ed.year}`} target="_blank" class="text-xs text-brand hover:underline inline-flex items-center gap-1.5 font-mono">
+                                        <span>Consulter la page</span>
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                    </a>
+                                    <div class="flex items-center gap-2">
+                                        <button 
+                                          type="button"
+                                          class="jump-to-results-btn bg-white/5 hover:bg-brand/20 text-gray-300 hover:text-brand text-xs px-3 py-2 rounded-xl transition font-semibold flex items-center gap-1.5 border border-white/10"
+                                          data-year={ed.year}
+                                          title="Gérer les liens de résultats"
+                                        >
+                                            <i class="fa-solid fa-square-poll-vertical text-brand"></i>
+                                            <span>Résultats ({ed.resultLinks?.length || 0})</span>
+                                        </button>
+                                        <button 
+                                          class="edit-edition-btn bg-brand/20 hover:bg-brand text-brand hover:text-dark text-xs px-3 py-2 rounded-xl transition font-semibold flex items-center gap-1.5"
+                                          data-edition={JSON.stringify(ed)}
+                                        >
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <span>Modifier</span>
+                                        </button>
+                                        <button 
+                                          class="delete-edition-btn text-red-400 hover:text-red-300 bg-red-500/10 hover:bg-red-500/20 text-xs px-3 py-2 rounded-xl transition flex items-center gap-1"
+                                          data-year={ed.year}
+                                          title="Supprimer cette édition"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* =========================================================================
+                    ONGLET 2 : GESTIONNAIRE DE LIENS DE RÉSULTATS EXTERNES
+                    ========================================================================= */}
+                <div id="tab-panel-resultats" class="tab-panel hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold uppercase text-white">Liens des Résultats</h2>
+                            <p class="text-xs text-gray-400">Gérez les liens externes vers les plateformes de chronométrage (ChronoStart, PDF, etc.) pour chaque édition</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs text-brand font-mono bg-brand/10 border border-brand/20 px-3.5 py-1.5 rounded-xl">
+                                <i class="fa-solid fa-link mr-1.5"></i> Liens externes illimités
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Sélecteur d'année pour les résultats -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-white/10" id="results-year-tabs">
+                        {editions.map((ed, idx) => (
+                            <button 
+                              class={`results-year-btn px-4 py-2.5 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center gap-2 shrink-0 ${idx === 0 ? 'bg-brand text-dark shadow' : 'bg-cardBg text-gray-300 hover:text-white'}`}
+                              data-year={ed.year}
+                            >
+                                <i class="fa-solid fa-calendar-day"></i>
+                                <span>{ed.year} • {ed.title}</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full bg-dark/30 font-mono font-normal">
+                                    {(ed.resultLinks || []).length}
+                                </span>
+                            </button>
+                        ))}
+                    </div>
+
+                    <!-- Conteneurs de liens de résultats par année -->
+                    {editions.map((ed, idx) => (
+                        <div class={`results-year-container space-y-6 ${idx === 0 ? '' : 'hidden'}`} id={`results-year-${ed.year}`} data-year={ed.year}>
+                            <div class="bg-cardBg rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl space-y-6">
+                                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+                                    <div>
+                                        <h3 class="font-display text-xl font-bold uppercase text-white flex items-center gap-2">
+                                            <span>Résultats de l'Édition {ed.year}</span>
+                                            <span class="text-xs font-mono font-normal text-brand">({ed.title})</span>
+                                        </h3>
+                                        <p class="text-xs text-gray-400 mt-1">
+                                            Ajoutez les intitulés et les adresses web complètes. Ils s'afficheront sous forme de boutons cliquables sur la page publique.
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center gap-2 self-start sm:self-auto">
+                                        <button 
+                                          type="button" 
+                                          class="add-result-link-row-btn bg-white/10 hover:bg-white/20 text-white text-xs px-4 py-2 rounded-xl transition font-display uppercase tracking-wider font-bold flex items-center gap-2 border border-white/10"
+                                          data-year={ed.year}
+                                        >
+                                            <i class="fa-solid fa-plus text-brand"></i>
+                                            <span>Ajouter un lien</span>
+                                        </button>
+                                        <button 
+                                          type="button" 
+                                          class="save-year-results-btn bg-brand text-dark hover:bg-white text-xs px-5 py-2 rounded-xl transition font-display uppercase tracking-wider font-bold shadow-lg shadow-brand/20 flex items-center gap-2"
+                                          data-year={ed.year}
+                                        >
+                                            <i class="fa-solid fa-floppy-disk"></i>
+                                            <span>Enregistrer ({ed.year})</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Liste répétable des liens -->
+                                <div class="result-links-list space-y-3" id={`result-links-list-${ed.year}`}>
+                                    {(!ed.resultLinks || ed.resultLinks.length === 0) ? (
+                                        <div class="empty-links-notice bg-dark/40 rounded-2xl p-8 text-center border border-dashed border-white/15">
+                                            <i class="fa-solid fa-trophy text-3xl text-gray-500 mb-3 block"></i>
+                                            <p class="text-gray-400 text-sm mb-4">Aucun lien de résultat configuré pour l'édition {ed.year}.</p>
+                                            <button 
+                                              type="button" 
+                                              class="add-result-link-row-btn bg-brand text-dark text-xs px-4 py-2 rounded-xl font-bold uppercase font-display tracking-wider"
+                                              data-year={ed.year}
+                                            >
+                                                <i class="fa-solid fa-plus mr-1"></i> Ajouter un premier lien
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        ed.resultLinks.map((link, lIdx) => (
+                                            <div class="result-link-row bg-dark/60 rounded-2xl p-4 border border-white/10 hover:border-brand/40 transition flex flex-col md:flex-row items-stretch md:items-center gap-3">
+                                                <div class="link-row-index w-8 h-8 rounded-xl bg-brand/10 text-brand flex items-center justify-center font-mono font-bold text-xs shrink-0 self-start md:self-auto">
+                                                    #{lIdx + 1}
+                                                </div>
+                                                <div class="flex-1">
+                                                    <label class="block text-[10px] uppercase text-gray-400 font-display mb-1">Intitulé du résultat *</label>
+                                                    <input 
+                                                      type="text" 
+                                                      class="link-label-input w-full bg-dark/90 border border-white/15 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand" 
+                                                      value={link.label} 
+                                                      placeholder="ex: Classement 52 km - ChronoStart" 
+                                                      required 
+                                                    />
+                                                </div>
+                                                <div class="flex-[1.5]">
+                                                    <label class="block text-[10px] uppercase text-gray-400 font-display mb-1">Lien externe (URL complète) *</label>
+                                                    <input 
+                                                      type="url" 
+                                                      class="link-url-input w-full bg-dark/90 border border-white/15 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand font-mono text-xs" 
+                                                      value={link.url} 
+                                                      placeholder="https://www.chrono-start.com/..." 
+                                                      required 
+                                                    />
+                                                </div>
+                                                <div class="flex items-center gap-2 pt-2 md:pt-4 self-end md:self-auto shrink-0">
+                                                    <a 
+                                                      href={link.url} 
+                                                      target="_blank" 
+                                                      rel="noopener noreferrer" 
+                                                      class="test-link-btn px-3 py-2 bg-white/5 hover:bg-brand/20 text-gray-300 hover:text-brand rounded-xl border border-white/10 text-xs font-medium transition inline-flex items-center gap-1.5"
+                                                      title="Tester le lien"
+                                                    >
+                                                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                                        <span class="hidden sm:inline">Tester</span>
+                                                    </a>
+                                                    <button 
+                                                      type="button" 
+                                                      class="delete-link-row-btn px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-medium transition inline-flex items-center gap-1.5"
+                                                      title="Supprimer cette ligne"
+                                                    >
+                                                        <i class="fa-solid fa-trash text-[11px]"></i>
+                                                        <span class="hidden sm:inline">Supprimer</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+
+                                <!-- Bas de panneau avec boutons d'ajout et d'enregistrement -->
+                                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/10">
+                                    <button 
+                                      type="button" 
+                                      class="add-result-link-row-btn bg-white/5 hover:bg-white/10 text-brand text-xs px-4 py-2.5 rounded-xl transition font-display uppercase tracking-wider font-bold flex items-center gap-2 border border-brand/20 hover:border-brand/50 w-full sm:w-auto justify-center"
+                                      data-year={ed.year}
+                                    >
+                                        <i class="fa-solid fa-plus"></i>
+                                        <span>Ajouter un autre lien</span>
+                                    </button>
+
+                                    <div class="flex items-center gap-3 w-full sm:w-auto justify-end">
+                                        <a 
+                                          href={`/editions-precedentes/${ed.year}#resultats`} 
+                                          target="_blank" 
+                                          class="text-xs text-gray-400 hover:text-white font-mono flex items-center gap-1.5"
+                                        >
+                                            <span>Voir le rendu public</span>
+                                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                        </a>
+                                        <button 
+                                          type="button" 
+                                          class="save-year-results-btn bg-brand text-dark hover:bg-white text-xs px-6 py-2.5 rounded-xl transition font-display uppercase tracking-wider font-bold shadow-lg shadow-brand/20 flex items-center gap-2 w-full sm:w-auto justify-center"
+                                          data-year={ed.year}
+                                        >
+                                            <i class="fa-solid fa-floppy-disk"></i>
+                                            <span>Enregistrer les liens</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* =========================================================================
+                    ONGLET 3 : STUDIO D'UPLOAD & TRAITEMENT D'IMAGES
+                    ========================================================================= */}
+                <div id="tab-panel-upload" class="tab-panel hidden space-y-6">
+                    <div class="bg-cardBg/90 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl">
+                        <div class="max-w-3xl mb-8">
+                            <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-1">
+                                Studio de Traitement & Compression
+                            </span>
+                            <h2 class="font-display text-3xl font-bold uppercase text-white mb-2">
+                                Upload & Traitement Automatique d'Images
+                            </h2>
+                            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                                Déposez vos photos brutes (JPG, PNG). Le serveur les convertit automatiquement au format ultra-rapide <strong>WebP</strong>, génère les versions HD et vignettes légères, applique si souhaité le <strong>filigrane officiel</strong>, et les classe immédiatement dans la sous-galerie ciblée.
+                            </p>
+                        </div>
+
+                        <form id="upload-form" class="space-y-6">
+                            
+                            <!-- Ligne 1 : Édition & Photographe -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Édition Cible</label>
+                                    <select id="upload-edition-year" name="editionYear" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand">
+                                        {editions.map(e => (
+                                            <option value={e.year}>{e.year} - {e.title}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Photographe</label>
+                                    <input 
+                                      type="text" 
+                                      id="upload-photographer-name" 
+                                      name="photographerName" 
+                                      placeholder="ex: Pierre Coutherut" 
+                                      value="Pierre Coutherut"
+                                      required
+                                      class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Ligne 2 : Course & Moment (Sous-galerie) -->
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="block text-xs uppercase tracking-wider text-gray-400 font-display">Course Associée</label>
+                                        <span class="text-[10px] font-mono text-gray-500 bg-white/5 px-2 py-0.5 rounded">Facultatif</span>
+                                    </div>
+                                    <input 
+                                      type="text" 
+                                      id="upload-race" 
+                                      name="race" 
+                                      placeholder="ex: Les Gueules Noires (52km)" 
+                                      class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand"
+                                    />
+                                </div>
+
+                                <div>
+                                    <div class="flex items-center justify-between mb-1.5">
+                                        <label class="block text-xs uppercase tracking-wider text-gray-400 font-display">Moment / Lieu Clé</label>
+                                        <span class="text-[10px] font-mono text-gray-500 bg-white/5 px-2 py-0.5 rounded">Facultatif</span>
+                                    </div>
+                                    <input 
+                                      type="text" 
+                                      id="upload-moment" 
+                                      name="moment" 
+                                      placeholder="ex: Sommet Planche des Belles Filles" 
+                                      class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand"
+                                    />
+                                </div>
+                            </div>
+
+                            <!-- Options de Traitement d'Images -->
+                            <div class="bg-dark/60 p-5 rounded-2xl border border-white/10 space-y-4">
+                                <span class="text-xs uppercase tracking-wider text-brand font-display font-bold block">
+                                    <i class="fa-solid fa-sliders mr-1.5"></i> Options de traitement Sharp
+                                </span>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                                    <div>
+                                        <label class="block text-gray-400 mb-1 font-mono">Largeur Max HD</label>
+                                        <select id="upload-max-width" name="maxWidth" class="w-full bg-cardBg border border-white/10 rounded-lg p-2 text-white">
+                                            <option value="1920" selected>1920 px (Full HD Optimisé)</option>
+                                            <option value="2560">2560 px (2K Haute Définition)</option>
+                                            <option value="1440">1440 px (Format Éco Web)</option>
+                                        </select>
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-gray-400 mb-1 font-mono">Qualité WebP : <span id="quality-val" class="text-brand font-bold">85%</span></label>
+                                        <input type="range" id="upload-quality" name="quality" min="60" max="95" value="85" class="w-full accent-brand" />
+                                    </div>
+
+                                    <div class="flex items-center gap-3 pt-4 sm:pt-0">
+                                        <input type="checkbox" id="upload-watermark" name="applyWatermark" checked class="w-4 h-4 accent-brand rounded" />
+                                        <label for="upload-watermark" class="text-white cursor-pointer select-none">
+                                            Appliquer le filigrane <strong class="text-brand">Trail des Mines</strong>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Zone Drag & Drop -->
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Sélection des photos</label>
+                                <div id="drop-zone" class="border-2 border-dashed border-white/20 hover:border-brand/60 rounded-3xl p-8 sm:p-12 text-center bg-dark/40 cursor-pointer transition-colors duration-300">
+                                    <i class="fa-solid fa-cloud-arrow-up text-4xl sm:text-5xl text-gray-400 mb-3 block"></i>
+                                    <p class="text-sm sm:text-base font-semibold text-white mb-1">
+                                        Glissez-déposez vos photos ici, ou <span class="text-brand underline">cliquez pour parcourir</span>
+                                    </p>
+                                    <p class="text-xs text-gray-500 font-mono">JPG, JPEG, PNG, WEBP acceptés • Plusieurs fichiers autorisés</p>
+                                    <input type="file" id="upload-files" multiple accept="image/*" class="hidden" />
+                                </div>
+                            </div>
+
+                            <!-- Liste des fichiers en attente -->
+                            <div id="file-previews" class="hidden space-y-3">
+                                <div class="flex items-center justify-between text-xs font-mono text-gray-400 pb-2 border-b border-white/10">
+                                    <span id="files-count-badge">0 fichier(s) sélectionné(s)</span>
+                                    <button type="button" id="clear-files-btn" class="text-red-400 hover:underline">Effacer la sélection</button>
+                                </div>
+                                <div id="files-list" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3"></div>
+                            </div>
+
+                            <!-- Bouton de Soumission & Progression -->
+                            <div class="pt-4">
+                                <div id="upload-progress-bar" class="hidden mb-4">
+                                    <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                        <span id="upload-status-text">Traitement et conversion en cours...</span>
+                                        <span id="upload-percent-text" class="text-brand font-bold">0%</span>
+                                    </div>
+                                    <div class="w-full bg-dark rounded-full h-2.5 overflow-hidden border border-white/10">
+                                        <div id="upload-progress-fill" class="bg-brand h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+                                    </div>
+                                </div>
+
+                                <button 
+                                  type="submit" 
+                                  id="upload-submit-btn" 
+                                  class="w-full bg-brand text-dark font-display font-bold uppercase tracking-wider text-sm py-4 rounded-xl hover:bg-white hover:scale-[1.01] transition-all shadow-xl shadow-brand/20 flex items-center justify-center gap-2"
+                                >
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    <span>Lancer le Traitement & l'Upload</span>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                {/* =========================================================================
+                    ONGLET 4 : GALERIES & PHOTOS (GESTION COMPLÈTE & SUPPRESSION)
+                    ========================================================================= */}
+                <div id="tab-panel-galleries" class="tab-panel hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold uppercase text-white">Galeries par Photographe</h2>
+                            <p class="text-xs text-gray-400">Gérez les profils, les sous-galeries et supprimez individuellement des clichés</p>
+                        </div>
+                        <button id="open-new-photographer-btn" class="bg-brand text-dark px-5 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold hover:bg-white transition flex items-center gap-2 shadow-lg shadow-brand/20 self-start sm:self-auto">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Nouveau Photographe</span>
+                        </button>
+                    </div>
+
+                    <!-- Sélecteur d'année pour les galeries -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-2 border-b border-white/10" id="galleries-year-tabs">
+                        {editions.map((ed, idx) => (
+                            <button 
+                              class={`galleries-year-btn px-4 py-2 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition ${idx === 0 ? 'bg-brand text-dark shadow' : 'bg-cardBg text-gray-300 hover:text-white'}`}
+                              data-year={ed.year}
+                            >
+                                {ed.year} ({ed.galleries?.length || 0} photographes)
+                            </button>
+                        ))}
+                    </div>
+
+                    {editions.map((ed, idx) => (
+                        <div class={`galleries-year-container space-y-6 ${idx === 0 ? '' : 'hidden'}`} id={`galleries-year-${ed.year}`}>
+                            {(!ed.galleries || ed.galleries.length === 0) ? (
+                                <div class="bg-cardBg/60 rounded-2xl p-8 text-center border border-white/5">
+                                    <p class="text-gray-400 text-sm">Aucune galerie créée pour cette édition.</p>
+                                </div>
+                            ) : (
+                                <div class="grid grid-cols-1 gap-6">
+                                    {ed.galleries.map(g => (
+                                        <div class="bg-cardBg rounded-3xl p-6 border border-white/10 shadow-xl space-y-6">
+                                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
+                                                <div class="flex items-center gap-4">
+                                                    <div class="w-12 h-12 rounded-full bg-brand/20 border border-brand/40 overflow-hidden flex items-center justify-center shrink-0">
+                                                        {g.avatarUrl ? <img src={g.avatarUrl} alt="" class="w-full h-full object-cover" /> : <i class="fa-solid fa-camera text-brand text-lg"></i>}
+                                                    </div>
+                                                    <div>
+                                                        <strong class="text-white text-lg block font-display uppercase">{g.photographerName}</strong>
+                                                        <span class="text-xs text-gray-400 font-mono">
+                                                            {g.instagramUrl ? `IG: ${g.instagramUrl}` : 'Photographe officiel'} • {g.subGalleries?.reduce((acc, s) => acc + s.photos.length, 0) || 0} photos au total
+                                                        </span>
+                                                        {g.bio && <p class="text-xs text-gray-300 mt-1 max-w-xl">{g.bio}</p>}
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex items-center gap-2">
+                                                    <a 
+                                                      href={`/editions-precedentes/${ed.year}/galerie/${g.photographerSlug}`} 
+                                                      target="_blank"
+                                                      class="text-xs text-brand hover:underline font-mono px-3 py-1.5 bg-white/5 rounded-lg inline-flex items-center gap-1"
+                                                    >
+                                                        <span>Voir l'album</span>
+                                                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                                    </a>
+                                                    <button 
+                                                      class="edit-photographer-btn text-xs px-3 py-1.5 bg-brand/20 hover:bg-brand text-brand hover:text-dark rounded-lg transition font-semibold"
+                                                      data-photographer={JSON.stringify(g)}
+                                                      data-year={ed.year}
+                                                    >
+                                                        <i class="fa-solid fa-pen mr-1"></i> Modifier
+                                                    </button>
+                                                    <button 
+                                                      class="delete-photographer-btn text-xs px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-lg transition"
+                                                      data-slug={g.photographerSlug}
+                                                      data-name={g.photographerName}
+                                                      data-year={ed.year}
+                                                      title="Supprimer ce photographe et ses photos"
+                                                    >
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <!-- Sous-galeries -->
+                                            <div class="space-y-4">
+                                                <span class="text-xs font-display uppercase tracking-wider text-gray-400 font-bold block">
+                                                    Sous-galeries & Clichés ({g.subGalleries?.length || 0}) :
+                                                </span>
+                                                <div class="grid grid-cols-1 gap-4">
+                                                    {g.subGalleries?.map(sub => (
+                                                        <div class="bg-dark/70 p-4 rounded-2xl border border-white/5 space-y-3">
+                                                            <div class="flex items-center justify-between">
+                                                                <div>
+                                                                    <span class="text-white font-bold text-sm block">{sub.name}</span>
+                                                                    <span class="text-xs text-gray-400 font-mono">{sub.race} • {sub.moment}</span>
+                                                                </div>
+                                                                <div class="flex items-center gap-3">
+                                                                    <span class="text-brand font-mono font-bold text-xs bg-brand/10 px-2.5 py-1 rounded-lg">
+                                                                        {sub.photos.length} photo(s)
+                                                                    </span>
+                                                                    <button 
+                                                                      class="toggle-photos-btn text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded-lg transition"
+                                                                      data-target={`sub-photos-${sub.id}`}
+                                                                    >
+                                                                        <span>Gérer les photos</span>
+                                                                        <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Grille de photos (rétractable) -->
+                                                            <div id={`sub-photos-${sub.id}`} class="hidden pt-3 border-t border-white/5">
+                                                                {sub.photos.length === 0 ? (
+                                                                    <p class="text-xs text-gray-500 font-mono">Aucune photo dans cette sous-galerie.</p>
+                                                                ) : (
+                                                                    <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2.5">
+                                                                        {sub.photos.map(p => (
+                                                                            <div class="relative group aspect-square rounded-xl overflow-hidden bg-dark border border-white/10" id={`photo-card-${p.id}`}>
+                                                                                <img src={p.urlThumb} alt="" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy" />
+                                                                                <button 
+                                                                                  class="delete-single-photo-btn absolute top-1 right-1 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition shadow-lg"
+                                                                                  data-year={ed.year}
+                                                                                  data-slug={g.photographerSlug}
+                                                                                  data-photo-id={p.id}
+                                                                                  title="Supprimer cette photo"
+                                                                                >
+                                                                                    <i class="fa-solid fa-trash text-[10px]"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                </div>
+
+                {/* =========================================================================
+                    ONGLET 5 : GESTION DES ADMINISTRATEURS
+                    ========================================================================= */}
+                <div id="tab-panel-admins" class="tab-panel hidden space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold uppercase text-white">Comptes Administrateurs</h2>
+                            <p class="text-xs text-gray-400">Créez et gérez les accès d'administration du Trail des Mines</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Formulaire Création Administrateur -->
+                        <div class="lg:col-span-5 bg-cardBg rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl">
+                            <h3 class="font-display text-xl font-bold uppercase text-white mb-4 flex items-center gap-2">
+                                <i class="fa-solid fa-user-plus text-brand text-sm"></i>
+                                <span>Ajouter un Administrateur</span>
+                            </h3>
+
+                            <form id="create-admin-form" class="space-y-4">
+                                <div id="create-admin-error" class="hidden p-3 bg-red-500/20 border border-red-500/40 rounded-xl text-xs text-red-300 font-semibold"></div>
+                                <div id="create-admin-success" class="hidden p-3 bg-green-500/20 border border-green-500/40 rounded-xl text-xs text-green-300 font-semibold"></div>
+
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Identifiant</label>
+                                    <input 
+                                      type="text" 
+                                      id="new-admin-username" 
+                                      placeholder="ex: pierre, julien" 
+                                      required 
+                                      class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Mot de passe</label>
+                                    <input 
+                                      type="password" 
+                                      id="new-admin-password" 
+                                      placeholder="••••••••" 
+                                      required 
+                                      class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand"
+                                    />
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs uppercase tracking-wider text-gray-400 font-display mb-1.5">Rôle</label>
+                                    <select id="new-admin-role" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand">
+                                        <option value="admin">Administrateur (Gestion éditions & photos)</option>
+                                        <option value="superadmin">Super-administrateur (Accès total)</option>
+                                    </select>
+                                </div>
+
+                                <button 
+                                  type="submit" 
+                                  class="w-full bg-brand text-dark font-display font-bold uppercase tracking-wider text-xs py-3 rounded-xl hover:bg-white transition shadow-md mt-2 flex items-center justify-center gap-2"
+                                >
+                                    <i class="fa-solid fa-check"></i>
+                                    <span>Créer ce compte</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Liste des Administrateurs -->
+                        <div class="lg:col-span-7 bg-cardBg rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl">
+                            <h3 class="font-display text-xl font-bold uppercase text-white mb-4">
+                                Administrateurs Actifs ({adminsList.length})
+                            </h3>
+
+                            <div class="space-y-3" id="admins-list-container">
+                                {adminsList.map(adm => (
+                                    <div class="flex items-center justify-between p-4 rounded-xl bg-dark/70 border border-white/5">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-9 h-9 rounded-full bg-brand/10 border border-brand/30 flex items-center justify-center text-brand font-bold text-sm">
+                                                {adm.username.charAt(0).toUpperCase()}
+                                            </div>
+                                            <div>
+                                                <span class="text-white font-bold text-sm block">{adm.username}</span>
+                                                <span class="text-[10px] text-gray-400 font-mono">Rôle : <strong class="text-brand">{adm.role}</strong></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex items-center gap-3">
+                                            {adm.username !== currentUser.username && adm.username !== 'root' ? (
+                                                <button 
+                                                  class="delete-admin-btn text-red-400 hover:text-red-300 text-xs px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 transition"
+                                                  data-id={adm.id}
+                                                >
+                                                    <i class="fa-solid fa-trash mr-1"></i> Supprimer
+                                                </button>
+                                            ) : (
+                                                <span class="text-[10px] font-mono text-gray-500 uppercase px-2 py-1 bg-white/5 rounded">Protégé</span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {/* =========================================================================
+                    ONGLET 6 : RÈGLEMENT OFFICIEL PDF & DÉCOUPAGE EN CHAPITRES
+                    ========================================================================= */}
+                <div id="tab-panel-reglement" class="tab-panel hidden space-y-8">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="font-display text-2xl font-bold uppercase text-white">Règlement Officiel & Traitement PDF</h2>
+                            <p class="text-xs text-gray-400">Téléversez le document PDF officiel et gérez les chapitres/articles affichés en accordéons</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <a href="/reglement" target="_blank" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2.5 rounded-xl text-xs font-display uppercase tracking-wider transition inline-flex items-center gap-2 border border-white/10">
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                <span>Voir page /reglement</span>
+                            </a>
+                            <button id="open-new-chapter-btn" class="bg-brand text-dark px-4 py-2.5 rounded-xl font-display uppercase tracking-wider text-xs font-bold hover:bg-white transition flex items-center gap-2 shadow-lg shadow-brand/20">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Ajouter un Article</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Carte 1 : Téléversement & Traitement du PDF -->
+                    <div class="bg-cardBg/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl space-y-6">
+                        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-6 border-b border-white/10">
+                            <!-- État actuel du PDF -->
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-2xl bg-brand/15 border border-brand/30 flex items-center justify-center text-brand text-2xl shrink-0 shadow-lg shadow-brand/10">
+                                    <i class="fa-solid fa-file-pdf"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-display uppercase tracking-widest text-brand font-bold block">Document Actuel en Ligne</span>
+                                    <strong class="text-white text-base block font-mono mt-0.5" id="reglement-current-filename">{reglement.pdfFilename || 'reglement.pdf'}</strong>
+                                    <div class="flex flex-wrap items-center gap-2 text-xs text-gray-400 font-mono mt-1">
+                                        <span class="bg-dark/80 px-2 py-0.5 rounded border border-white/5" id="reglement-current-size">
+                                            {reglement.pdfSizeBytes ? `${Math.round(reglement.pdfSizeBytes / 1024)} Ko` : 'PDF'}
+                                        </span>
+                                        <span>•</span>
+                                        <span id="reglement-current-date">Mis à jour le {new Date(reglement.lastUpdated).toLocaleDateString('fr-FR')}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <a 
+                                  href={reglement.pdfUrl || '/medias/reglement.pdf'} 
+                                  download={reglement.pdfFilename || 'reglement.pdf'} 
+                                  class="bg-white/10 hover:bg-white/20 text-white text-xs px-4 py-2.5 rounded-xl transition flex items-center gap-2 border border-white/10"
+                                >
+                                    <i class="fa-solid fa-download text-xs"></i>
+                                    <span>Télécharger actuel</span>
+                                </a>
+                                <a 
+                                  href={reglement.pdfUrl || '/medias/reglement.pdf'} 
+                                  target="_blank" 
+                                  class="bg-brand/20 hover:bg-brand text-brand hover:text-dark text-xs px-4 py-2.5 rounded-xl transition font-semibold flex items-center gap-1.5"
+                                >
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                    <span>Ouvrir PDF</span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Formulaire d'upload de nouveau PDF -->
+                        <form id="upload-reglement-form" class="space-y-4">
+                            <label class="block text-xs uppercase tracking-wider text-gray-300 font-display font-bold">
+                                Remplacer par un nouveau fichier PDF
+                            </label>
+                            
+                            <div id="drop-zone-reglement" class="relative border-2 border-dashed border-white/20 hover:border-brand/60 rounded-3xl p-8 sm:p-10 text-center bg-dark/40 transition-colors duration-300 group">
+                                <input 
+                                  type="file" 
+                                  id="upload-reglement-file" 
+                                  accept="application/pdf,.pdf" 
+                                  class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20" 
+                                  title="Cliquez ou déposez un fichier PDF"
+                                />
+                                <div class="pointer-events-none relative z-10 space-y-2">
+                                    <i class="fa-solid fa-cloud-arrow-up text-3xl sm:text-4xl text-gray-400 group-hover:text-brand transition-colors block"></i>
+                                    <p class="text-sm font-semibold text-white">
+                                        Glissez-déposez votre PDF ici, ou <span class="text-brand underline">cliquez pour choisir</span>
+                                    </p>
+                                    <div id="selected-reglement-filename" class="text-xs text-gray-400 font-mono py-1 px-3 bg-white/5 rounded-lg inline-block">
+                                        Format PDF uniquement (ex: reglement-2026.pdf)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+                                <div class="flex items-center gap-2.5">
+                                    <input type="checkbox" id="reglement-auto-parse" checked class="w-4 h-4 accent-brand rounded cursor-pointer" />
+                                    <label for="reglement-auto-parse" class="text-xs text-gray-300 cursor-pointer select-none">
+                                        Analyser et <strong>découper automatiquement le texte en chapitres / articles</strong>
+                                    </label>
+                                </div>
+
+                                <button 
+                                  type="submit" 
+                                  id="upload-reglement-submit-btn" 
+                                  class="bg-brand text-dark font-display font-bold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl hover:bg-white transition shadow-lg shadow-brand/20 flex items-center justify-center gap-2 self-start sm:self-auto"
+                                >
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    <span>Traiter & Mettre en Ligne</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Carte 2 : Liste des Chapitres Actifs -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-display text-xl font-bold uppercase text-white flex items-center gap-2">
+                                <span>Articles & Chapitres Actifs</span>
+                                <span class="text-xs font-mono font-normal text-brand" id="admin-chapters-count">({reglement.chapters.length} articles)</span>
+                            </h3>
+                            <span class="text-xs text-gray-400 font-mono hidden sm:inline">Ces articles sont affichés sous forme d'accordéons sur la page /reglement</span>
+                        </div>
+
+                        <div class="space-y-3" id="admin-chapters-list">
+                            {reglement.chapters.map((ch, idx) => (
+                                <div class="bg-cardBg rounded-2xl p-5 border border-white/10 hover:border-brand/30 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4" id={`chapter-row-${ch.id}`}>
+                                    <div class="space-y-1.5 flex-1 min-w-0">
+                                        <div class="flex items-center gap-3">
+                                            <span class="bg-brand/15 text-brand font-display font-bold uppercase text-xs px-2.5 py-1 rounded-lg border border-brand/30 shrink-0">
+                                                {ch.number}
+                                            </span>
+                                            <h4 class="font-display text-base font-bold text-white uppercase truncate">
+                                                {ch.title}
+                                            </h4>
+                                        </div>
+                                        <p class="text-xs text-gray-400 line-clamp-2 leading-relaxed">
+                                            {ch.content}
+                                        </p>
+                                    </div>
+
+                                    <div class="flex items-center gap-2 shrink-0">
+                                        <button 
+                                          class="edit-chapter-btn text-xs px-3 py-2 bg-brand/20 hover:bg-brand text-brand hover:text-dark rounded-xl transition font-semibold flex items-center gap-1.5"
+                                          data-chapter={JSON.stringify(ch)}
+                                        >
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span>Modifier</span>
+                                        </button>
+                                        <button 
+                                          class="delete-chapter-btn text-xs px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl transition flex items-center gap-1"
+                                          data-id={ch.id}
+                                          data-title={ch.title}
+                                          title="Supprimer cet article"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        )}
+
+    </div>
+
+    {/* =========================================================================
+        MODALE 1 : CRÉATION / MODIFICATION D'UNE ÉDITION
+        ========================================================================= */}
+    <div id="edition-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-cardBg rounded-3xl p-6 sm:p-8 max-w-2xl w-full border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                <h3 id="edition-modal-title" class="font-display text-2xl font-bold uppercase text-white">Créer une Édition</h3>
+                <button type="button" class="modal-close-btn text-gray-400 hover:text-white text-2xl p-1" data-modal="edition-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="edition-modal-form" class="space-y-4">
+                <input type="hidden" id="modal-ed-mode" value="create" />
+                <input type="hidden" id="modal-ed-existing-poster" value="" />
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase text-gray-400 font-display mb-1">Année *</label>
+                        <input type="number" id="modal-ed-year" required placeholder="ex: 2026" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase text-gray-400 font-display mb-1">Titre de l'Édition *</label>
+                        <input type="text" id="modal-ed-title" required placeholder="ex: L'Édition Record" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase text-gray-400 font-display mb-1">Sous-titre / N°</label>
+                        <input type="text" id="modal-ed-subtitle" placeholder="ex: 5ème Édition • Mai 2026" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase text-gray-400 font-display mb-1">Date</label>
+                        <input type="text" id="modal-ed-date" placeholder="ex: 17 Mai 2026" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase text-gray-400 font-display mb-1">Description éditoriale</label>
+                    <textarea id="modal-ed-desc" rows="3" placeholder="Racontez les faits marquants de cette édition..." class="w-full bg-dark/80 border border-white/15 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase text-gray-400 font-display mb-1">Faits marquants (1 par ligne)</label>
+                    <textarea id="modal-ed-highlights" rows="2" placeholder="Record scratch pulvérisé&#10;720 finishers à Champagney" class="w-full bg-dark/80 border border-white/15 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand"></textarea>
+                </div>
+
+                <!-- Upload de l'Affiche -->
+                <div class="bg-dark/60 p-4 rounded-xl border border-white/10">
+                    <label class="block text-xs uppercase tracking-wider text-brand font-display font-bold mb-2">
+                        <i class="fa-solid fa-image mr-1"></i> Affiche Officielle
+                    </label>
+                    <div class="flex items-center gap-4">
+                        <div id="modal-ed-poster-preview-container" class="hidden">
+                            <img id="modal-ed-poster-preview" src="" alt="Affiche actuelle" class="w-14 h-20 object-cover rounded-lg border border-white/20" />
+                        </div>
+                        <div class="flex-1">
+                            <input type="file" id="modal-ed-poster-file" accept="image/*" class="text-xs text-gray-400 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand file:text-dark hover:file:bg-white" />
+                            <span class="text-[10px] text-gray-500 font-mono block mt-1">Laissez vide pour conserver l'affiche actuelle.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end gap-3">
+                    <button type="button" class="modal-close-btn px-4 py-2.5 rounded-xl text-xs text-gray-400 hover:text-white transition" data-modal="edition-modal">Annuler</button>
+                    <button type="submit" id="modal-ed-submit-btn" class="bg-brand text-dark font-display font-bold uppercase tracking-wider text-xs px-6 py-2.5 rounded-xl hover:bg-white transition shadow-md">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    {/* =========================================================================
+        MODALE 3 : CRÉATION / MODIFICATION D'UN PHOTOGRAPHE
+        ========================================================================= */}
+    <div id="photographer-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-cardBg rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-white/10 shadow-2xl">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                <h3 id="photo-modal-title" class="font-display text-2xl font-bold uppercase text-white">Modifier le Photographe</h3>
+                <button type="button" class="modal-close-btn text-gray-400 hover:text-white text-2xl p-1" data-modal="photographer-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="photographer-modal-form" class="space-y-4">
+                <input type="hidden" id="modal-photo-year" value="" />
+                <input type="hidden" id="modal-photo-slug" value="" />
+
+                <div>
+                    <label class="block text-xs uppercase text-gray-400 font-display mb-1">Nom Complet *</label>
+                    <input type="text" id="modal-photo-name" required placeholder="ex: Julien Monnier" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase text-gray-400 font-display mb-1">Biographie / Rôle</label>
+                    <textarea id="modal-photo-bio" rows="2" placeholder="Photographe officiel bénévole..." class="w-full bg-dark/80 border border-white/15 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-brand"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase text-gray-400 font-display mb-1">Instagram (@compte ou URL)</label>
+                    <input type="text" id="modal-photo-instagram" placeholder="@julien_trail_photo" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase text-gray-400 font-display mb-1">Site Web (URL)</label>
+                    <input type="url" id="modal-photo-website" placeholder="https://julienphoto.fr" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                </div>
+
+                <div class="pt-4 flex items-center justify-end gap-3">
+                    <button type="button" class="modal-close-btn px-4 py-2.5 rounded-xl text-xs text-gray-400 hover:text-white transition" data-modal="photographer-modal">Annuler</button>
+                    <button type="submit" id="modal-photo-submit-btn" class="bg-brand text-dark font-display font-bold uppercase tracking-wider text-xs px-6 py-2.5 rounded-xl hover:bg-white transition shadow-md">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {/* =========================================================================
+        MODALE 4 : CRÉATION / MODIFICATION D'UN ARTICLE DU RÈGLEMENT
+        ========================================================================= */}
+    <div id="chapter-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-cardBg rounded-3xl p-6 sm:p-8 max-w-xl w-full border border-white/10 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                <h3 id="chapter-modal-title" class="font-display text-2xl font-bold uppercase text-white">Modifier l'Article</h3>
+                <button type="button" class="modal-close-btn text-gray-400 hover:text-white text-2xl p-1" data-modal="chapter-modal">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="chapter-modal-form" class="space-y-4">
+                <input type="hidden" id="modal-chapter-id" value="" />
+                <input type="hidden" id="modal-chapter-mode" value="edit" />
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase text-gray-400 font-display mb-1">Numéro *</label>
+                        <input type="text" id="modal-chapter-number" required placeholder="ex: Article 1" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs uppercase text-gray-400 font-display mb-1">Titre de l'Article *</label>
+                        <input type="text" id="modal-chapter-title" required placeholder="ex: Organisation & Cadre de Course" class="w-full bg-dark/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand" />
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase text-gray-400 font-display mb-1">Contenu complet *</label>
+                    <textarea id="modal-chapter-content" rows="8" required placeholder="Texte de l'article, règles, conditions..." class="w-full bg-dark/80 border border-white/15 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-brand leading-relaxed"></textarea>
+                    <span class="text-[10px] text-gray-500 font-mono mt-1 block">Astuce : Utilisez des tirets (-) pour créer des listes à puces et des **mots** pour mettre en gras.</span>
+                </div>
+
+                <div class="pt-4 flex items-center justify-end gap-3">
+                    <button type="button" class="modal-close-btn px-4 py-2.5 rounded-xl text-xs text-gray-400 hover:text-white transition" data-modal="chapter-modal">Annuler</button>
+                    <button type="submit" id="modal-chapter-submit-btn" class="bg-brand text-dark font-display font-bold uppercase tracking-wider text-xs px-6 py-2.5 rounded-xl hover:bg-white transition shadow-md">Enregistrer l'Article</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Conteneur de Notifications Toasts Flottantes -->
+    <div id="admin-toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 max-w-sm pointer-events-none"></div>
+
+</Layout>
+
+<script>
+    function initAdmin() {
+        
+        // ==========================================
+        // 0. Système de Toasts Modernes & Utilitaires
+        // ==========================================
+        function showToast(message: string, type: 'success' | 'error' | 'info' = 'success') {
+            const container = document.getElementById('admin-toast-container');
+            if (!container) {
+                alert(message);
+                return;
+            }
+            const toast = document.createElement('div');
+            const bgClass = type === 'error'
+                ? 'bg-red-950/90 border-red-500/50 text-red-200'
+                : type === 'info'
+                ? 'bg-blue-950/90 border-blue-500/50 text-blue-200'
+                : 'bg-dark/95 border-brand/50 text-white shadow-brand/10';
+            const icon = type === 'error' ? 'fa-circle-exclamation text-red-400' : type === 'info' ? 'fa-circle-info text-blue-400' : 'fa-circle-check text-brand';
+
+            toast.className = `p-4 rounded-2xl text-xs font-semibold shadow-2xl flex items-center gap-3 pointer-events-auto border backdrop-blur-xl transition-all duration-300 transform translate-y-2 opacity-0 ${bgClass}`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base shrink-0"></i><span class="flex-1 leading-snug">${message}</span>`;
+            
+            container.appendChild(toast);
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            });
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+
+        function openModal(modalId: string) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            modal.classList.remove('hidden');
+            setTimeout(() => modal.classList.remove('opacity-0'), 10);
+        }
+
+        function closeModal(modalId: string) {
+            const modal = document.getElementById(modalId);
+            if (!modal) return;
+            modal.classList.add('opacity-0');
+            setTimeout(() => modal.classList.add('hidden'), 300);
+        }
+
+        // Fermeture générique des modales
+        document.querySelectorAll('.modal-close-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const modalId = btn.getAttribute('data-modal');
+                if (modalId) closeModal(modalId);
+            });
+        });
+
+        // Fermeture sur clic en dehors de la boîte modale & touche Échap
+        ['edition-modal', 'race-modal', 'photographer-modal', 'chapter-modal'].forEach(id => {
+            const modal = document.getElementById(id);
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal(id);
+                });
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                ['edition-modal', 'race-modal', 'photographer-modal', 'chapter-modal'].forEach(closeModal);
+            }
+        });
+
+        // ==========================================
+        // 1. Formulaire de Connexion
+        // ==========================================
+        const loginForm = document.getElementById('login-form') as HTMLFormElement | null;
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const usernameInput = document.getElementById('login-username') as HTMLInputElement;
+                const passwordInput = document.getElementById('login-password') as HTMLInputElement;
+                const errBox = document.getElementById('login-error');
+                const submitBtn = document.getElementById('login-submit-btn');
+
+                if (submitBtn) submitBtn.setAttribute('disabled', 'true');
+                if (errBox) errBox.classList.add('hidden');
+
+                try {
+                    const res = await fetch('/api/auth', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: usernameInput.value,
+                            password: passwordInput.value
+                        })
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        if (errBox) {
+                            errBox.textContent = data.error || 'Identifiants invalides';
+                            errBox.classList.remove('hidden');
+                        }
+                        if (submitBtn) submitBtn.removeAttribute('disabled');
+                    } else {
+                        showToast('Connexion réussie ! Chargement...', 'success');
+                        setTimeout(() => window.location.reload(), 500);
+                    }
+                } catch (err: any) {
+                    if (errBox) {
+                        errBox.textContent = err.message || 'Erreur réseau';
+                        errBox.classList.remove('hidden');
+                    }
+                    if (submitBtn) submitBtn.removeAttribute('disabled');
+                }
+            });
+        }
+
+        // ==========================================
+        // 2. Déconnexion
+        // ==========================================
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', async () => {
+                await fetch('/api/auth', { method: 'DELETE' });
+                window.location.reload();
+            });
+        }
+
+        // ==========================================
+        // 3. Navigation par Onglets Principaux avec Persistance
+        // ==========================================
+        const tabBtns = document.querySelectorAll('.admin-tab-btn');
+        const tabPanels = document.querySelectorAll('.tab-panel');
+
+        function switchTab(targetTab: string) {
+            tabBtns.forEach(b => {
+                const isTarget = b.getAttribute('data-tab') === targetTab;
+                if (isTarget) {
+                    b.classList.add('bg-brand', 'text-dark', 'shadow');
+                    b.classList.remove('bg-transparent', 'text-gray-300');
+                } else {
+                    b.classList.remove('bg-brand', 'text-dark', 'shadow');
+                    b.classList.add('bg-transparent', 'text-gray-300');
+                }
+            });
+
+            tabPanels.forEach(p => p.classList.add('hidden'));
+            const activePanel = document.getElementById(`tab-panel-${targetTab}`);
+            if (activePanel) activePanel.classList.remove('hidden');
+
+            try {
+                localStorage.setItem('admin_active_tab', targetTab);
+                history.replaceState(null, '', `#${targetTab}`);
+            } catch (e) {}
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetTab = btn.getAttribute('data-tab');
+                if (targetTab) switchTab(targetTab);
+            });
+        });
+
+        // Restaurer automatiquement l'onglet actif au chargement
+        const hashTab = window.location.hash.replace('#', '');
+        const savedTab = hashTab || localStorage.getItem('admin_active_tab') || 'editions';
+        if (document.getElementById(`tab-panel-${savedTab}`)) {
+            switchTab(savedTab);
+        }
+
+        // ==========================================
+        // 4. Gestion des Éditions (Créer & MODIFIER)
+        // ==========================================
+        const openNewEdBtn = document.getElementById('open-new-edition-btn');
+        const edModalForm = document.getElementById('edition-modal-form') as HTMLFormElement | null;
+        const edModalTitle = document.getElementById('edition-modal-title');
+        const edModeInput = document.getElementById('modal-ed-mode') as HTMLInputElement | null;
+        const edYearInput = document.getElementById('modal-ed-year') as HTMLInputElement | null;
+        const edTitleInput = document.getElementById('modal-ed-title') as HTMLInputElement | null;
+        const edSubtitleInput = document.getElementById('modal-ed-subtitle') as HTMLInputElement | null;
+        const edDateInput = document.getElementById('modal-ed-date') as HTMLInputElement | null;
+        const edDescInput = document.getElementById('modal-ed-desc') as HTMLTextAreaElement | null;
+        const edHighlightsInput = document.getElementById('modal-ed-highlights') as HTMLTextAreaElement | null;
+        const edFinishersInput = document.getElementById('modal-ed-finishers') as HTMLInputElement | null;
+        const edRunnersInput = document.getElementById('modal-ed-runners') as HTMLInputElement | null;
+        const edVolunteersInput = document.getElementById('modal-ed-volunteers') as HTMLInputElement | null;
+        const edWeatherInput = document.getElementById('modal-ed-weather') as HTMLInputElement | null;
+        const edRecHolderInput = document.getElementById('modal-ed-record-holder') as HTMLInputElement | null;
+        const edRecTimeInput = document.getElementById('modal-ed-record-time') as HTMLInputElement | null;
+        const edExistingPosterInput = document.getElementById('modal-ed-existing-poster') as HTMLInputElement | null;
+        const edPosterPreviewContainer = document.getElementById('modal-ed-poster-preview-container');
+        const edPosterPreview = document.getElementById('modal-ed-poster-preview') as HTMLImageElement | null;
+        const edPosterFileInput = document.getElementById('modal-ed-poster-file') as HTMLInputElement | null;
+        const edSubmitBtn = document.getElementById('modal-ed-submit-btn');
+
+        if (openNewEdBtn) {
+            openNewEdBtn.addEventListener('click', () => {
+                if (edModalForm) edModalForm.reset();
+                if (edModeInput) edModeInput.value = 'create';
+                if (edYearInput) {
+                    edYearInput.removeAttribute('readonly');
+                    edYearInput.classList.remove('opacity-60', 'cursor-not-allowed');
+                }
+                if (edModalTitle) edModalTitle.textContent = 'Créer une Édition';
+                if (edExistingPosterInput) edExistingPosterInput.value = '';
+                if (edPosterPreviewContainer) edPosterPreviewContainer.classList.add('hidden');
+                openModal('edition-modal');
+            });
+        }
+
+        // Brancher les boutons Modifier sur les cartes d'éditions
+        document.querySelectorAll('.edit-edition-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const edDataRaw = btn.getAttribute('data-edition');
+                if (!edDataRaw) return;
+                try {
+                    const ed = JSON.parse(edDataRaw);
+                    if (edModalForm) edModalForm.reset();
+
+                    if (edModeInput) edModeInput.value = 'edit';
+                    if (edModalTitle) edModalTitle.textContent = `Modifier l'Édition ${ed.year}`;
+                    
+                    if (edYearInput) {
+                        edYearInput.value = String(ed.year);
+                        edYearInput.setAttribute('readonly', 'true');
+                        edYearInput.classList.add('opacity-60', 'cursor-not-allowed');
+                    }
+                    if (edTitleInput) edTitleInput.value = ed.title || '';
+                    if (edSubtitleInput) edSubtitleInput.value = ed.subtitle || '';
+                    if (edDateInput) edDateInput.value = ed.date || '';
+                    if (edDescInput) edDescInput.value = ed.description || '';
+                    if (edHighlightsInput) edHighlightsInput.value = Array.isArray(ed.highlights) ? ed.highlights.join('\n') : '';
+
+                    if (edFinishersInput) edFinishersInput.value = String(ed.stats?.finishers || '');
+                    if (edRunnersInput) edRunnersInput.value = String(ed.stats?.runners || '');
+                    if (edVolunteersInput) edVolunteersInput.value = String(ed.stats?.volunteers || '');
+                    if (edWeatherInput) edWeatherInput.value = ed.stats?.weather || '';
+                    if (edRecHolderInput) edRecHolderInput.value = ed.stats?.recordHolder || '';
+                    if (edRecTimeInput) edRecTimeInput.value = ed.stats?.recordTime || '';
+
+                    if (edExistingPosterInput) edExistingPosterInput.value = ed.posterUrl || '';
+                    if (edPosterPreview && ed.posterUrl) {
+                        edPosterPreview.src = ed.posterUrl;
+                        if (edPosterPreviewContainer) edPosterPreviewContainer.classList.remove('hidden');
+                    } else if (edPosterPreviewContainer) {
+                        edPosterPreviewContainer.classList.add('hidden');
+                    }
+
+                    openModal('edition-modal');
+                } catch (e) {
+                    console.error('Erreur parsing edition:', e);
+                }
+            });
+        });
+
+        if (edModalForm) {
+            edModalForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (edSubmitBtn) edSubmitBtn.setAttribute('disabled', 'true');
+
+                try {
+                    const year = parseInt(edYearInput?.value || '0', 10);
+                    const title = edTitleInput?.value || '';
+                    const subtitle = edSubtitleInput?.value || `${year} • Trail des Mines`;
+                    const date = edDateInput?.value || `Mai ${year}`;
+                    const desc = edDescInput?.value || '';
+                    const rawHighlights = edHighlightsInput?.value || '';
+                    const highlights = rawHighlights.split('\n').map(h => h.trim()).filter(Boolean);
+
+                    const finishers = parseInt(edFinishersInput?.value || '0', 10);
+                    const runners = parseInt(edRunnersInput?.value || '0', 10);
+                    const volunteers = parseInt(edVolunteersInput?.value || '0', 10);
+                    const weather = edWeatherInput?.value || '';
+                    const recordHolder = edRecHolderInput?.value || '';
+                    const recordTime = edRecTimeInput?.value || '';
+
+                    let posterUrl = edExistingPosterInput?.value || `/medias/affiches/affiche-${year}.webp`;
+
+                    // Si un fichier d'affiche est sélectionné, upload préalable
+                    if (edPosterFileInput && edPosterFileInput.files && edPosterFileInput.files[0]) {
+                        const posterFormData = new FormData();
+                        posterFormData.append('type', 'poster');
+                        posterFormData.append('editionYear', String(year));
+                        posterFormData.append('file', edPosterFileInput.files[0]);
+
+                        const pRes = await fetch('/api/upload', {
+                            method: 'POST',
+                            body: posterFormData
+                        });
+                        const pData = await pRes.json();
+                        if (pData.posterUrl) {
+                            posterUrl = pData.posterUrl;
+                        }
+                    }
+
+                    const edPayload = {
+                        year,
+                        title,
+                        subtitle,
+                        date,
+                        description: desc,
+                        posterUrl,
+                        highlights,
+                        stats: {
+                            finishers,
+                            runners,
+                            volunteers,
+                            weather,
+                            recordHolder,
+                            recordTime
+                        }
+                    };
+
+                    const res = await fetch('/api/editions', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(edPayload)
+                    });
+
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        showToast(`Édition ${year} enregistrée avec succès !`, 'success');
+                        closeModal('edition-modal');
+                        setTimeout(() => window.location.reload(), 600);
+                    } else {
+                        showToast(data.error || 'Erreur lors de la sauvegarde', 'error');
+                        if (edSubmitBtn) edSubmitBtn.removeAttribute('disabled');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur : ' + err.message, 'error');
+                    if (edSubmitBtn) edSubmitBtn.removeAttribute('disabled');
+                }
+            });
+        }
+
+        // Suppression d'une édition
+        document.querySelectorAll('.delete-edition-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const year = btn.getAttribute('data-year');
+                if (!confirm(`Supprimer définitivement l'édition ${year} ainsi que toutes ses courses et galeries ?`)) return;
+
+                try {
+                    const res = await fetch(`/api/editions?id=${year}`, { method: 'DELETE' });
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        showToast(`Édition ${year} supprimée avec succès`, 'success');
+                        setTimeout(() => window.location.reload(), 600);
+                    } else {
+                        showToast(data.error || 'Erreur lors de la suppression', 'error');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur réseau : ' + err.message, 'error');
+                }
+            });
+        });
+
+        // ==========================================
+        // 5. Gestion des Liens de Résultats (Onglet 2)
+        // ==========================================
+        const resultsYearTabs = document.querySelectorAll('.results-year-btn');
+        let currentSelectedResultsYear = resultsYearTabs[0]?.getAttribute('data-year') || '2025';
+
+        function selectResultsYear(year: string) {
+            currentSelectedResultsYear = year;
+            resultsYearTabs.forEach(t => {
+                if (t.getAttribute('data-year') === year) {
+                    t.classList.add('bg-brand', 'text-dark', 'shadow');
+                    t.classList.remove('bg-cardBg', 'text-gray-300');
+                } else {
+                    t.classList.remove('bg-brand', 'text-dark', 'shadow');
+                    t.classList.add('bg-cardBg', 'text-gray-300');
+                }
+            });
+
+            document.querySelectorAll('.results-year-container').forEach(c => c.classList.add('hidden'));
+            const targetContainer = document.getElementById(`results-year-${year}`);
+            if (targetContainer) targetContainer.classList.remove('hidden');
+        }
+
+        resultsYearTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const year = tab.getAttribute('data-year');
+                if (year) selectResultsYear(year);
+            });
+        });
+
+        // Bouton de raccourci depuis Tab 1 : "Gérer les résultats"
+        document.querySelectorAll('.jump-to-results-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const year = btn.getAttribute('data-year');
+                switchTab('resultats');
+                if (year) selectResultsYear(year);
+            });
+        });
+
+        // Helper pour renuméroter les lignes d'une année
+        function reindexResultLinkRows(year: string) {
+            const listEl = document.getElementById(`result-links-list-${year}`);
+            if (!listEl) return;
+            const rows = listEl.querySelectorAll<HTMLElement>('.result-link-row');
+            rows.forEach((row, idx) => {
+                const badge = row.querySelector('.link-row-index');
+                if (badge) badge.textContent = `#${idx + 1}`;
+            });
+
+            // Gérer le conteneur vide
+            const emptyNotice = listEl.querySelector('.empty-links-notice');
+            if (rows.length === 0) {
+                if (!emptyNotice) {
+                    const notice = document.createElement('div');
+                    notice.className = 'empty-links-notice bg-dark/40 rounded-2xl p-8 text-center border border-dashed border-white/15';
+                    notice.innerHTML = `
+                        <i class="fa-solid fa-trophy text-3xl text-gray-500 mb-3 block"></i>
+                        <p class="text-gray-400 text-sm mb-4">Aucun lien de résultat configuré pour l'édition ${year}.</p>
+                        <button type="button" class="add-result-link-row-btn bg-brand text-dark text-xs px-4 py-2 rounded-xl font-bold uppercase font-display tracking-wider" data-year="${year}">
+                            <i class="fa-solid fa-plus mr-1"></i> Ajouter un premier lien
+                        </button>
+                    `;
+                    listEl.appendChild(notice);
+                    notice.querySelector('.add-result-link-row-btn')?.addEventListener('click', () => addResultLinkRow(year));
+                }
+            } else if (emptyNotice) {
+                emptyNotice.remove();
+            }
+        }
+
+        // Créer une nouvelle ligne de lien
+        function createLinkRowElement(year: string, label = '', url = '') {
+            const row = document.createElement('div');
+            row.className = 'result-link-row bg-dark/60 rounded-2xl p-4 border border-white/10 hover:border-brand/40 transition flex flex-col md:flex-row items-stretch md:items-center gap-3 animate-fade-in';
+            row.innerHTML = `
+                <div class="link-row-index w-8 h-8 rounded-xl bg-brand/10 text-brand flex items-center justify-center font-mono font-bold text-xs shrink-0 self-start md:self-auto">
+                    #
+                </div>
+                <div class="flex-1">
+                    <label class="block text-[10px] uppercase text-gray-400 font-display mb-1">Intitulé du résultat *</label>
+                    <input 
+                      type="text" 
+                      class="link-label-input w-full bg-dark/90 border border-white/15 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand" 
+                      value="${label.replace(/"/g, '&quot;')}" 
+                      placeholder="ex: Classement 52 km - ChronoStart" 
+                      required 
+                    />
+                </div>
+                <div class="flex-[1.5]">
+                    <label class="block text-[10px] uppercase text-gray-400 font-display mb-1">Lien externe (URL complète) *</label>
+                    <input 
+                      type="url" 
+                      class="link-url-input w-full bg-dark/90 border border-white/15 rounded-xl px-3.5 py-2 text-sm text-white focus:outline-none focus:border-brand font-mono text-xs" 
+                      value="${url.replace(/"/g, '&quot;')}" 
+                      placeholder="https://www.chrono-start.com/..." 
+                      required 
+                    />
+                </div>
+                <div class="flex items-center gap-2 pt-2 md:pt-4 self-end md:self-auto shrink-0">
+                    <a 
+                      href="${url || '#'}" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      class="test-link-btn px-3 py-2 bg-white/5 hover:bg-brand/20 text-gray-300 hover:text-brand rounded-xl border border-white/10 text-xs font-medium transition inline-flex items-center gap-1.5 ${url ? '' : 'opacity-40 pointer-events-none'}"
+                      title="Tester le lien"
+                    >
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                        <span class="hidden sm:inline">Tester</span>
+                    </a>
+                    <button 
+                      type="button" 
+                      class="delete-link-row-btn px-3 py-2 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded-xl text-xs font-medium transition inline-flex items-center gap-1.5"
+                      title="Supprimer cette ligne"
+                    >
+                        <i class="fa-solid fa-trash text-[11px]"></i>
+                        <span class="hidden sm:inline">Supprimer</span>
+                    </button>
+                </div>
+            `;
+
+            // Événements pour cette ligne
+            const urlInput = row.querySelector('.link-url-input') as HTMLInputElement;
+            const testBtn = row.querySelector('.test-link-btn') as HTMLAnchorElement;
+            const deleteBtn = row.querySelector('.delete-link-row-btn') as HTMLButtonElement;
+
+            urlInput.addEventListener('input', () => {
+                const val = urlInput.value.trim();
+                testBtn.href = val || '#';
+                if (val && (val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'))) {
+                    testBtn.classList.remove('opacity-40', 'pointer-events-none');
+                } else {
+                    testBtn.classList.add('opacity-40', 'pointer-events-none');
+                }
+            });
+
+            deleteBtn.addEventListener('click', () => {
+                row.remove();
+                reindexResultLinkRows(year);
+            });
+
+            return row;
+        }
+
+        function addResultLinkRow(year: string, label = '', url = '') {
+            const listEl = document.getElementById(`result-links-list-${year}`);
+            if (!listEl) return;
+            const row = createLinkRowElement(year, label, url);
+            listEl.appendChild(row);
+            reindexResultLinkRows(year);
+            const labelInput = row.querySelector('.link-label-input') as HTMLInputElement;
+            if (labelInput) labelInput.focus();
+        }
+
+        // Brancher les boutons d'ajout déjà présents
+        document.querySelectorAll('.add-result-link-row-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const y = btn.getAttribute('data-year');
+                if (y) addResultLinkRow(y);
+            });
+        });
+
+        // Brancher les lignes déjà rendues côté serveur
+        document.querySelectorAll('.results-year-container').forEach(container => {
+            const year = container.getAttribute('data-year') || '';
+            const listEl = container.querySelector('.result-links-list');
+            if (!listEl) return;
+
+            listEl.querySelectorAll('.result-link-row').forEach(row => {
+                const urlInput = row.querySelector('.link-url-input') as HTMLInputElement;
+                const testBtn = row.querySelector('.test-link-btn') as HTMLAnchorElement;
+                const deleteBtn = row.querySelector('.delete-link-row-btn') as HTMLButtonElement;
+
+                if (urlInput && testBtn) {
+                    urlInput.addEventListener('input', () => {
+                        const val = urlInput.value.trim();
+                        testBtn.href = val || '#';
+                        if (val && (val.startsWith('http://') || val.startsWith('https://') || val.startsWith('/'))) {
+                            testBtn.classList.remove('opacity-40', 'pointer-events-none');
+                        } else {
+                            testBtn.classList.add('opacity-40', 'pointer-events-none');
+                        }
+                    });
+                }
+
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', () => {
+                        row.remove();
+                        if (year) reindexResultLinkRows(year);
+                    });
+                }
+            });
+        });
+
+        // Enregistrement des liens d'une édition
+        document.querySelectorAll('.save-year-results-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const year = btn.getAttribute('data-year');
+                if (!year) return;
+
+                const listEl = document.getElementById(`result-links-list-${year}`);
+                if (!listEl) return;
+
+                const rows = listEl.querySelectorAll('.result-link-row');
+                const links: { label: string; url: string }[] = [];
+                let hasIncomplete = false;
+
+                rows.forEach(row => {
+                    const labelInput = row.querySelector('.link-label-input') as HTMLInputElement;
+                    const urlInput = row.querySelector('.link-url-input') as HTMLInputElement;
+                    const label = (labelInput?.value || '').trim();
+                    const url = (urlInput?.value || '').trim();
+
+                    if (label && url) {
+                        links.push({ label, url });
+                    } else if (label || url) {
+                        hasIncomplete = true;
+                    }
+                });
+
+                if (hasIncomplete) {
+                    showToast('Veuillez renseigner à la fois le label et l\'URL pour chaque ligne (ou supprimez la ligne vide).', 'error');
+                    return;
+                }
+
+                const originalBtnText = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Enregistrement...</span>';
+                btn.setAttribute('disabled', 'true');
+
+                try {
+                    const res = await fetch('/api/edition-result-links', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ year, resultLinks: links })
+                    });
+
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        showToast(`Liens de l'édition ${year} enregistrés (${links.length} lien(s)) !`, 'success');
+                        // Mettre à jour les badges de compteur
+                        const yearTabBtn = document.querySelector(`.results-year-btn[data-year="${year}"] span:last-child`);
+                        if (yearTabBtn) yearTabBtn.textContent = String(links.length);
+                        const edCardBtn = document.querySelector(`.jump-to-results-btn[data-year="${year}"] span`);
+                        if (edCardBtn) edCardBtn.textContent = `Résultats (${links.length})`;
+                        reindexResultLinkRows(year);
+                    } else {
+                        showToast(data.error || 'Erreur lors de l\'enregistrement', 'error');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur réseau : ' + err.message, 'error');
+                } finally {
+                    btn.innerHTML = originalBtnText;
+                    btn.removeAttribute('disabled');
+                }
+            });
+        });
+
+        // ==========================================
+        // 6. Gestion des Galeries & Photos (Onglet 4)
+        // ==========================================
+        const galleryYearTabs = document.querySelectorAll('.galleries-year-btn');
+        let currentSelectedGalleryYear = galleryYearTabs[0]?.getAttribute('data-year') || '';
+
+        galleryYearTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const year = tab.getAttribute('data-year');
+                if (!year) return;
+                currentSelectedGalleryYear = year;
+
+                galleryYearTabs.forEach(t => {
+                    t.classList.remove('bg-brand', 'text-dark', 'shadow');
+                    t.classList.add('bg-cardBg', 'text-gray-300');
+                });
+                tab.classList.add('bg-brand', 'text-dark', 'shadow');
+                tab.classList.remove('bg-cardBg', 'text-gray-300');
+
+                document.querySelectorAll('.galleries-year-container').forEach(c => c.classList.add('hidden'));
+                const targetContainer = document.getElementById(`galleries-year-${year}`);
+                if (targetContainer) targetContainer.classList.remove('hidden');
+            });
+        });
+
+        // Déplier les photos d'une sous-galerie
+        document.querySelectorAll('.toggle-photos-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                if (!targetId) return;
+                const el = document.getElementById(targetId);
+                if (el) {
+                    el.classList.toggle('hidden');
+                    const isNowHidden = el.classList.contains('hidden');
+                    const icon = btn.querySelector('i');
+                    if (icon) {
+                        icon.className = isNowHidden ? 'fa-solid fa-chevron-down text-[10px] ml-1' : 'fa-solid fa-chevron-up text-[10px] ml-1';
+                    }
+                }
+            });
+        });
+
+        // Supprimer une photo individuelle
+        document.querySelectorAll('.delete-single-photo-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const year = btn.getAttribute('data-year');
+                const slug = btn.getAttribute('data-slug');
+                const photoId = btn.getAttribute('data-photo-id');
+                if (!year || !slug || !photoId) return;
+
+                if (!confirm('Supprimer définitivement ce cliché ?')) return;
+
+                try {
+                    const res = await fetch(`/api/galleries?editionYear=${year}&photographerSlug=${slug}&photoId=${photoId}`, {
+                        method: 'DELETE'
+                    });
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        const card = document.getElementById(`photo-card-${photoId}`);
+                        if (card) {
+                            card.style.opacity = '0';
+                            setTimeout(() => card.remove(), 300);
+                        }
+                        showToast('Photo supprimée avec succès', 'success');
+                    } else {
+                        showToast(data.error || 'Erreur lors de la suppression', 'error');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur : ' + err.message, 'error');
+                }
+            });
+        });
+
+        // Modale Photographe (Créer & Modifier)
+        const openNewPhotographerBtn = document.getElementById('open-new-photographer-btn');
+        const photoModalForm = document.getElementById('photographer-modal-form') as HTMLFormElement | null;
+        const photoModalTitle = document.getElementById('photo-modal-title');
+        const photoModalYear = document.getElementById('modal-photo-year') as HTMLInputElement | null;
+        const photoModalSlug = document.getElementById('modal-photo-slug') as HTMLInputElement | null;
+        const photoModalName = document.getElementById('modal-photo-name') as HTMLInputElement | null;
+        const photoModalBio = document.getElementById('modal-photo-bio') as HTMLTextAreaElement | null;
+        const photoModalIg = document.getElementById('modal-photo-instagram') as HTMLInputElement | null;
+        const photoModalWeb = document.getElementById('modal-photo-website') as HTMLInputElement | null;
+
+        if (openNewPhotographerBtn) {
+            openNewPhotographerBtn.addEventListener('click', () => {
+                if (photoModalForm) photoModalForm.reset();
+                if (photoModalTitle) photoModalTitle.textContent = 'Nouveau Photographe';
+                if (photoModalYear) photoModalYear.value = currentSelectedGalleryYear || '2025';
+                if (photoModalSlug) photoModalSlug.value = '';
+                openModal('photographer-modal');
+            });
+        }
+
+        document.querySelectorAll('.edit-photographer-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const raw = btn.getAttribute('data-photographer');
+                const year = btn.getAttribute('data-year');
+                if (!raw || !year) return;
+
+                try {
+                    const g = JSON.parse(raw);
+                    if (photoModalForm) photoModalForm.reset();
+                    if (photoModalTitle) photoModalTitle.textContent = `Modifier ${g.photographerName}`;
+                    if (photoModalYear) photoModalYear.value = year;
+                    if (photoModalSlug) photoModalSlug.value = g.photographerSlug;
+                    if (photoModalName) photoModalName.value = g.photographerName || '';
+                    if (photoModalBio) photoModalBio.value = g.bio || '';
+                    if (photoModalIg) photoModalIg.value = g.instagramUrl || '';
+                    if (photoModalWeb) photoModalWeb.value = g.websiteUrl || '';
+
+                    openModal('photographer-modal');
+                } catch (e) {
+                    console.error('Erreur parsing photographe:', e);
+                }
+            });
+        });
+
+        if (photoModalForm) {
+            photoModalForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                try {
+                    const payload = {
+                        editionYear: photoModalYear?.value,
+                        photographerSlug: photoModalSlug?.value,
+                        photographerName: photoModalName?.value,
+                        bio: photoModalBio?.value,
+                        instagramUrl: photoModalIg?.value,
+                        websiteUrl: photoModalWeb?.value
+                    };
+
+                    const res = await fetch('/api/galleries', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        showToast('Profil photographe enregistré !', 'success');
+                        closeModal('photographer-modal');
+                        setTimeout(() => window.location.reload(), 600);
+                    } else {
+                        showToast(data.error || 'Erreur enregistrement', 'error');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur : ' + err.message, 'error');
+                }
+            });
+        }
+
+        // Supprimer photographe entier
+        document.querySelectorAll('.delete-photographer-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const slug = btn.getAttribute('data-slug');
+                const name = btn.getAttribute('data-name');
+                const year = btn.getAttribute('data-year');
+                if (!slug || !year) return;
+
+                if (!confirm(`Supprimer l'album complet de ${name} pour l'édition ${year} ainsi que toutes ses photos ?`)) return;
+
+                try {
+                    const res = await fetch(`/api/galleries?editionYear=${year}&photographerSlug=${slug}`, {
+                        method: 'DELETE'
+                    });
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        showToast('Photographe et galerie supprimés', 'success');
+                        setTimeout(() => window.location.reload(), 600);
+                    } else {
+                        showToast(data.error || 'Erreur lors de la suppression', 'error');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur : ' + err.message, 'error');
+                }
+            });
+        });
+
+        // ==========================================
+        // 7. Studio d'Upload & Traitement d'Images
+        // ==========================================
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('upload-files') as HTMLInputElement | null;
+        const previewsContainer = document.getElementById('file-previews');
+        const filesList = document.getElementById('files-list');
+        const filesCountBadge = document.getElementById('files-count-badge');
+        const clearFilesBtn = document.getElementById('clear-files-btn');
+        const qualitySlider = document.getElementById('upload-quality') as HTMLInputElement | null;
+        const qualityVal = document.getElementById('quality-val');
+        const uploadForm = document.getElementById('upload-form');
+        const progressBar = document.getElementById('upload-progress-bar');
+        const progressFill = document.getElementById('upload-progress-fill');
+        const progressPercent = document.getElementById('upload-percent-text');
+        const progressStatus = document.getElementById('upload-status-text');
+        const uploadSubmitBtn = document.getElementById('upload-submit-btn');
+
+        let selectedFiles: File[] = [];
+
+        if (qualitySlider && qualityVal) {
+            qualitySlider.addEventListener('input', () => {
+                qualityVal.textContent = `${qualitySlider.value}%`;
+            });
+        }
+
+        function updateFilesDisplay() {
+            if (!previewsContainer || !filesList || !filesCountBadge) return;
+            if (selectedFiles.length === 0) {
+                previewsContainer.classList.add('hidden');
+                filesList.innerHTML = '';
+                return;
+            }
+
+            previewsContainer.classList.remove('hidden');
+            filesCountBadge.textContent = `${selectedFiles.length} photo(s) prête(s) au traitement`;
+            filesList.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'relative group aspect-square rounded-xl overflow-hidden bg-dark border border-white/10';
+                
+                const img = document.createElement('img');
+                img.className = 'w-full h-full object-cover';
+                img.src = URL.createObjectURL(file);
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'absolute top-1 right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] opacity-80 hover:opacity-100';
+                removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+                removeBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectedFiles.splice(index, 1);
+                    updateFilesDisplay();
+                });
+
+                item.appendChild(img);
+                item.appendChild(removeBtn);
+                filesList.appendChild(item);
+            });
+        }
+
+        if (dropZone && fileInput) {
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('border-brand');
+            });
+            dropZone.addEventListener('dragleave', () => dropZone.classList.remove('border-brand'));
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('border-brand');
+                if (e.dataTransfer?.files) {
+                    selectedFiles.push(...Array.from(e.dataTransfer.files));
+                    updateFilesDisplay();
+                }
+            });
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files) {
+                    selectedFiles.push(...Array.from(fileInput.files));
+                    updateFilesDisplay();
+                }
+            });
+        }
+
+        if (clearFilesBtn) {
+            clearFilesBtn.addEventListener('click', () => {
+                selectedFiles = [];
+                updateFilesDisplay();
+            });
+        }
+
+        if (uploadForm) {
+            uploadForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (selectedFiles.length === 0) {
+                    showToast('Veuillez sélectionner au moins une image.', 'info');
+                    return;
+                }
+
+                const editionYear = (document.getElementById('upload-edition-year') as HTMLSelectElement).value;
+                const photographerName = (document.getElementById('upload-photographer-name') as HTMLInputElement).value;
+                const race = ((document.getElementById('upload-race') as HTMLInputElement)?.value || '').trim() || 'Toutes courses';
+                const moment = ((document.getElementById('upload-moment') as HTMLInputElement)?.value || '').trim() || 'Moments forts';
+                const maxWidth = (document.getElementById('upload-max-width') as HTMLSelectElement).value;
+                const quality = (document.getElementById('upload-quality') as HTMLInputElement).value;
+                const applyWatermark = (document.getElementById('upload-watermark') as HTMLInputElement).checked;
+
+                const formData = new FormData();
+                formData.append('type', 'gallery');
+                formData.append('editionYear', editionYear);
+                formData.append('photographerName', photographerName);
+                formData.append('photographerSlug', photographerName.toLowerCase().replace(/[^a-z0-9-]/g, '-'));
+                formData.append('race', race);
+                formData.append('moment', moment);
+                formData.append('maxWidth', maxWidth);
+                formData.append('quality', quality);
+                formData.append('applyWatermark', String(applyWatermark));
+
+                selectedFiles.forEach(f => formData.append('photos', f));
+
+                if (progressBar) progressBar.classList.remove('hidden');
+                if (uploadSubmitBtn) uploadSubmitBtn.setAttribute('disabled', 'true');
+                if (progressFill) progressFill.style.width = '45%';
+                if (progressPercent) progressPercent.textContent = '45%';
+                if (progressStatus) progressStatus.textContent = 'Conversion WebP, génération vignettes et filigrane...';
+
+                try {
+                    const res = await fetch('/api/upload', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        showToast(data.error || "Erreur lors de l'upload", 'error');
+                    } else {
+                        if (progressFill) progressFill.style.width = '100%';
+                        if (progressPercent) progressPercent.textContent = '100%';
+                        if (progressStatus) progressStatus.textContent = 'Traitement réussi !';
+                        
+                        showToast(`Succès ! ${data.count} image(s) traitée(s) et ajoutée(s) à la galerie.`, 'success');
+                        selectedFiles = [];
+                        updateFilesDisplay();
+                        setTimeout(() => window.location.reload(), 800);
+                    }
+                } catch (err: any) {
+                    showToast('Erreur réseau : ' + err.message, 'error');
+                } finally {
+                    if (uploadSubmitBtn) uploadSubmitBtn.removeAttribute('disabled');
+                }
+            });
+        }
+
+        // ==========================================
+        // 8. Gestion des Administrateurs
+        // ==========================================
+        const createAdminForm = document.getElementById('create-admin-form');
+        if (createAdminForm) {
+            createAdminForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const username = (document.getElementById('new-admin-username') as HTMLInputElement).value;
+                const password = (document.getElementById('new-admin-password') as HTMLInputElement).value;
+                const role = (document.getElementById('new-admin-role') as HTMLSelectElement).value;
+
+                const errBox = document.getElementById('create-admin-error');
+                const succBox = document.getElementById('create-admin-success');
+                if (errBox) errBox.classList.add('hidden');
+                if (succBox) succBox.classList.add('hidden');
+
+                try {
+                    const res = await fetch('/api/admins', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password, role })
+                    });
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        if (errBox) {
+                            errBox.textContent = data.error || 'Erreur création administrateur';
+                            errBox.classList.remove('hidden');
+                        }
+                    } else {
+                        showToast(`Compte "${data.admin.username}" créé avec succès !`, 'success');
+                        if (succBox) {
+                            succBox.textContent = `Compte "${data.admin.username}" créé avec succès !`;
+                            succBox.classList.remove('hidden');
+                        }
+                        setTimeout(() => window.location.reload(), 800);
+                    }
+                } catch (err: any) {
+                    if (errBox) {
+                        errBox.textContent = err.message || 'Erreur réseau';
+                        errBox.classList.remove('hidden');
+                    }
+                }
+            });
+        }
+
+        // Suppression d'administrateur
+        document.querySelectorAll('.delete-admin-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.getAttribute('data-id');
+                if (!confirm('Êtes-vous sûr de vouloir supprimer cet administrateur ?')) return;
+
+                try {
+                    const res = await fetch(`/api/admins?id=${id}`, { method: 'DELETE' });
+                    const data = await res.json();
+                    if (res.ok && data.success) {
+                        showToast('Administrateur supprimé avec succès', 'success');
+                        setTimeout(() => window.location.reload(), 600);
+                    } else {
+                        showToast(data.error || 'Impossible de supprimer', 'error');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur : ' + err.message, 'error');
+                }
+            });
+        });
+
+        // ==========================================
+        // 9. Gestion du Règlement Officiel & Traitement PDF
+        // ==========================================
+        const uploadReglementForm = document.getElementById('upload-reglement-form') as HTMLFormElement | null;
+        const reglementDropZone = document.getElementById('drop-zone-reglement');
+        const reglementFileInput = document.getElementById('upload-reglement-file') as HTMLInputElement | null;
+        const reglementSelectedFilename = document.getElementById('selected-reglement-filename');
+        const reglementAutoParse = document.getElementById('reglement-auto-parse') as HTMLInputElement | null;
+        const uploadReglementBtn = document.getElementById('upload-reglement-submit-btn') as HTMLButtonElement | null;
+
+        let currentSelectedPdfFile: File | null = null;
+
+        function setReglementFile(file: File | null) {
+            currentSelectedPdfFile = file;
+            if (reglementSelectedFilename) {
+                if (file) {
+                    const sizeKb = Math.round(file.size / 1024);
+                    reglementSelectedFilename.innerHTML = `<span class="inline-flex items-center gap-1.5 text-brand font-semibold"><i class="fa-solid fa-circle-check"></i> ${file.name} (${sizeKb} Ko)</span>`;
+                    reglementSelectedFilename.classList.remove('text-gray-400', 'bg-white/5');
+                    reglementSelectedFilename.classList.add('text-brand', 'bg-brand/10', 'border', 'border-brand/30');
+                } else {
+                    reglementSelectedFilename.textContent = 'Format PDF uniquement (ex: reglement-2026.pdf)';
+                    reglementSelectedFilename.classList.add('text-gray-400', 'bg-white/5');
+                    reglementSelectedFilename.classList.remove('text-brand', 'bg-brand/10', 'border', 'border-brand/30');
+                }
+            }
+        }
+
+        if (reglementFileInput) {
+            reglementFileInput.addEventListener('change', () => {
+                if (reglementFileInput.files && reglementFileInput.files.length > 0) {
+                    setReglementFile(reglementFileInput.files[0]);
+                }
+            });
+        }
+
+        if (reglementDropZone) {
+            reglementDropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                reglementDropZone.classList.add('border-brand', 'bg-brand/5');
+            });
+
+            reglementDropZone.addEventListener('dragleave', () => {
+                reglementDropZone.classList.remove('border-brand', 'bg-brand/5');
+            });
+
+            reglementDropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                reglementDropZone.classList.remove('border-brand', 'bg-brand/5');
+                if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    const file = e.dataTransfer.files[0];
+                    if (file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')) {
+                        setReglementFile(file);
+                    } else {
+                        showToast('Veuillez déposer un fichier au format PDF', 'error');
+                    }
+                }
+            });
+        }
+
+        if (uploadReglementForm) {
+            uploadReglementForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const fileToUpload = currentSelectedPdfFile || (reglementFileInput?.files && reglementFileInput.files.length > 0 ? reglementFileInput.files[0] : null);
+
+                if (!fileToUpload) {
+                    showToast('Veuillez d\'abord sélectionner un fichier PDF', 'error');
+                    return;
+                }
+
+                if (uploadReglementBtn) {
+                    uploadReglementBtn.setAttribute('disabled', 'true');
+                    uploadReglementBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Traitement du PDF en cours...';
+                }
+
+                try {
+                    const formData = new FormData();
+                    formData.append('file', fileToUpload);
+                    formData.append('autoParse', reglementAutoParse ? String(reglementAutoParse.checked) : 'true');
+
+                    const res = await fetch('/api/reglement', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await res.json();
+                    if (!res.ok || !data.success) {
+                        showToast(data.error || 'Erreur lors du traitement du règlement', 'error');
+                    } else {
+                        showToast(`Succès ! PDF mis en ligne et ${data.count || 0} article(s) découverts.`, 'success');
+                        try {
+                            localStorage.setItem('admin_active_tab', 'reglement');
+                            window.location.hash = '#reglement';
+                        } catch(e) {}
+                        setTimeout(() => window.location.reload(), 800);
+                    }
+                } catch (err: any) {
+                    showToast('Erreur réseau : ' + err.message, 'error');
+                } finally {
+                    if (uploadReglementBtn) {
+                        uploadReglementBtn.removeAttribute('disabled');
+                        uploadReglementBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles"></i> <span>Traiter & Mettre en Ligne</span>';
+                    }
+                }
+            });
+        }
+
+        // Gestion de la modale des chapitres
+        const openNewChapterBtn = document.getElementById('open-new-chapter-btn');
+        const chapterModalForm = document.getElementById('chapter-modal-form') as HTMLFormElement | null;
+        const chapterModalTitle = document.getElementById('chapter-modal-title');
+        const modalChapterId = document.getElementById('modal-chapter-id') as HTMLInputElement | null;
+        const modalChapterMode = document.getElementById('modal-chapter-mode') as HTMLInputElement | null;
+        const modalChapterNumber = document.getElementById('modal-chapter-number') as HTMLInputElement | null;
+        const modalChapterTitle = document.getElementById('modal-chapter-title') as HTMLInputElement | null;
+        const modalChapterContent = document.getElementById('modal-chapter-content') as HTMLTextAreaElement | null;
+        const modalChapterSubmitBtn = document.getElementById('modal-chapter-submit-btn');
+
+        if (openNewChapterBtn) {
+            openNewChapterBtn.addEventListener('click', () => {
+                if (modalChapterId) modalChapterId.value = '';
+                if (modalChapterMode) modalChapterMode.value = 'create';
+                if (modalChapterNumber) modalChapterNumber.value = 'Article ' + (document.querySelectorAll('.edit-chapter-btn').length + 1);
+                if (modalChapterTitle) modalChapterTitle.value = '';
+                if (modalChapterContent) modalChapterContent.value = '';
+                if (chapterModalTitle) chapterModalTitle.textContent = 'Ajouter un Article au Règlement';
+                openModal('chapter-modal');
+            });
+        }
+
+        // Clic sur bouton "Modifier" un chapitre
+        document.querySelectorAll('.edit-chapter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const dataRaw = btn.getAttribute('data-chapter');
+                if (!dataRaw) return;
+                try {
+                    const chapter = JSON.parse(dataRaw);
+                    if (modalChapterId) modalChapterId.value = chapter.id;
+                    if (modalChapterMode) modalChapterMode.value = 'edit';
+                    if (modalChapterNumber) modalChapterNumber.value = chapter.number || '';
+                    if (modalChapterTitle) modalChapterTitle.value = chapter.title || '';
+                    if (modalChapterContent) modalChapterContent.value = chapter.content || '';
+                    if (chapterModalTitle) chapterModalTitle.textContent = 'Modifier l\'Article';
+                    openModal('chapter-modal');
+                } catch (e) {
+                    console.error('Erreur lecture données chapitre', e);
+                }
+            });
+        });
+
+        // Enregistrement d'un chapitre (création ou édition)
+        if (chapterModalForm) {
+            chapterModalForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const id = modalChapterId ? modalChapterId.value.trim() : '';
+                const mode = modalChapterMode ? modalChapterMode.value : 'create';
+                const number = modalChapterNumber ? modalChapterNumber.value.trim() : '';
+                const title = modalChapterTitle ? modalChapterTitle.value.trim() : '';
+                const content = modalChapterContent ? modalChapterContent.value.trim() : '';
+
+                if (modalChapterSubmitBtn) modalChapterSubmitBtn.setAttribute('disabled', 'true');
+
+                try {
+                    // Récupérer la liste actuelle des chapitres
+                    const getRes = await fetch('/api/reglement');
+                    const getData = await getRes.json();
+                    let chapters = (getData.reglement && getData.reglement.chapters) ? [...getData.reglement.chapters] : [];
+
+                    if (mode === 'create') {
+                        const newId = `article-${Date.now()}`;
+                        chapters.push({ id: newId, number, title, content });
+                    } else {
+                        const idx = chapters.findIndex((c: any) => c.id === id);
+                        if (idx !== -1) {
+                            chapters[idx] = { ...chapters[idx], number, title, content };
+                        } else {
+                            chapters.push({ id, number, title, content });
+                        }
+                    }
+
+                    const postRes = await fetch('/api/reglement', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chapters })
+                    });
+
+                    const postData = await postRes.json();
+                    if (!postRes.ok || !postData.success) {
+                        showToast(postData.error || 'Erreur lors de l\'enregistrement', 'error');
+                    } else {
+                        showToast('Article enregistré avec succès !', 'success');
+                        closeModal('chapter-modal');
+                        try {
+                            localStorage.setItem('admin_active_tab', 'reglement');
+                            window.location.hash = '#reglement';
+                        } catch(e) {}
+                        setTimeout(() => window.location.reload(), 600);
+                    }
+                } catch (err: any) {
+                    showToast('Erreur : ' + err.message, 'error');
+                } finally {
+                    if (modalChapterSubmitBtn) modalChapterSubmitBtn.removeAttribute('disabled');
+                }
+            });
+        }
+
+        // Suppression d'un chapitre
+        document.querySelectorAll('.delete-chapter-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const id = btn.getAttribute('data-id');
+                const title = btn.getAttribute('data-title') || 'cet article';
+                if (!confirm(`Êtes-vous sûr de vouloir supprimer ${title} ?`)) return;
+
+                try {
+                    const getRes = await fetch('/api/reglement');
+                    const getData = await getRes.json();
+                    let chapters = (getData.reglement && getData.reglement.chapters) ? [...getData.reglement.chapters] : [];
+                    const filtered = chapters.filter((c: any) => c.id !== id);
+
+                    const postRes = await fetch('/api/reglement', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ chapters: filtered })
+                    });
+
+                    const postData = await postRes.json();
+                    if (postRes.ok && postData.success) {
+                        showToast('Article supprimé avec succès', 'success');
+                        try {
+                            localStorage.setItem('admin_active_tab', 'reglement');
+                            window.location.hash = '#reglement';
+                        } catch(e) {}
+                        setTimeout(() => window.location.reload(), 600);
+                    } else {
+                        showToast(postData.error || 'Erreur lors de la suppression', 'error');
+                    }
+                } catch (err: any) {
+                    showToast('Erreur : ' + err.message, 'error');
+                }
+            });
+        });
+
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAdmin);
+    } else {
+        initAdmin();
+    }
+</script>

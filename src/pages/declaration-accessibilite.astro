@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Déclaration d'Accessibilité Numérique | Trail des Mines 2026";
+const description = "Déclaration d";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- Header / Hero Accessibilité -->
+    <header class="pt-32 pb-16 md:pt-44 md:pb-20 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark text-center">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
+                <i class="fa-solid fa-universal-access"></i> Accessibilité & Inclusion Numérique
+            </div>
+            <h1 class="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
+                Déclaration <span class="text-brand">d'Accessibilité</span>
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm max-w-2xl mx-auto font-light leading-relaxed hero-anim">
+                L'Association Run in Champagney s'engage à rendre son site web accessible à tous les internautes, qu'ils soient porteurs de handicap visuel, moteur ou cognitif, conformément au Référentiel Général d'Amélioration de l'Accessibilité (RGAA 4.1).
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenu Textuel RGAA Structuré -->
+    <main class="max-w-4xl mx-auto px-4 pb-24 space-y-10">
+
+        <!-- 1. État de Conformité -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">1. État de Conformité</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Le site internet <strong class="text-white">traildesmines.fr</strong> est <strong class="text-brand">partiellement conforme</strong> avec le Référentiel Général d'Amélioration de l'Accessibilité (RGAA version 4.1) et les directives pour l'accessibilité aux contenus web (WCAG 2.1 niveau Double-A).
+                </p>
+                <p>
+                    Nous travaillons de manière continue pour améliorer l'expérience utilisateur et lever les obstacles éventuels à la consultation autonome de nos contenus.
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Dispositifs Techniques Mis en Œuvre -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">2. Mesures d'Accessibilité Appliquées</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-white">Contrastes chromatiques élevés :</strong> Les combinaisons de couleurs (texte blanc sur fond sombre #101D20, accentuation vert pomme #B0BE42) respectent un ratio de contraste supérieur à 4.5:1, facilitant la lecture pour les personnes malvoyantes.</li>
+                    <li><strong class="text-white">Lecteurs d'écran & Balises ARIA :</strong> Les éléments décoratifs non informatifs (filigranes géants d'arrière-plan, overlay de grain SVG) sont neutralisés via l'attribut standard <code class="text-brand font-mono">aria-hidden="true"</code> pour ne pas polluer la synthèse vocale.</li>
+                    <li><strong class="text-white">Structure sémantique rigoureuse :</strong> Chaque page dispose d'un unique titre principal <code class="text-brand font-mono">&lt;h1&gt;</code> complété d'une arborescence logique de sous-titres <code class="text-brand font-mono">&lt;h2&gt;</code> à <code class="text-brand font-mono">&lt;h4&gt;</code>.</li>
+                    <li><strong class="text-white">Alternatives textuelles explicites :</strong> Toutes les photographies et infographies disposent d'un texte alternatif <code class="text-brand font-mono">alt</code> décrivant précisément le contenu de l'image.</li>
+                    <li><strong class="text-white">Navigation au clavier :</strong> Tous les éléments interactifs (liens de navigation, boutons d'accordéons, formulaires) sont activables par la touche Tabulation avec indicateur de focus distinct.</li>
+                    <li><strong class="text-white">Respect des animations (prefers-reduced-motion) :</strong> Le site est conçu pour adapter la vitesse de défilement pour les utilisateurs ayant activé la réduction de mouvement dans leur système d'exploitation.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 3. Dérogations & Contenus Non Accessibles -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">3. Contenus Non Accessibles (Dérogations)</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>Certains modules spécifiques peuvent présenter des limites d'accessibilité :</p>
+                <ul class="list-disc pl-5 space-y-1.5">
+                    <li><strong class="text-white">Cartes interactives Leaflet :</strong> La manipulation des tracés GPX sur la carte cartographique peut être difficilement accessible via lecteur d'écran. En compensation, les données clés (distances, dénivelés, barrières horaires, points de ravitaillement) sont systématiquement retranscrites sous forme de tableaux textuels entièrement accessibles.</li>
+                    <li><strong class="text-white">Vidéos embarquées YouTube :</strong> Les sous-titres et transcriptions dépendent de l'outil d'hébergement externe tiers.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 4. Contact Référent Accessibilité & Voie de Recours -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">4. Signalement d'un Défaut & Recours</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Si vous rencontrez un défaut d'accessibilité qui vous empêche d'accéder à un contenu ou à une fonctionnalité du site, merci de nous le signaler afin que nous puissions vous orienter vers une alternative accessible :
+                </p>
+                <p>
+                    <strong class="text-white">Courriel du Référent Accessibilité :</strong> <a href="mailto:accessibilite@traildesmines.fr" class="text-brand hover:underline">accessibilite@traildesmines.fr</a>
+                    <br><strong class="text-white">Formulaire de contact :</strong> Accessible via notre page <a href="/contact" class="text-brand hover:underline">Contact</a>.
+                </p>
+                <div class="mt-4 p-4 bg-dark/50 rounded-2xl border border-white/10">
+                    <strong class="text-white block mb-1">Voie de recours légale :</strong>
+                    <p class="text-gray-400 text-xs">
+                        Si vous constatez un défaut d'accessibilité vous privant d'un droit et que vous n'obtenez pas de réponse satisfaisante de notre part sous 15 jours, vous êtes en droit d'adresser une réclamation au Défenseur des droits :
+                        <br>• Écrire un message au Défenseur des droits via son portail en ligne (<a href="https://formulaire.defenseurdesdroits.fr" target="_blank" rel="noopener" class="text-brand underline">formulaire.defenseurdesdroits.fr</a>).
+                        <br>• Contacter le délégué du Défenseur des droits dans votre région.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mega Footer -->
+
+</Layout>

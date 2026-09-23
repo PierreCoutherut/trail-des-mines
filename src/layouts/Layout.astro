@@ -1,0 +1,103 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import SponsorMarquee from '../components/SponsorMarquee.astro';
+import CtaSection from '../components/CtaSection.astro';
+import NoiseOverlay from '../components/NoiseOverlay.astro';
+import RegistrationModal from '../components/RegistrationModal.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  loadLeaflet?: boolean;
+  loadChart?: boolean;
+  showCta?: boolean;
+  showSponsors?: boolean;
+}
+
+const {
+  title = "Trail des Mines 2027 - Champagney | Course Nature & Terrils",
+  description = "Participez au Trail des Mines à Champagney ! Une course nature exigeante et authentique au cœur des terrils et de la forêt vosgienne.",
+  canonical,
+  loadLeaflet = false,
+  loadChart = false,
+  showCta = true,
+  showSponsors = true
+} = Astro.props;
+
+const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://traildesmines.fr').href;
+---
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalURL} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalURL} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content={canonicalURL} />
+  <meta property="twitter:title" content={title} />
+  <meta property="twitter:description" content={description} />
+  <meta property="twitter:image" content="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ" />
+
+  <!-- Google Fonts : Oswald & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6.4.0 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Lenis (Smooth Scroll) & GSAP CDN -->
+  <script is:inline src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Leaflet CDN (si demandé) -->
+  {loadLeaflet && (
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+    <script is:inline src="https://unpkg.com/leaflet-omnivore@0.3.4/leaflet-omnivore.min.js"></script>
+  )}
+
+  <!-- Chart.js CDN (si demandé) -->
+  {loadChart && (
+    <script is:inline src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  )}
+</head>
+
+<body class="bg-dark text-white font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-dark relative">
+  
+  <NoiseOverlay />
+  
+  <Navbar currentPath={Astro.url.pathname} />
+
+  <slot />
+
+  {showCta && <CtaSection />}
+
+  {showSponsors && <SponsorMarquee />}
+
+  <Footer />
+
+  <RegistrationModal />
+
+  <!-- Script global Lenis, GSAP, Navbar auto-hide & Compteur -->
+  <script is:inline src="/js/main.js"></script>
+</body>
+</html>

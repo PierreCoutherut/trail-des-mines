@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Préparer mon Trail - Trail des Mines | Conseils, Entraînement & Matériel";
+const description = "Tous les conseils pour bien préparer le Trail des Mines à Champagney : plan d";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Conseils de Coachs & Experts</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Préparer <span class="text-brand">mon Trail</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Le terrain du Trail des Mines est réputé pour son caractère piégeux : relances nerveuses sur terrils instables, racines mouillées et dénivelé condensé. Voici nos recommandations pour aborder sereinement votre course.
+            </p>
+        </div>
+    </header>
+
+    <!-- 4 Piliers de Préparation -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <!-- 1. Entraînement -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-person-running"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">1. L'Entraînement Spécifique</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Privilégiez les sorties en côtes courtes mais raides avec relances immédiates au sommet pour simuler les montées de terrils. Sur le 52km, prévoyez des sorties longues de 4 à 6 heures en montagne avec travail de dénivelé négatif pour préparer vos quadriceps.
+                </p>
+                <div class="bg-dark/60 p-4 rounded-xl text-xs text-gray-400 space-y-2">
+                    <p><strong class="text-brand">Conseil Pro :</strong> Intégrez 1 séance de renforcement musculaire (gainage, squats, fentes) chaque semaine pour protéger vos chevilles sur les pierres roulantes.</p>
+                </div>
+            </div>
+
+            <!-- 2. Nutrition & Ravitaillement -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-apple-whole"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">2. Nutrition & Hydratation</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Ne testez aucun aliment ni gel inconnu le jour de la course ! Buvez une gorgée toutes les 15 minutes (eau + électrolytes) et consommez 30 à 60g de glucides par heure d'effort selon votre gabarit.
+                </p>
+                <div class="bg-dark/60 p-4 rounded-xl text-xs text-gray-400 space-y-2">
+                    <p><strong class="text-brand">Sur nos stands :</strong> Vous trouverez des fruits secs, bananes, pain d'épices local, chocolat noir, soupes chaudes (52km) et fromage de comté.</p>
+                </div>
+            </div>
+
+            <!-- 3. Choix des Chaussures -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-shoe-prints"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">3. Chaussures & Accroche</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Les sentiers vosgiens alternent terre meuble, racines glissantes et schiste minier coupant. Une paire de chaussures de trail dotée de crampons profonds (4 à 5 mm) et d'un pare-pierre renforcé est indispensable.
+                </p>
+                <div class="bg-dark/60 p-4 rounded-xl text-xs text-gray-400 space-y-2">
+                    <p><strong class="text-brand">L'astuce :</strong> Prévoyez une paire de chaussettes de rechange dans votre sac sur le 52km pour éviter les ampoules après les traversées de ruisseaux.</p>
+                </div>
+            </div>
+
+            <!-- 4. Reconnaissance & Météo -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-cloud-sun-rain"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">4. Climat & Gestion Mentale</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    À la mi-mai, la météo vosgienne peut varier de 8°C avec brouillard matinal sur les crêtes à 25°C l'après-midi au fond de la vallée. Adaptez votre tenue (manchettes amovibles, casquette ou bandeau) et gérez vos allures sans vous enflammer au départ.
+                </p>
+                <div class="bg-dark/60 p-4 rounded-xl text-xs text-gray-400 space-y-2">
+                    <p><strong class="text-brand">Trace GPX :</strong> Téléchargez le fichier GPX sur votre montre GPS pour vérifier votre allure et les points d'eau.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

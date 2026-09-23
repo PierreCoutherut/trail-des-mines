@@ -1,0 +1,122 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Espace Bénévoles - Trail des Mines 2027 | Rejoignez l'Aventure";
+const description = "Devenez bénévole sur le Trail des Mines 2027 à Champagney ! Rejoignez une équipe soudée de 120 passionnés : signaleurs, ravitaillements, accueil et ambiance.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Le Cœur de l'Événement</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Rejoignez les <span class="text-brand">Bénévoles</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Sans les 120 bénévoles, le Trail des Mines n'existerait pas. Que vous soyez sur un ravitaillement, signaleur sur les crêtes ou à l'arrivée pour encourager les héros du jour, votre sourire fait toute la différence !
+            </p>
+        </div>
+    </header>
+
+    <!-- Missions & Avantages -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-flag"></i>
+                </div>
+                <h2 class="font-display text-xl font-bold uppercase text-white mb-2">Signaleurs & Sécurité</h2>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Orientez les coureurs aux carrefours clés, veillez à la sécurité des croisements de routes et encouragez les trailers dans les montées de terrils les plus rudes.
+                </p>
+            </div>
+
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-glass-water"></i>
+                </div>
+                <h2 class="font-display text-xl font-bold uppercase text-white mb-2">Ravitaillements</h2>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    L'ambiance festive par excellence ! Préparez les boissons, coupez le fromage local et redonnez de l'énergie aux athlètes au km 12, km 26 ou à l'arrivée.
+                </p>
+            </div>
+
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-id-card"></i>
+                </div>
+                <h2 class="font-display text-xl font-bold uppercase text-white mb-2">Accueil & Dossards</h2>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Le premier visage que découvrent les participants. Vérifiez les attestations médicales, remettez les puces et goodies sacs le samedi et dimanche matin.
+                </p>
+            </div>
+        </div>
+
+        <!-- Formulaire de Candidature Bénévole -->
+        <div class="bg-cardBg rounded-3xl p-8 md:p-12 border border-white/10 shadow-2xl max-w-3xl mx-auto">
+            <h2 class="font-display text-2xl md:text-3xl font-bold uppercase text-brand mb-2 text-center">
+                Devenir Bénévole pour le 16 Mai 2027
+            </h2>
+            <p class="text-xs text-gray-400 text-center mb-8">Remplissez ce formulaire et notre responsable bénévoles prendra contact avec vous sous 48h.</p>
+
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Merci pour votre engagement bénévole ! Notre équipe vous contactera très rapidement.');">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-gray-300 mb-1">Nom</label>
+                        <input type="text" required class="w-full bg-dark/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-gray-300 mb-1">Prénom</label>
+                        <input type="text" required class="w-full bg-dark/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-gray-300 mb-1">Email</label>
+                        <input type="email" required class="w-full bg-dark/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand">
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase font-semibold text-gray-300 mb-1">Téléphone</label>
+                        <input type="tel" required class="w-full bg-dark/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase font-semibold text-gray-300 mb-1">Poste souhaité</label>
+                    <select class="w-full bg-dark/80 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand">
+                        <option value="ravito">Ravitaillement en forêt</option>
+                        <option value="signaleur">Signaleur / Sécurité parcours</option>
+                        <option value="dossards">Accueil & Retrait des dossards (Samedi ou Dimanche)</option>
+                        <option value="arrivee">Arrivée & Remise des médailles</option>
+                        <option value="indifferent">Où l'équipe a le plus besoin de moi !</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs uppercase font-semibold text-gray-300 mb-1">Vos disponibilités</label>
+                    <div class="flex flex-wrap gap-4 text-xs text-gray-300 mt-2">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" checked class="accent-[#B0BE42]"> Samedi 15 mai après-midi
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" checked class="accent-[#B0BE42]"> Dimanche 16 mai matin
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="checkbox" checked class="accent-[#B0BE42]"> Dimanche 16 mai après-midi
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-brand text-dark hover:bg-white py-4 rounded-xl font-display uppercase tracking-widest font-bold text-sm transition-all shadow-lg mt-6">
+                    Envoyer ma candidature bénévole
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

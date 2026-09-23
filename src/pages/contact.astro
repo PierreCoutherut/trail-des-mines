@@ -1,0 +1,343 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Contact & FAQ | Trail des Mines 2026 - Champagney";
+const description = "Contactez l";
+---
+
+<Layout title={title} description={description} loadLeaflet={true} loadChart={false}>
+
+<!-- Header / Hero Contact -->
+    <header class="pt-32 pb-16 md:pt-44 md:pb-24 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark">
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
+                <i class="fa-solid fa-headset"></i> Support & Équipe d'Organisation
+            </div>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
+                Contactez <span class="text-brand">l'Organisation</span>
+            </h1>
+            <p class="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto font-light leading-relaxed hero-anim">
+                Une interrogation sur votre dossier, les règles médicales, un échange technique sur les terrils ou un projet de partenariat ? Nous vous répondons sous 24 à 48 heures.
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 pb-24">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+
+            <!-- Formulaire de Contact (7 cols) -->
+            <div class="lg:col-span-7 bg-cardBg/60 backdrop-blur-xl rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl gsap-fade-up">
+                <div class="flex items-center gap-3 mb-8 pb-6 border-b border-white/10">
+                    <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                        <i class="fa-regular fa-paper-plane"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-display text-2xl font-bold uppercase text-white">Formulaire de Contact</h2>
+                        <p class="text-gray-400 text-xs">Remplissez tous les champs marqués d'une astérisque (*)</p>
+                    </div>
+                </div>
+
+                <form id="contact-form" class="space-y-6" onsubmit="event.preventDefault(); handleFormSubmit();">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="prenom" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Prénom *</label>
+                            <input type="text" id="prenom" required placeholder="Jean" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm">
+                        </div>
+                        <div>
+                            <label for="nom" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Nom *</label>
+                            <input type="text" id="nom" required placeholder="Dupont" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="email" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Adresse Email *</label>
+                            <input type="email" id="email" required placeholder="jean.dupont@exemple.com" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm">
+                        </div>
+                        <div>
+                            <label for="telephone" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Téléphone</label>
+                            <input type="tel" id="telephone" placeholder="06 12 34 56 78" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="sujet" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Objet de votre demande *</label>
+                            <select id="sujet" required class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm cursor-pointer">
+                                <option value="" disabled selected>Sélectionnez un sujet</option>
+                                <option value="inscriptions">Inscriptions & Dossards</option>
+                                <option value="pps-medical">Question Médicale / PPS FFA</option>
+                                <option value="parcours">Parcours & Dénivelé</option>
+                                <option value="benevolat">Rejoindre les Bénévoles</option>
+                                <option value="partenariat">Partenariat & Sponsoring</option>
+                                <option value="presse">Presse & Médias</option>
+                                <option value="autre">Autre demande</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dossard" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">N° de dossard (si déjà inscrit)</label>
+                            <input type="text" id="dossard" placeholder="Ex: TDM-428" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="message" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Votre Message *</label>
+                        <textarea id="message" rows="5" required placeholder="Détaillez votre question ou votre situation..." class="w-full bg-dark/60 border border-white/15 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all text-sm resize-none"></textarea>
+                    </div>
+
+                    <div class="flex items-start gap-3">
+                        <input type="checkbox" id="rgpd" required class="mt-1 w-4 h-4 accent-brand rounded border-gray-600 focus:ring-brand">
+                        <label for="rgpd" class="text-xs text-gray-400 font-light leading-snug cursor-pointer">
+                            J'accepte que les informations saisies soient traitées par l'Association Run in Champagney dans le cadre de ma demande, conformément à la <a href="/politique-confidentialite" class="text-brand hover:underline">politique de confidentialité</a>.
+                        </label>
+                    </div>
+
+                    <button type="submit" id="btn-submit" class="w-full bg-brand text-dark font-display uppercase tracking-widest text-sm py-4 rounded-xl font-bold hover:bg-white hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-3 shadow-[0_10px_30px_rgba(176,190,66,0.2)]">
+                        <span>Envoyer mon message</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+
+                    <div id="form-success" class="hidden p-4 rounded-xl bg-brand/10 border border-brand/30 text-brand text-center text-sm font-semibold animate-fade-in">
+                        <i class="fa-solid fa-circle-check mr-2"></i> Votre message a été transmis avec succès à l'équipe ! Nous reviendrons vers vous très vite.
+                    </div>
+                </form>
+            </div>
+
+            <!-- Coordonnées & Cartes Directes (5 cols) -->
+            <div class="lg:col-span-5 flex flex-col gap-6 gsap-fade-up">
+
+                <!-- Carte Coordonnées -->
+                <div class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl">
+                    <h2 class="font-display text-2xl font-bold uppercase text-white mb-6 flex items-center gap-3">
+                        <i class="fa-solid fa-location-dot text-brand"></i>
+                        Coordonnées Directes
+                    </h2>
+                    
+                    <div class="space-y-6 text-sm">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-dark/60 border border-white/10 flex items-center justify-center text-brand shrink-0">
+                                <i class="fa-solid fa-building"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-0.5">Association organisatrice</span>
+                                <span class="font-medium text-white">Run in Champagney (Loi 1901)</span>
+                                <p class="text-gray-400 text-xs mt-0.5">Mairie de Champagney, Grande Rue<br>70290 Champagney (Haute-Saône)</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-dark/60 border border-white/10 flex items-center justify-center text-brand shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-0.5">Courriel Général</span>
+                                <a href="mailto:contact@traildesmines.fr" class="font-medium text-brand hover:underline">contact@traildesmines.fr</a>
+                                <p class="text-gray-400 text-xs mt-0.5">Pour inscriptions : inscriptions@traildesmines.fr</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-dark/60 border border-white/10 flex items-center justify-center text-brand shrink-0">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <span class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-0.5">Permanence Téléphonique</span>
+                                <span class="font-medium text-white">03 84 23 XX XX</span>
+                                <p class="text-gray-400 text-xs mt-0.5">Lundi au vendredi : 18h00 - 20h00<br>Urgence le week-end de course 24/24</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Réseaux Sociaux -->
+                    <div class="mt-8 pt-6 border-t border-white/10">
+                        <span class="block text-xs uppercase tracking-wider text-gray-400 font-semibold mb-3">Rejoindre la communauté</span>
+                        <div class="flex items-center gap-3">
+                            <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Page Facebook Trail des Mines" class="w-10 h-10 rounded-xl bg-dark/60 border border-white/10 flex items-center justify-center text-gray-400 hover:text-brand hover:border-brand/40 transition-all">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Compte Instagram Trail des Mines" class="w-10 h-10 rounded-xl bg-dark/60 border border-white/10 flex items-center justify-center text-gray-400 hover:text-brand hover:border-brand/40 transition-all">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://strava.com" target="_blank" rel="noopener" aria-label="Club Strava Run in Champagney" class="w-10 h-10 rounded-xl bg-dark/60 border border-white/10 flex items-center justify-center text-gray-400 hover:text-brand hover:border-brand/40 transition-all">
+                                <i class="fa-brands fa-strava"></i>
+                            </a>
+                            <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Chaîne YouTube Trail des Mines" class="w-10 h-10 rounded-xl bg-dark/60 border border-white/10 flex items-center justify-center text-gray-400 hover:text-brand hover:border-brand/40 transition-all">
+                                <i class="fa-brands fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mini carte Leaflet Emplacement Village -->
+                <div class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-6 border border-white/10 shadow-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="font-display text-lg font-bold uppercase text-white block">Village Départ / Arrivée</span>
+                            <span class="text-xs text-brand font-semibold">Complexe Sportif & Salle des Fêtes</span>
+                        </div>
+                        <a href="https://maps.google.com/?q=Champagney+70290" target="_blank" rel="noopener" class="text-xs text-gray-400 hover:text-white underline">Ouvrir GPS</a>
+                    </div>
+                    <div id="contact-map" class="w-full h-48 rounded-2xl overflow-hidden border border-white/10 z-0"></div>
+                </div>
+
+                <!-- Encart Sécurité & Urgence Jour J -->
+                <div class="bg-gradient-to-r from-red-950/40 to-cardBg rounded-3xl p-6 border border-red-500/20 shadow-xl">
+                    <div class="flex items-center gap-3 mb-2">
+                        <i class="fa-solid fa-triangle-exclamation text-red-400 text-lg"></i>
+                        <h3 class="font-display text-base font-bold uppercase text-white">Poste de Secours & Médical</h3>
+                    </div>
+                    <p class="text-gray-300 text-xs leading-relaxed">
+                        Le jour de la course (16 mai 2027), le numéro d'urgence médicale du PC Course est imprimé au dos de chaque dossard officiel avec géolocalisation directe des patrouilleurs.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Section FAQ Interactive -->
+        <section class="mt-20 pt-16 border-t border-white/10 max-w-5xl mx-auto gsap-fade-up">
+            <div class="text-center mb-12">
+                <span class="text-brand font-display text-xs uppercase tracking-widest block mb-2">Réponses Rapides</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white">Questions Fréquentes</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-cardBg/70 rounded-2xl border border-white/10 p-6">
+                    <button class="faq-btn flex items-center justify-between w-full text-left font-display uppercase tracking-wider text-base md:text-lg text-white hover:text-brand transition-colors">
+                        <span>Comment céder ou modifier mon dossard en cas d'imprévu ?</span>
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden opacity-0 transition-all duration-300 text-gray-300 text-xs sm:text-sm pt-0 font-light leading-relaxed">
+                        <p class="mt-3">
+                            Les cessions ou échanges de dossards sont autorisés sans frais jusqu'au 10 mai 2026 à minuit, directement depuis votre lien de gestion de dossier reçu par e-mail lors de l'inscription. Tout transfert sauvage non déclaré est strictement interdit pour des motifs impératifs de sécurité et d'assurance médicale.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-cardBg/70 rounded-2xl border border-white/10 p-6">
+                    <button class="faq-btn flex items-center justify-between w-full text-left font-display uppercase tracking-wider text-base md:text-lg text-white hover:text-brand transition-colors">
+                        <span>Le Parcours Prévention Santé (PPS) remplace-t-il le certificat médical ?</span>
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden opacity-0 transition-all duration-300 text-gray-300 text-xs sm:text-sm pt-0 font-light leading-relaxed">
+                        <p class="mt-3">
+                            Oui ! Conformément à la réglementation FFA en vigueur, les participants majeurs non licenciés peuvent désormais valider leur inscription grâce à l'attestation PPS (Parcours Prévention Santé) générée gratuitement en moins de 3 minutes sur le site officiel de la fédération (pps.athle.fr). Cette attestation doit dater de moins de 3 mois au jour de la course.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-cardBg/70 rounded-2xl border border-white/10 p-6">
+                    <button class="faq-btn flex items-center justify-between w-full text-left font-display uppercase tracking-wider text-base md:text-lg text-white hover:text-brand transition-colors">
+                        <span>Puis-je retirer le dossard d'un ami ou collègue de club ?</span>
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden opacity-0 transition-all duration-300 text-gray-300 text-xs sm:text-sm pt-0 font-light leading-relaxed">
+                        <p class="mt-3">
+                            Oui, à la stricte condition de présenter une copie de sa pièce d'identité (format numérique sur smartphone accepté) ainsi que la confirmation d'inscription indiquant que son dossier est 100% complet (pièce médicale ou licence validée).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="bg-cardBg/70 rounded-2xl border border-white/10 p-6">
+                    <button class="faq-btn flex items-center justify-between w-full text-left font-display uppercase tracking-wider text-base md:text-lg text-white hover:text-brand transition-colors">
+                        <span>Y a-t-il des douches, vestiaires et consignes sécurisées sur place ?</span>
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden opacity-0 transition-all duration-300 text-gray-300 text-xs sm:text-sm pt-0 font-light leading-relaxed">
+                        <p class="mt-3">
+                            Absolument. Des vestiaires avec douches chaudes hommes et femmes sont mis à disposition au complexe sportif de Champagney. Une consigne bagage surveillée gratuite permet de déposer un sac numéroté avec votre ticket dossard.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="bg-cardBg/70 rounded-2xl border border-white/10 p-6">
+                    <button class="faq-btn flex items-center justify-between w-full text-left font-display uppercase tracking-wider text-base md:text-lg text-white hover:text-brand transition-colors">
+                        <span>Les bâtons de trail sont-ils autorisés sur tous les formats ?</span>
+                        <i class="fa-solid fa-chevron-down text-brand transition-transform duration-300 faq-icon"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden opacity-0 transition-all duration-300 text-gray-300 text-xs sm:text-sm pt-0 font-light leading-relaxed">
+                        <p class="mt-3">
+                            Les bâtons sont autorisés sur Les Gueules Noires (52 km) et Les Terrils (28 km), mais formellement interdits durant le premier kilomètre de course pour éviter tout accident dans le peloton de départ. Ils sont fortement déconseillés sur Les Galibots (13 km).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mega Footer -->
+
+<script is:inline>
+        // Mini carte interactive Champagney
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('contact-map') && typeof L !== 'undefined') {
+                const map = L.map('contact-map', {
+                    center: [47.7058, 6.6831], // Champagney
+                    zoom: 13,
+                    scrollWheelZoom: false
+                });
+
+                L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                    attribution: '&copy; OpenStreetMap &copy; CARTO',
+                    subdomains: 'abcd',
+                    maxZoom: 19
+                }).addTo(map);
+
+                const customIcon = L.divIcon({
+                    className: 'custom-pin',
+                    html: '<div style="background-color:#B0BE42; width:16px; height:16px; border-radius:50%; border:3px solid #101D20; box-shadow:0 0 10px #B0BE42;"></div>',
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8]
+                });
+
+                L.marker([47.7058, 6.6831], { icon: customIcon })
+                    .addTo(map)
+                    .bindPopup('<strong style="color:#B0BE42;">Village Trail des Mines</strong><br>Complexe Sportif, Champagney');
+            }
+
+            // Gestion de l'accordéon FAQ
+            const faqBtns = document.querySelectorAll('.faq-btn');
+            faqBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const answer = btn.nextElementSibling;
+                    const icon = btn.querySelector('.faq-icon');
+                    const isOpen = answer.style.maxHeight;
+
+                    // Fermer les autres
+                    document.querySelectorAll('.faq-answer').forEach(a => {
+                        a.style.maxHeight = null;
+                        a.classList.remove('opacity-100', 'pt-3');
+                    });
+                    document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('rotate-180'));
+
+                    if (!isOpen) {
+                        answer.style.maxHeight = answer.scrollHeight + 30 + "px";
+                        answer.classList.add('opacity-100', 'pt-3');
+                        icon.classList.add('rotate-180');
+                    }
+                });
+            });
+        });
+
+        // Simulation d'envoi du formulaire de contact
+        function handleFormSubmit() {
+            const btn = document.getElementById('btn-submit');
+            const success = document.getElementById('form-success');
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Transmission en cours...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.classList.add('hidden');
+                success.classList.remove('hidden');
+                document.getElementById('contact-form').reset();
+            }, 1000);
+        }
+    </script>
+</Layout>

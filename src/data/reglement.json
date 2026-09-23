@@ -1,0 +1,47 @@
+{
+  "pdfUrl": "/medias/reglement.pdf",
+  "pdfFilename": "reglement-trail-des-mines-2027.pdf",
+  "pdfSizeBytes": 2094,
+  "lastUpdated": "2026-09-21T19:22:00.000Z",
+  "edition": "2027",
+  "title": "Règlement Officiel - Trail des Mines 2027",
+  "description": "Le présent règlement a pour objet de définir les conditions d'organisation, de sécurité et de participation au Trail des Mines. L'inscription implique l'acceptation sans réserve de l'ensemble des articles ci-dessous.",
+  "chapters": [
+    {
+      "id": "article-1",
+      "number": "Article 1",
+      "title": "Organisation & Cadre de Course",
+      "content": "Le Trail des Mines est organise par l’association loi 1901 Run in Champagney sous l’egide de la FFA.\nL’epreuve se deroule le 16 mai 2027 au depart de Champagney sur les sentiers du bassin minier."
+    },
+    {
+      "id": "article-2",
+      "number": "Article 2",
+      "title": "Conditions d’Admission & Parcours Prevention Sante - PPS",
+      "content": "Toute participation requiert une attestation PPS valide de moins de 3 mois ou une licence FFA active.\nAges minimums : 18 ans pour 52km et 28km, 16 ans pour 13km avec accord parental."
+    },
+    {
+      "id": "article-3",
+      "number": "Article 3",
+      "title": "Dossards & Cession",
+      "content": "Les dossards doivent etre portes de maniere visible. Toute cession sans accord est interdite."
+    },
+    {
+      "id": "article-4",
+      "number": "Article 4",
+      "title": "Equipements Obligatoires & Controles",
+      "content": "Gobelet personnel, reserve d’eau obligatoire selon la distance, couverture de survie et sifflet.\n52km : frontale obligatoire, bande de strapping et veste 10k schmerber."
+    },
+    {
+      "id": "article-5",
+      "number": "Article 5",
+      "title": "Eco-responsabilite & Sanctions",
+      "content": "Tout jet de dechet hors zone de ravitaillement entrainera la disqualification immediate."
+    },
+    {
+      "id": "article-6",
+      "number": "Article 6",
+      "title": "Barrieres Horaires & Securite",
+      "content": "Les barrieres horaires garantissent la securite. Tout concurrent hors delai est rapatrie.\n-- 1 of 1 --"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Politique de Confidentialité & Données Personnelles | Trail des Mines";
+const description = "Politique de confidentialité et protection des données (RGPD) du Trail des Mines et de l";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- Header / Hero Confidentialité -->
+    <header class="pt-32 pb-16 md:pt-44 md:pb-20 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark text-center">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
+                <i class="fa-solid fa-user-shield"></i> Protection des Données • RGPD (UE 2016/679)
+            </div>
+            <h1 class="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
+                Politique de <span class="text-brand">Confidentialité</span>
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm max-w-2xl mx-auto font-light leading-relaxed hero-anim">
+                La protection de votre vie privée et de vos données personnelles est une priorité absolue pour l'Association Run in Champagney. Découvrez comment nous collectons, traitons et protégeons vos informations.
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenu Textuel Structuré RGPD -->
+    <main class="max-w-4xl mx-auto px-4 pb-24 space-y-10">
+
+        <!-- 1. Responsable de Traitement -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-id-card-clip"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">1. Responsable du Traitement</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Le responsable du traitement des données personnelles collectées sur le site <strong class="text-white">traildesmines.fr</strong> est l'<strong class="text-white">Association Run in Champagney</strong>, domiciliée en Mairie de Champagney (70290), représentée par son Président en exercice.
+                </p>
+                <p>
+                    Pour toute question relative à vos données ou pour contacter notre délégué à la protection des données (DPO bénévole) :
+                    <br><strong class="text-white">Courriel dédié :</strong> <a href="mailto:rgpd@traildesmines.fr" class="text-brand hover:underline">rgpd@traildesmines.fr</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Données Collectées & Origine -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">2. Données Personnelles Collectées</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>Dans le cadre de l'organisation du Trail des Mines, nous sommes amenés à collecter les catégories suivantes :</p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-white">Identité & État civil :</strong> Nom, prénom, date de naissance, sexe, nationalité (requis pour l'attribution des catégories d'âge officielles FFA).</li>
+                    <li><strong class="text-white">Coordonnées :</strong> Adresse postale, adresse électronique, numéro de téléphone portable (pour l'envoi des confirmations et alertes météo d'urgence).</li>
+                    <li><strong class="text-white">Données sportives & Santé :</strong> Numéro de licence FFA, attestation du Parcours Prévention Santé (PPS), contact d'urgence (nom et téléphone d'un proche).</li>
+                    <li><strong class="text-white">Données de course & Chronométrage :</strong> Temps de passage aux balises intermédiaires, temps scratch, classement officiel par catégorie.</li>
+                    <li><strong class="text-white">Médias & Image :</strong> Photographies et vidéos prises lors de la manifestation dans le cadre de la couverture de l'événement.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 3. Finalités & Bases Légales -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">3. Finalités du Traitement</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p><strong class="text-white">Gestion des inscriptions (Exécution contractuelle) :</strong> Attribution des numéros de dossard, suivi financier des règlements et communication pré-course.</p>
+                <p><strong class="text-white">Sécurité médicale & Secours (Sauvegarde de la vie) :</strong> Transmission immédiate aux médecins urgentistes et équipes du SDIS en cas d'accident sur le parcours.</p>
+                <p><strong class="text-white">Publication des classements sportifs (Intérêt légitime / Réglementation FFA) :</strong> Affichage des résultats sur notre site, la plateforme du chronométreur officiel et transmission à la FFA pour le calcul des bilans officiels et index ITRA/UTMB.</p>
+                <p><strong class="text-white">Information sur les éditions futures (Consentement) :</strong> Envoi de la newsletter annuelle si vous avez coché la case correspondante lors de votre inscription.</p>
+            </div>
+        </section>
+
+        <!-- 4. Destinataires des Données -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">4. Destinataires & Absence de Revente</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Vos données personnelles sont strictement confidentielles. Elles ne sont <strong class="text-brand">jamais vendues, louées ou cédées</strong> à des partenaires commerciaux à des fins de prospection publicitaire.
+                </p>
+                <p>Les seuls sous-traitants et partenaires habilités à recevoir certaines données sont :</p>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>La société de chronométrage officiel agréée (gestion des puces RFID et classements).</li>
+                    <li>Le service de secours médical (Croix-Rouge, pompiers, médecin coordinateur).</li>
+                    <li>La Fédération Française d'Athlétisme (FFA) et l'International Trail Running Association (ITRA).</li>
+                    <li>La compagnie d'assurance de l'association (en cas de déclaration de sinistre).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. Durée de Conservation -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">5. Durées de Conservation</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p><strong class="text-white">Dossiers administratifs & facturation :</strong> 3 ans à compter de la date de la course, conformément aux obligations comptables.</p>
+                <p><strong class="text-white">Attestations médicales / PPS :</strong> Détruites ou anonymisées dans un délai maximum de 6 mois après l'événement.</p>
+                <p><strong class="text-white">Classements sportifs historiques :</strong> Conservés indéfiniment pour mémoire du palmarès de l'épreuve sportive, sauf demande expresse d'anonymisation de votre part.</p>
+            </div>
+        </section>
+
+        <!-- 6. Exercice de Vos Droits -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-hand-holding-hand"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">6. Vos Droits & Réclamations</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Conformément aux articles 15 à 22 du Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité de vos données et d'opposition.
+                </p>
+                <p>
+                    Pour exercer l'un de ces droits, il vous suffit de nous adresser une demande accompagnée d'un justificatif d'identité à l'adresse électronique : <a href="mailto:rgpd@traildesmines.fr" class="text-brand hover:underline">rgpd@traildesmines.fr</a>. Nous vous répondrons dans un délai maximum de 30 jours.
+                </p>
+                <p>
+                    Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous disposez du droit d'introduire une réclamation auprès de l'autorité de contrôle compétente : la <strong class="text-white">CNIL (Commission Nationale de l'Informatique et des Libertés - cnil.fr)</strong>.
+                </p>
+            </div>
+        </section>
+
+        <!-- 7. Cookies & Traceurs -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-cookie-bite"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">7. Gestion des Cookies</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Notre site internet <strong class="text-white">traildesmines.fr</strong> utilise exclusivement des cookies techniques nécessaires au bon fonctionnement de la navigation (notamment pour mémoriser l'affichage responsive et la fluidité du défilement Lenis).
+                </p>
+                <p>
+                    Nous n'employons aucun cookie tiers publicitaire intrusif. La consultation du site ne donne lieu à aucun profilage commercial de votre activité sur le web.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mega Footer -->
+
+</Layout>

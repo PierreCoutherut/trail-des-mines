@@ -1,0 +1,379 @@
+---
+export const prerender = false;
+
+import Layout from '../../../layouts/Layout.astro';
+import { getAllEditionsSync, getEditionByYearSync } from '../../../lib/db';
+import type { Edition } from '../../../lib/types';
+
+interface Props {
+  edition: Edition;
+}
+
+const { year } = Astro.params;
+const allEditions = getAllEditionsSync();
+const edition = Astro.props.edition || getEditionByYearSync(year || '');
+
+if (!edition) {
+  return Astro.redirect('/editions-precedentes');
+}
+
+const title = `Édition ${edition.year} : ${edition.title} - Trail des Mines Champagney`;
+const description = `Résultats officiels, affiche officielle et albums photos de l'édition ${edition.year} du Trail des Mines (${edition.subtitle}).`;
+const resultLinks = edition.resultLinks || [];
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+    <!-- Fil d'Ariane & Navigation Rapide -->
+    <div class="pt-28 md:pt-36 pb-4 px-4 max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+        <nav class="flex items-center gap-2 text-gray-400" aria-label="Fil d'Ariane">
+            <a href="/" class="hover:text-brand transition">Accueil</a>
+            <span>/</span>
+            <a href="/editions-precedentes" class="hover:text-brand transition">Éditions Précédentes</a>
+            <span>/</span>
+            <span class="text-brand font-bold">Édition {edition.year}</span>
+        </nav>
+
+        <!-- Sélecteur d'autres années -->
+        <div class="flex items-center gap-1.5 bg-cardBg/80 p-1 rounded-xl border border-white/10">
+            <span class="text-gray-400 text-[10px] uppercase px-2 font-display">Autres éditions :</span>
+            {allEditions.map(e => (
+                <a 
+                  href={`/editions-precedentes/${e.year}`}
+                  class={`px-2.5 py-1 rounded-lg transition text-xs font-bold ${e.year === edition.year ? 'bg-brand text-dark shadow' : 'text-gray-300 hover:text-brand'}`}
+                >
+                    {e.year}
+                </a>
+            ))}
+        </div>
+    </div>
+
+    <!-- En-tête Héroïque de l'Édition -->
+    <header class="py-10 px-4 relative overflow-hidden bg-gradient-to-b from-dark via-[#102024] to-dark">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="bg-brand text-dark font-display font-bold uppercase tracking-widest text-xs px-3.5 py-1 rounded-full">
+                    {edition.subtitle}
+                </span>
+                <span class="bg-white/10 text-white font-mono text-xs px-3 py-1 rounded-full">
+                    <i class="fa-regular fa-calendar text-brand mr-1"></i> {edition.date}
+                </span>
+            </div>
+
+            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tight text-white mb-6">
+                Édition {edition.year} <span class="text-brand">• {edition.title}</span>
+            </h1>
+
+            <p class="text-gray-300 text-base md:text-lg max-w-3xl leading-relaxed font-light">
+                {edition.description}
+            </p>
+        </div>
+    </header>
+
+
+
+
+    <!-- =========================================================================
+         SECTION 1 : L'AFFICHE OFFICIELLE DE L'ANNÉE
+         ========================================================================= -->
+    <section id="affiche" class="py-16 px-4 max-w-6xl mx-auto scroll-mt-36">
+        <div class="bg-cardBg/70 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Affiche avec effet cadre & zoom -->
+                <div class="lg:col-span-6 flex justify-center">
+                    <div class="relative group max-w-sm w-full rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] border-2 border-white/10 hover:border-brand/50 transition-all duration-500 bg-dark">
+                        <img 
+                          id="poster-img"
+                          src={edition.posterUrl} 
+                          alt={`Affiche officielle du Trail des Mines ${edition.year}`} 
+                          class="w-full h-auto object-cover cursor-pointer group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div class="absolute inset-0 bg-dark/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                            <span class="bg-brand text-dark px-4 py-2 rounded-full font-display font-bold uppercase tracking-wider text-xs shadow-xl flex items-center gap-2">
+                                <i class="fa-solid fa-expand"></i> Agrandir en haute définition
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Descriptif de l'affiche et actions -->
+                <div class="lg:col-span-6 flex flex-col justify-center space-y-6">
+                    <div>
+                        <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-2">Visuel Officiel</span>
+                        <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white mb-4">
+                            L'Affiche de l'Édition {edition.year}
+                        </h2>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-4">
+                            Chaque millésime du Trail des Mines est immortalisé par une création graphique originale rendant hommage à l'identité industrielle, aux chevalements miniers de Champagney et à la rudesse des sentiers vosgiens.
+                        </p>
+                        {edition.highlights && edition.highlights.length > 0 && (
+                            <div class="space-y-2 mt-4">
+                                <span class="text-xs uppercase tracking-wider text-gray-400 font-display font-semibold block">Faits marquants :</span>
+                                <ul class="space-y-2 text-xs text-gray-300">
+                                    {edition.highlights.map(h => (
+                                        <li class="flex items-start gap-2">
+                                            <i class="fa-solid fa-check text-brand mt-0.5"></i>
+                                            <span>{h}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <button 
+                          id="open-poster-modal" 
+                          class="bg-brand text-dark px-6 py-3 rounded-xl font-display uppercase tracking-wider font-bold text-xs hover:bg-white transition-all shadow-md inline-flex items-center gap-2"
+                        >
+                            <i class="fa-solid fa-magnifying-glass-plus text-sm"></i>
+                            <span>Voir en Grand Format</span>
+                        </button>
+                        <a 
+                          href={edition.posterUrl} 
+                          download={`Affiche-Trail-des-Mines-${edition.year}.webp`}
+                          class="bg-white/10 hover:bg-white/20 text-white px-5 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-semibold transition inline-flex items-center gap-2 border border-white/10"
+                        >
+                            <i class="fa-solid fa-download text-brand"></i>
+                            <span>Télécharger l'Affiche</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Lightbox Plein Écran pour l'affiche -->
+    <div id="poster-modal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4">
+        <button id="close-poster-modal" class="absolute top-6 right-6 text-white hover:text-brand text-3xl focus:outline-none p-2 z-50">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div class="max-w-4xl max-h-[90vh] flex flex-col items-center">
+            <img src={edition.posterUrl} alt={`Affiche plein écran ${edition.year}`} class="max-h-[85vh] w-auto object-contain rounded-xl shadow-2xl" />
+            <span class="text-white text-xs font-display tracking-widest uppercase mt-3">Affiche officielle - Trail des Mines {edition.year}</span>
+        </div>
+    </div>
+
+    <!-- =========================================================================
+         SECTION 2 : RÉSULTATS (LIENS EXTERNES)
+         ========================================================================= -->
+    <section id="resultats" class="py-16 px-4 max-w-6xl mx-auto scroll-mt-36">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+                <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-1">Classements & Chronométrage</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white">
+                    Résultats • Édition {edition.year}
+                </h2>
+            </div>
+            <span class="text-xs text-gray-400 font-mono">
+                {resultLinks.length} lien(s) officiel(s)
+            </span>
+        </div>
+
+        {resultLinks.length === 0 ? (
+            <div class="bg-cardBg rounded-2xl p-10 text-center border border-white/10 shadow-xl">
+                <i class="fa-solid fa-trophy text-4xl text-gray-500 mb-3 block"></i>
+                <p class="text-gray-300 text-sm">Les liens des résultats de cette édition seront bientôt disponibles.</p>
+            </div>
+        ) : (
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {resultLinks.map((link) => (
+                    <a 
+                      href={link.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="group bg-cardBg/90 hover:bg-[#152327] border border-white/10 hover:border-brand/60 rounded-2xl p-6 transition-all duration-300 flex items-center justify-between shadow-xl hover:shadow-[0_10px_30px_rgba(176,190,66,0.15)] hover:-translate-y-0.5"
+                    >
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand group-hover:bg-brand group-hover:text-dark flex items-center justify-center text-lg transition-colors shrink-0">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-display text-base font-bold uppercase text-white group-hover:text-brand transition-colors">
+                                    {link.label}
+                                </h3>
+                                <span class="text-xs text-gray-400 font-sans flex items-center gap-1.5 mt-0.5">
+                                    <span>Consulter le classement</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="w-8 h-8 rounded-lg bg-white/5 group-hover:bg-brand/20 text-gray-400 group-hover:text-brand flex items-center justify-center transition-colors shrink-0">
+                            <i class="fa-solid fa-arrow-up-right-from-square text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                        </div>
+                    </a>
+                ))}
+            </div>
+        )}
+    </section>
+
+    <!-- =========================================================================
+         SECTION 3 : GALERIES D'IMAGES DE L'ÉDITION
+         ========================================================================= -->
+    <section id="galeries" class="py-16 px-4 max-w-6xl mx-auto scroll-mt-36">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+                <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-1">Souvenirs Visuels</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white">
+                    Galeries Photos Officielles • {edition.year}
+                </h2>
+            </div>
+            <span class="text-xs text-gray-400 font-mono">
+                Classées par photographe, course & moment
+            </span>
+        </div>
+
+        {edition.galleries.length === 0 ? (
+            <div class="bg-cardBg rounded-2xl p-10 text-center border border-white/10">
+                <i class="fa-solid fa-camera text-4xl text-gray-500 mb-3 block"></i>
+                <p class="text-gray-300">Les galeries photos pour cette édition sont en cours de numérisation.</p>
+            </div>
+        ) : (
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {edition.galleries.map(gallery => {
+                    const totalPhotos = gallery.subGalleries.reduce((acc, sub) => acc + sub.photos.length, 0);
+                    const coverPhoto = gallery.subGalleries[0]?.photos[0]?.urlThumb || gallery.avatarUrl || edition.posterUrl;
+
+                    return (
+                        <div class="bg-cardBg/90 backdrop-blur-md rounded-3xl overflow-hidden border border-white/10 hover:border-brand/40 transition-all duration-300 group flex flex-col justify-between shadow-2xl">
+                            
+                            <!-- Vignette de couverture de la galerie -->
+                            <div class="aspect-[16/9] overflow-hidden relative bg-dark">
+                                <img 
+                                  src={coverPhoto} 
+                                  alt={`Galerie de ${gallery.photographerName} - Trail des Mines ${edition.year}`} 
+                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                  loading="lazy"
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-80"></div>
+                                <span class="absolute bottom-3 right-3 bg-dark/90 text-brand px-3 py-1 rounded-full text-xs font-mono font-bold">
+                                    {totalPhotos} Photos HD
+                                </span>
+                            </div>
+
+                            <!-- Contenu Photographe & Sous-Galeries -->
+                            <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="w-10 h-10 rounded-full bg-brand/20 border border-brand/40 overflow-hidden flex items-center justify-center shrink-0">
+                                            {gallery.avatarUrl ? (
+                                                <img src={gallery.avatarUrl} alt={gallery.photographerName} class="w-full h-full object-cover" />
+                                            ) : (
+                                                <i class="fa-solid fa-camera text-brand"></i>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h3 class="font-display text-2xl font-bold uppercase text-white leading-tight">
+                                                {gallery.photographerName}
+                                            </h3>
+                                            <span class="text-xs text-gray-400 font-mono">Photographe Officiel {edition.year}</span>
+                                        </div>
+                                    </div>
+
+                                    {gallery.bio && (
+                                        <p class="text-gray-300 text-xs sm:text-sm leading-relaxed mb-4">
+                                            {gallery.bio}
+                                        </p>
+                                    )}
+
+                                    <!-- Aperçu des sous-galeries (par course / moment) -->
+                                    <div class="bg-dark/60 rounded-xl p-3.5 border border-white/5 mb-6">
+                                        <span class="text-[10px] uppercase tracking-wider text-gray-400 font-display font-bold block mb-2">
+                                            Sous-galeries disponibles :
+                                        </span>
+                                        <div class="flex flex-wrap gap-1.5">
+                                            {gallery.subGalleries.map(sub => (
+                                                <span class="text-[11px] bg-white/5 border border-white/5 text-gray-300 px-2.5 py-1 rounded-lg">
+                                                    {sub.name} <strong class="text-brand">({sub.photos.length})</strong>
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Bouton d'accès vers la galerie détaillée -->
+                                <div class="pt-2">
+                                    <a 
+                                      href={`/editions-precedentes/${edition.year}/galerie/${gallery.photographerSlug}`}
+                                      class="w-full bg-brand text-dark py-3.5 px-6 rounded-xl font-display font-bold uppercase tracking-wider text-xs hover:bg-white transition-all shadow-md inline-flex items-center justify-center gap-2"
+                                    >
+                                        <span>Explorer la Galerie ({gallery.photographerName})</span>
+                                        <i class="fa-solid fa-arrow-right text-[11px]"></i>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        )}
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>
+
+<script>
+    // Logique interactive pour onglets des courses
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabButtons = document.querySelectorAll('.race-tab-btn');
+        const panels = document.querySelectorAll('.race-panel');
+
+        tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const raceId = btn.getAttribute('data-race-id');
+                
+                // Mettre à jour style des boutons
+                tabButtons.forEach(b => {
+                    b.classList.remove('bg-brand', 'text-dark', 'shadow-md');
+                    b.classList.add('bg-cardBg', 'text-gray-300');
+                });
+                btn.classList.add('bg-brand', 'text-dark', 'shadow-md');
+                btn.classList.remove('bg-cardBg', 'text-gray-300');
+
+                // Afficher le panneau correspondant
+                panels.forEach(p => p.classList.add('hidden'));
+                const targetPanel = document.getElementById(`race-content-${raceId}`);
+                if (targetPanel) targetPanel.classList.remove('hidden');
+            });
+        });
+
+        // Gestion de la modal Affiche plein écran
+        const posterImg = document.getElementById('poster-img');
+        const openModalBtn = document.getElementById('open-poster-modal');
+        const posterModal = document.getElementById('poster-modal');
+        const closeModalBtn = document.getElementById('close-poster-modal');
+
+        function openModal() {
+            if (!posterModal) return;
+            posterModal.classList.remove('hidden');
+            setTimeout(() => posterModal.classList.remove('opacity-0'), 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            if (!posterModal) return;
+            posterModal.classList.add('opacity-0');
+            setTimeout(() => {
+                posterModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        if (posterImg) posterImg.addEventListener('click', openModal);
+        if (openModalBtn) openModalBtn.addEventListener('click', openModal);
+        if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+        if (posterModal) {
+            posterModal.addEventListener('click', (e) => {
+                if (e.target === posterModal) closeModal();
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && posterModal && !posterModal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    });
+</script>

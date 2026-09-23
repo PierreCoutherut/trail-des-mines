@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Dossard Solidaire - Trail des Mines 2026 | Courir pour une Cause";
+const description = "Engagez-vous avec le Dossard Solidaire du Trail des Mines 2026. Donnez du sens à vos foulées en soutenant des associations caritatives de Haute-Saône.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Donner du sens à son chrono</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Dossard <span class="text-brand">Solidaire</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Le Trail des Mines s'engage chaque année auprès d'associations locales d'utilité publique. Découvrez comment vos kilomètres peuvent soutenir des projets humains concrets en Haute-Saône.
+            </p>
+        </div>
+    </header>
+
+    <!-- Cause Parrainée 2026 -->
+    <section class="py-12 px-4 max-w-5xl mx-auto">
+        <div class="bg-cardBg rounded-3xl p-8 md:p-12 border border-brand/30 shadow-2xl">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="w-24 h-24 rounded-2xl bg-brand text-dark flex items-center justify-center text-4xl shrink-0">
+                    <i class="fa-solid fa-hand-holding-heart"></i>
+                </div>
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-brand font-bold font-display block mb-1">Association Bénéficiaire 2026</span>
+                    <h2 class="font-display text-3xl font-bold uppercase text-white mb-3">
+                        « Les Enfants de l'Espoir 70 »
+                    </h2>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                        Cette association locale œuvre quotidiennement pour améliorer le quotidien des enfants hospitalisés en pédiatrie à l'Hôpital Nord Franche-Comté : achat de matériel ludique, aménagement de salles de jeux et financement d'ateliers créatifs.
+                    </p>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        En 2025, la générosité des trailers a permis de récolter <strong>4 250 €</strong> intégralement reversés sans aucun frais intermédiaire.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comment Participer -->
+    <section class="py-12 px-4 max-w-5xl mx-auto">
+        <h2 class="font-display text-2xl font-bold uppercase text-white mb-8 text-center">Comment fonctionne le Dossard Solidaire ?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <span class="font-display text-3xl font-bold text-brand block mb-2">01</span>
+                <h3 class="font-display text-lg font-bold uppercase text-white mb-2">Lors de l'Inscription</h3>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Cochez simplement l'option « Don Solidaire » (5 €, 10 € ou montant libre) au moment de valider votre dossard en ligne.
+                </p>
+            </div>
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <span class="font-display text-3xl font-bold text-brand block mb-2">02</span>
+                <h3 class="font-display text-lg font-bold uppercase text-white mb-2">Dossard Personnalisé</h3>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Votre dossard portera la mention spéciale « Coureur Solidaire » pour valoriser votre engagement tout au long de la course.
+                </p>
+            </div>
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <span class="font-display text-3xl font-bold text-brand block mb-2">03</span>
+                <h3 class="font-display text-lg font-bold uppercase text-white mb-2">Remise du Chèque</h3>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Le chèque global est officiellement remis aux représentants de l'association sur le podium à 15h30 en présence du public.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="/inscription" class="btn-registration-trigger inline-block bg-brand text-dark hover:bg-white px-10 py-4 rounded-full font-display uppercase tracking-widest font-bold text-xs transition-all shadow-lg cursor-pointer">
+                Prendre un Dossard Solidaire
+            </a>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

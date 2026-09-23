@@ -1,0 +1,282 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Espace Presse & Médias | Trail des Mines 2027 - Champagney";
+const description = "Espace presse officiel du Trail des Mines : kit média, logos HD, dossier de presse 2027, communiqués récents et formulaire d";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- Header / Hero Presse -->
+    <header class="pt-32 pb-16 md:pt-44 md:pb-24 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark text-center">
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
+                <i class="fa-solid fa-bullhorn"></i> Espace Journalistes & Photographes
+            </div>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
+                Espace <span class="text-brand">Presse & Médias</span>
+            </h1>
+            <p class="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto font-light leading-relaxed mb-8 hero-anim">
+                Accédez aux communiqués officiels, téléchargez les kits graphiques et visuels haute définition libres de droits, et soumettez votre demande d'accréditation terrain pour l'édition 2027.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-4 hero-anim">
+                <a href="#dossier-presse" class="bg-brand text-dark px-8 py-3.5 rounded-full font-display uppercase tracking-widest font-bold text-xs hover:bg-white transition-all shadow-[0_10px_25px_rgba(176,190,66,0.3)]">
+                    Dossier de Presse (PDF)
+                </a>
+                <a href="#accreditation" class="bg-white/10 hover:bg-white/20 text-white px-8 py-3.5 rounded-full font-display uppercase tracking-widest font-semibold text-xs transition-all border border-white/15">
+                    Demander une Accréditation
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-7xl mx-auto px-4 pb-24 space-y-20">
+
+        <!-- Kit Média & Identité Visuelle -->
+        <section id="dossier-presse" class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl gsap-fade-up">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10 pb-6 border-b border-white/10">
+                <div>
+                    <span class="text-brand font-display text-xs uppercase tracking-widest block mb-1">Ressources Officielles</span>
+                    <h2 class="font-display text-2xl sm:text-4xl font-bold uppercase text-white">Kit Médias & Dossier 2027</h2>
+                </div>
+                <a href="#" onclick="alert('Téléchargement du Pack Média Complet TDM 2027 (ZIP - 45 Mo)'); return false;" class="inline-flex items-center gap-2 bg-brand text-dark px-6 py-3 rounded-xl font-display uppercase tracking-widest font-bold text-xs hover:bg-white transition-all shadow-md shrink-0">
+                    <i class="fa-solid fa-download"></i> Tout Télécharger (.ZIP)
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dossier de Presse PDF -->
+                <div class="p-6 bg-dark/50 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-xl mb-4">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold uppercase text-white mb-2">Dossier de Presse 2027</h3>
+                        <p class="text-xs text-gray-400 font-light leading-relaxed mb-4">18 pages de présentation détaillée : genèse, données chiffrées, fiches techniques des 4 épreuves et engagements éco-solidaires.</p>
+                    </div>
+                    <a href="#" onclick="alert('Ouverture du Dossier de Presse PDF interactif...'); return false;" class="text-xs text-brand uppercase font-bold tracking-wider hover:underline inline-flex items-center gap-1">
+                        Consulter le PDF <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Kit Logos HD -->
+                <div class="p-6 bg-dark/50 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-xl mb-4">
+                            <i class="fa-solid fa-shapes"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold uppercase text-white mb-2">Logothèque Officielle</h3>
+                        <p class="text-xs text-gray-400 font-light leading-relaxed mb-4">Logos officiels Trail des Mines et Run in Champagney en vectoriel (SVG, EPS, AI) et matriciel HD fond transparent (PNG).</p>
+                    </div>
+                    <a href="#" onclick="alert('Téléchargement du pack logos vectoriels...'); return false;" class="text-xs text-brand uppercase font-bold tracking-wider hover:underline inline-flex items-center gap-1">
+                        Télécharger les Logos <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    </a>
+                </div>
+
+                <!-- Palette Chromatique -->
+                <div class="p-6 bg-dark/50 rounded-2xl border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-xl mb-4">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold uppercase text-white mb-2">Couleurs de Marque</h3>
+                        <div class="grid grid-cols-2 gap-2 text-[10px] font-mono mt-3">
+                            <div class="p-2 rounded bg-dark border border-white/10 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-[#101D20] border border-white/20"></span> #101D20
+                            </div>
+                            <div class="p-2 rounded bg-dark border border-white/10 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-[#B0BE42]"></span> #B0BE42
+                            </div>
+                            <div class="p-2 rounded bg-dark border border-white/10 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-[#213A40]"></span> #213A40
+                            </div>
+                            <div class="p-2 rounded bg-dark border border-white/10 flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-[#0a1214] border border-white/20"></span> #0A1214
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-500 uppercase mt-4 block">Typographies : Oswald & Inter</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Derniers Communiqués de Presse -->
+        <section class="gsap-fade-up">
+            <div class="text-center mb-10">
+                <span class="text-brand font-display text-xs uppercase tracking-widest block mb-1">Actualités Journalistes</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white">Communiqués Récents</h2>
+            </div>
+
+            <div class="space-y-4 max-w-5xl mx-auto">
+                <!-- CP 1 -->
+                <div class="p-6 bg-cardBg/60 backdrop-blur-md rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-brand/30 transition-all">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-3">
+                            <span class="px-2.5 py-0.5 rounded-full bg-brand/10 text-brand text-[10px] font-bold uppercase tracking-wider">CP #05-26</span>
+                            <span class="text-xs text-gray-400">15 Janvier 2026</span>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white uppercase">Ouverture des inscriptions de la 5ème édition du Trail des Mines</h3>
+                        <p class="text-xs text-gray-300 font-light">Nouveaux formats allongés, inscription directe via PPS et quota renforcé sur Les Gueules Noires.</p>
+                    </div>
+                    <a href="#" onclick="alert('Téléchargement du Communiqué de Presse du 15 Janvier 2026 (PDF)'); return false;" class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-brand hover:text-dark text-xs font-display uppercase tracking-wider font-bold transition-all text-center">
+                        <i class="fa-solid fa-file-arrow-down"></i> Lire le CP
+                    </a>
+                </div>
+
+                <!-- CP 2 -->
+                <div class="p-6 bg-cardBg/60 backdrop-blur-md rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-brand/30 transition-all">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-3">
+                            <span class="px-2.5 py-0.5 rounded-full bg-brand/10 text-brand text-[10px] font-bold uppercase tracking-wider">CP #04-26</span>
+                            <span class="text-xs text-gray-400">01 Février 2026</span>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white uppercase">Le Trail des Mines obtient la labellisation éco-responsable niveau Or</h3>
+                        <p class="text-xs text-gray-300 font-light">Abandon définitif des rubalises plastiques au profit de fanions en tissu réutilisable et trophées locaux.</p>
+                    </div>
+                    <a href="#" onclick="alert('Téléchargement du Communiqué de Presse du 1er Février 2026 (PDF)'); return false;" class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-brand hover:text-dark text-xs font-display uppercase tracking-wider font-bold transition-all text-center">
+                        <i class="fa-solid fa-file-arrow-down"></i> Lire le CP
+                    </a>
+                </div>
+
+                <!-- CP 3 -->
+                <div class="p-6 bg-cardBg/60 backdrop-blur-md rounded-2xl border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:border-brand/30 transition-all">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-3">
+                            <span class="px-2.5 py-0.5 rounded-full bg-brand/10 text-brand text-[10px] font-bold uppercase tracking-wider">CP #03-25</span>
+                            <span class="text-xs text-gray-400">19 Mai 2025</span>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-white uppercase">Bilan et record d'affluence pour la 4ème édition : 1 120 coureurs au départ</h3>
+                        <p class="text-xs text-gray-300 font-light">Retour sur les chronos records, l'ambiance des terrils et le don solidaire de 2 500 € remis au service pédiatrie.</p>
+                    </div>
+                    <a href="#" onclick="alert('Téléchargement du Bilan Presse 2025 (PDF)'); return false;" class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-brand hover:text-dark text-xs font-display uppercase tracking-wider font-bold transition-all text-center">
+                        <i class="fa-solid fa-file-arrow-down"></i> Lire le CP
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galerie HD pour la Presse (Libre de droits) -->
+        <section class="gsap-fade-up">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+                <div>
+                    <span class="text-brand font-display text-xs uppercase tracking-widest block mb-1">Usage Éditorial Gratuit</span>
+                    <h2 class="font-display text-3xl font-bold uppercase text-white">Sélection Photos HD</h2>
+                    <p class="text-gray-400 text-xs mt-1">Crédit obligatoire : &copy; Association Run in Champagney / Trail des Mines</p>
+                </div>
+                <a href="#" onclick="alert('Téléchargement de la sélection HD presse (12 photos 4K - 120 Mo)...'); return false;" class="text-xs text-brand uppercase font-bold tracking-wider hover:underline inline-flex items-center gap-1">
+                    Télécharger la sélection 4K <i class="fa-solid fa-arrow-down text-[10px]"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative rounded-2xl overflow-hidden aspect-[16/10] bg-dark border border-white/10">
+                    <img src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ" alt="Coureur en forêt vosgienne sur le parcours du Trail des Mines" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-3 left-4 right-4 flex justify-between items-center text-xs">
+                        <span class="font-display uppercase text-white font-bold">Forêt de Champagney</span>
+                        <span class="text-[10px] text-brand">300 DPI</span>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden aspect-[16/10] bg-dark border border-white/10">
+                    <img src="https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcR-eYNsnkVA6wvHpDhNYBJ2UDJTsGAdz81pf4i1E_SIoCRKju4-BG8N-bb_JEsz4-jqD3Jtk_H4HauA25U" alt="Passage technique sur les terrils miniers du Trail des Mines" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-3 left-4 right-4 flex justify-between items-center text-xs">
+                        <span class="font-display uppercase text-white font-bold">Crêtes des Terrils</span>
+                        <span class="text-[10px] text-brand">300 DPI</span>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-2xl overflow-hidden aspect-[16/10] bg-dark border border-white/10">
+                    <img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRSpg4p7rfwxDVXuNoTFsQC7JMS35siUrcM3fZ8PGI9HdmQNgffF_gEk_ctU2VBM7ku4i8VZNxOGwXHASU" alt="Départ massif du peloton du Trail des Mines à Champagney" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-80"></div>
+                    <div class="absolute bottom-3 left-4 right-4 flex justify-between items-center text-xs">
+                        <span class="font-display uppercase text-white font-bold">Peloton au Départ</span>
+                        <span class="text-[10px] text-brand">300 DPI</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulaire d'Accréditation Journalistes & Photographes -->
+        <section id="accreditation" class="bg-cardBg/80 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border border-white/10 shadow-2xl max-w-4xl mx-auto gsap-fade-up">
+            <div class="text-center mb-8">
+                <span class="text-brand font-display text-xs uppercase tracking-widest block mb-1">Accès Sécurisé Circuit</span>
+                <h2 class="font-display text-3xl font-bold uppercase text-white">Demande d'Accréditation 2027</h2>
+                <p class="text-gray-300 text-xs sm:text-sm font-light mt-2 max-w-xl mx-auto">
+                    Réservé aux journalistes professionnels, photographes accrédités et créateurs de contenu spécialisés running. Clôture des demandes le 10 mai 2027.
+                </p>
+            </div>
+
+            <form class="space-y-6" onsubmit="event.preventDefault(); alert('Votre demande d\'accréditation a bien été transmise à notre attaché de presse. Une confirmation avec badge vous sera envoyée sous 48h.'); this.reset();">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="acc-prenom" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Prénom *</label>
+                        <input type="text" id="acc-prenom" required placeholder="Claire" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand text-sm">
+                    </div>
+                    <div>
+                        <label for="acc-nom" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Nom *</label>
+                        <input type="text" id="acc-nom" required placeholder="Vidal" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="acc-media" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Organe de presse / Média *</label>
+                        <input type="text" id="acc-media" required placeholder="L'Est Républicain / Trails Endurance" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand text-sm">
+                    </div>
+                    <div>
+                        <label for="acc-carte" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">N° Carte de Presse ou Portfolio Web</label>
+                        <input type="text" id="acc-carte" placeholder="Carte n° / https://monportfolio.com" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label for="acc-email" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Adresse Email Pro *</label>
+                        <input type="email" id="acc-email" required placeholder="claire.vidal@media.fr" class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-brand text-sm">
+                    </div>
+                    <div>
+                        <label for="acc-zone" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Zone d'intervention souhaitée *</label>
+                        <select id="acc-zone" required class="w-full bg-dark/60 border border-white/15 rounded-xl px-4 py-3.5 text-white focus:outline-none focus:border-brand text-sm">
+                            <option value="" disabled selected>Sélectionnez une zone</option>
+                            <option value="depart-arrivee">Ligne de Départ / Arrivée & Podium</option>
+                            <option value="terrils">Crêtes des Terrils & Forêt (Navette 4x4 requise)</option>
+                            <option value="planche">Sommet Planche des Belles Filles (Gueules Noires)</option>
+                            <option value="toutes">Accès Intégral Parcours (Moto / Presse)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="acc-details" class="block text-xs uppercase tracking-wider font-semibold text-gray-300 mb-2">Besoins spécifiques & matériel</label>
+                    <textarea id="acc-details" rows="3" placeholder="Précisez si vous avez besoin d'une place sur une navette presse, d'une prise d'interview préférentielle..." class="w-full bg-dark/60 border border-white/15 rounded-xl p-4 text-white placeholder-gray-500 focus:outline-none focus:border-brand text-sm resize-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full bg-brand text-dark font-display uppercase tracking-widest text-sm py-4 rounded-xl font-bold hover:bg-white transition-all shadow-[0_10px_30px_rgba(176,190,66,0.2)]">
+                    Envoyer ma demande d'accréditation
+                </button>
+            </form>
+        </section>
+
+        <!-- Contact Attaché de Presse Direct -->
+        <div class="bg-cardBg/40 rounded-3xl p-8 border border-white/10 max-w-2xl mx-auto text-center gsap-fade-up">
+            <span class="text-xs uppercase tracking-wider text-brand font-semibold block mb-1">Contact Attaché de Presse</span>
+            <span class="font-display text-xl font-bold text-white block">Maxime D. — Responsable Communication</span>
+            <p class="text-xs text-gray-400 mt-1 mb-4">Pour toute demande d'interview, reportage télévisé ou reportage embarqué.</p>
+            <div class="flex flex-wrap justify-center gap-6 text-xs">
+                <a href="mailto:presse@traildesmines.fr" class="text-brand hover:underline flex items-center gap-2">
+                    <i class="fa-solid fa-envelope"></i> presse@traildesmines.fr
+                </a>
+                <span class="text-gray-300 flex items-center gap-2">
+                    <i class="fa-solid fa-phone"></i> 06 45 XX XX XX
+                </span>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Mega Footer -->
+
+</Layout>

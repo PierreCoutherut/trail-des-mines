@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Politique de Confidentialité & Données Personnelles | Trail des Mines</title>
+    <meta name="description" content="Politique de confidentialité et protection des données (RGPD) du Trail des Mines et de l'Association Run in Champagney : gestion des dossards, PPS et droits coureurs.">
+    <link rel="canonical" href="https://traildesmines.fr/politique-confidentialite.html">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#101D20',
+                        brand: '#B0BE42',
+                        cardBg: '#213A40',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-dark text-white font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-dark relative">
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] bg-[#0a1214]/95 backdrop-blur-2xl z-[45] pointer-events-none opacity-0 overflow-y-auto" role="dialog" aria-modal="true">
+        <div class="min-h-full flex flex-col justify-between items-center py-20 px-6">
+            <div class="w-full flex flex-col items-center justify-center flex-1 mt-8 mb-12">
+                <nav class="flex flex-col items-center space-y-6 text-center font-display uppercase tracking-widest w-full max-w-sm">
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>Parcours</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="parcours.html" class="text-gray-400 hover:text-brand text-lg py-1">Tous les Parcours</a>
+                                <a href="galibots.html" class="text-gray-400 hover:text-brand text-lg py-1">Galibots (13 km)</a>
+                                <a href="terrils.html" class="text-gray-400 hover:text-brand text-lg py-1">Terrils (28 km)</a>
+                                <a href="gueules-noires.html" class="text-gray-400 hover:text-brand text-lg py-1">Gueules Noires (52 km)</a>
+                                <a href="autres.html" class="text-gray-400 hover:text-brand text-lg py-1">Autres formats</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>Infos Pratiques</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="infos-pratiques.html" class="text-gray-400 hover:text-brand text-lg py-1">Guide Général</a>
+                                <a href="reglement.html" class="text-gray-400 hover:text-brand text-lg py-1">Règlement</a>
+                                <a href="resultats-medias.html" class="text-gray-400 hover:text-brand text-lg py-1">Résultats & Médias</a>
+                                <a href="editions-precedentes.html" class="text-gray-400 hover:text-brand text-lg py-1">Éditions Précédentes</a>
+                                <a href="preparer-mon-trail.html" class="text-gray-400 hover:text-brand text-lg py-1">Préparer mon trail</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>L'Association</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="a-propos.html" class="text-gray-400 hover:text-brand text-lg py-1">À propos</a>
+                                <a href="association.html" class="text-gray-400 hover:text-brand text-lg py-1">Run in Champagney</a>
+                                <a href="benevoles.html" class="text-gray-400 hover:text-brand text-lg py-1">Bénévoles</a>
+                                <a href="eco-engagement.html" class="text-gray-400 hover:text-brand text-lg py-1">Éco-engagement</a>
+                                <a href="partenaires.html" class="text-gray-400 hover:text-brand text-lg py-1">Partenaires</a>
+                                <a href="dossard-solidaire.html" class="text-gray-400 hover:text-brand text-lg py-1">Dossard solidaire</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full mt-4">
+                        <a href="contact.html" class="text-3xl hover:text-brand py-2 block">Contact</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="mobile-link shrink-0 pb-4">
+                <a href="inscription.html" class="bg-brand text-dark px-12 py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:scale-105 inline-block shadow-[0_10px_30px_rgba(176,190,66,0.2)]">S'inscrire</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Pilule principale -->
+    <div class="fixed w-full top-4 md:top-6 z-50 px-4 flex justify-center nav-container pointer-events-none">
+        <nav class="bg-[#101D20]/80 backdrop-blur-xl rounded-full border border-white/10 shadow-2xl flex items-center px-4 md:px-6 py-2 md:py-3 max-w-6xl w-full justify-between transition-transform duration-500 pointer-events-auto" id="main-nav">
+            <a href="index.html" class="font-display font-bold text-lg md:text-xl uppercase tracking-widest text-white group relative overflow-hidden h-6 flex flex-col justify-start z-50">
+                <span class="block group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1)">TD<span class="text-brand">M</span><span class="hidden sm:inline">26</span></span>
+                <span class="block translate-y-full group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) text-brand absolute inset-0">TD<span class="text-white">M</span><span class="hidden sm:inline text-white">26</span></span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-gray-300">
+                <div class="nav-item relative">
+                    <a href="parcours.html" class="hover:text-brand transition-colors duration-300 py-4 block">Parcours</a>
+                    <div class="dropdown-wrapper w-52">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="parcours.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Tous les Parcours</a>
+                            <a href="galibots.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Galibots (13 km)</a>
+                            <a href="terrils.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Terrils (28 km)</a>
+                            <a href="gueules-noires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Gueules Noires (52 km)</a>
+                            <a href="autres.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Autres formats</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="infos-pratiques.html" class="hover:text-brand transition-colors duration-300 py-4 block">Infos pratiques</a>
+                    <div class="dropdown-wrapper w-60">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="infos-pratiques.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Guide Général</a>
+                            <a href="reglement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Règlement</a>
+                            <a href="resultats-medias.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Résultats & Médias</a>
+                            <a href="editions-precedentes.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éditions précédentes</a>
+                            <a href="preparer-mon-trail.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Préparer mon trail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="a-propos.html" class="hover:text-brand transition-colors duration-300 py-4 block">À propos</a>
+                    <div class="dropdown-wrapper w-64">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="a-propos.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">À propos</a>
+                            <a href="association.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Run in Champagney</a>
+                            <a href="benevoles.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Bénévoles</a>
+                            <a href="eco-engagement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éco-engagement</a>
+                            <a href="partenaires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Partenaires</a>
+                            <a href="dossard-solidaire.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Dossard solidaire</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="contact.html" class="hover:text-brand transition-colors duration-300 py-4">Contact</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="inscription.html" class="bg-brand text-dark font-display uppercase tracking-widest text-[10px] md:text-xs px-5 md:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-bold z-50">S'inscrire</a>
+                <button id="hamburger-btn" aria-label="Ouvrir le menu" class="lg:hidden text-white p-2 z-50 relative focus:outline-none">
+                    <div class="w-6 h-4 relative flex flex-col justify-between">
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-1"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300" id="line-2"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-3"></span>
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Header / Hero Confidentialité -->
+    <header class="pt-32 pb-16 md:pt-44 md:pb-20 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark text-center">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
+                <i class="fa-solid fa-user-shield"></i> Protection des Données • RGPD (UE 2016/679)
+            </div>
+            <h1 class="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
+                Politique de <span class="text-brand">Confidentialité</span>
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm max-w-2xl mx-auto font-light leading-relaxed hero-anim">
+                La protection de votre vie privée et de vos données personnelles est une priorité absolue pour l'Association Run in Champagney. Découvrez comment nous collectons, traitons et protégeons vos informations.
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenu Textuel Structuré RGPD -->
+    <main class="max-w-4xl mx-auto px-4 pb-24 space-y-10">
+
+        <!-- 1. Responsable de Traitement -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-id-card-clip"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">1. Responsable du Traitement</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Le responsable du traitement des données personnelles collectées sur le site <strong class="text-white">traildesmines.fr</strong> est l'<strong class="text-white">Association Run in Champagney</strong>, domiciliée en Mairie de Champagney (70290), représentée par son Président en exercice.
+                </p>
+                <p>
+                    Pour toute question relative à vos données ou pour contacter notre délégué à la protection des données (DPO bénévole) :
+                    <br><strong class="text-white">Courriel dédié :</strong> <a href="mailto:rgpd@traildesmines.fr" class="text-brand hover:underline">rgpd@traildesmines.fr</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Données Collectées & Origine -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-database"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">2. Données Personnelles Collectées</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>Dans le cadre de l'organisation du Trail des Mines, nous sommes amenés à collecter les catégories suivantes :</p>
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-white">Identité & État civil :</strong> Nom, prénom, date de naissance, sexe, nationalité (requis pour l'attribution des catégories d'âge officielles FFA).</li>
+                    <li><strong class="text-white">Coordonnées :</strong> Adresse postale, adresse électronique, numéro de téléphone portable (pour l'envoi des confirmations et alertes météo d'urgence).</li>
+                    <li><strong class="text-white">Données sportives & Santé :</strong> Numéro de licence FFA, attestation du Parcours Prévention Santé (PPS), contact d'urgence (nom et téléphone d'un proche).</li>
+                    <li><strong class="text-white">Données de course & Chronométrage :</strong> Temps de passage aux balises intermédiaires, temps scratch, classement officiel par catégorie.</li>
+                    <li><strong class="text-white">Médias & Image :</strong> Photographies et vidéos prises lors de la manifestation dans le cadre de la couverture de l'événement.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 3. Finalités & Bases Légales -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">3. Finalités du Traitement</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p><strong class="text-white">Gestion des inscriptions (Exécution contractuelle) :</strong> Attribution des numéros de dossard, suivi financier des règlements et communication pré-course.</p>
+                <p><strong class="text-white">Sécurité médicale & Secours (Sauvegarde de la vie) :</strong> Transmission immédiate aux médecins urgentistes et équipes du SDIS en cas d'accident sur le parcours.</p>
+                <p><strong class="text-white">Publication des classements sportifs (Intérêt légitime / Réglementation FFA) :</strong> Affichage des résultats sur notre site, la plateforme du chronométreur officiel et transmission à la FFA pour le calcul des bilans officiels et index ITRA/UTMB.</p>
+                <p><strong class="text-white">Information sur les éditions futures (Consentement) :</strong> Envoi de la newsletter annuelle si vous avez coché la case correspondante lors de votre inscription.</p>
+            </div>
+        </section>
+
+        <!-- 4. Destinataires des Données -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">4. Destinataires & Absence de Revente</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Vos données personnelles sont strictement confidentielles. Elles ne sont <strong class="text-brand">jamais vendues, louées ou cédées</strong> à des partenaires commerciaux à des fins de prospection publicitaire.
+                </p>
+                <p>Les seuls sous-traitants et partenaires habilités à recevoir certaines données sont :</p>
+                <ul class="list-disc pl-5 space-y-1">
+                    <li>La société de chronométrage officiel agréée (gestion des puces RFID et classements).</li>
+                    <li>Le service de secours médical (Croix-Rouge, pompiers, médecin coordinateur).</li>
+                    <li>La Fédération Française d'Athlétisme (FFA) et l'International Trail Running Association (ITRA).</li>
+                    <li>La compagnie d'assurance de l'association (en cas de déclaration de sinistre).</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. Durée de Conservation -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">5. Durées de Conservation</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p><strong class="text-white">Dossiers administratifs & facturation :</strong> 3 ans à compter de la date de la course, conformément aux obligations comptables.</p>
+                <p><strong class="text-white">Attestations médicales / PPS :</strong> Détruites ou anonymisées dans un délai maximum de 6 mois après l'événement.</p>
+                <p><strong class="text-white">Classements sportifs historiques :</strong> Conservés indéfiniment pour mémoire du palmarès de l'épreuve sportive, sauf demande expresse d'anonymisation de votre part.</p>
+            </div>
+        </section>
+
+        <!-- 6. Exercice de Vos Droits -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-hand-holding-hand"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">6. Vos Droits & Réclamations</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Conformément aux articles 15 à 22 du Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité de vos données et d'opposition.
+                </p>
+                <p>
+                    Pour exercer l'un de ces droits, il vous suffit de nous adresser une demande accompagnée d'un justificatif d'identité à l'adresse électronique : <a href="mailto:rgpd@traildesmines.fr" class="text-brand hover:underline">rgpd@traildesmines.fr</a>. Nous vous répondrons dans un délai maximum de 30 jours.
+                </p>
+                <p>
+                    Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous disposez du droit d'introduire une réclamation auprès de l'autorité de contrôle compétente : la <strong class="text-white">CNIL (Commission Nationale de l'Informatique et des Libertés - cnil.fr)</strong>.
+                </p>
+            </div>
+        </section>
+
+        <!-- 7. Cookies & Traceurs -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-cookie-bite"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">7. Gestion des Cookies</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Notre site internet <strong class="text-white">traildesmines.fr</strong> utilise exclusivement des cookies techniques nécessaires au bon fonctionnement de la navigation (notamment pour mémoriser l'affichage responsive et la fluidité du défilement Lenis).
+                </p>
+                <p>
+                    Nous n'employons aucun cookie tiers publicitaire intrusif. La consultation du site ne donne lieu à aucun profilage commercial de votre activité sur le web.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mega Footer -->
+    <footer class="bg-[#0a1214] pt-16 md:pt-24 flex flex-col relative z-20 overflow-hidden" role="contentinfo">
+        <div class="w-full max-w-7xl mx-auto px-4 mb-16 md:mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-10">
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Les Épreuves</h4>
+                <a href="parcours.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Parcours</a>
+                <a href="galibots.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Galibots (13 km)</a>
+                <a href="terrils.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Terrils (28 km)</a>
+                <a href="gueules-noires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Gueules Noires (52 km)</a>
+                <a href="autres.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Autres formats</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Infos Pratiques</h4>
+                <a href="infos-pratiques.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Guide Général</a>
+                <a href="reglement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Règlement</a>
+                <a href="resultats-medias.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Résultats & Médias</a>
+                <a href="editions-precedentes.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éditions Précédentes</a>
+                <a href="preparer-mon-trail.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Préparer mon trail</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">L'Association</h4>
+                <a href="a-propos.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">À propos</a>
+                <a href="association.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Run in Champagney</a>
+                <a href="benevoles.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Bénévoles</a>
+                <a href="eco-engagement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éco-engagement & Territoire</a>
+                <a href="partenaires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Partenaires & Sponsors</a>
+                <a href="dossard-solidaire.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Dossard Solidaire</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Raccourcis</h4>
+                <a href="inscription.html" class="text-brand hover:text-white text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors mb-2 font-bold">S'inscrire</a>
+                <a href="index.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Page d'accueil</a>
+                <a href="contact.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Contact</a>
+                <a href="presse.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Presse</a>
+                <div class="mt-4 flex flex-col gap-2">
+                    <a href="mentions-legales.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Mentions légales</a>
+                    <a href="politique-confidentialite.html" class="text-brand text-[9px] uppercase tracking-wider font-sans transition-colors font-bold">Politique de confidentialité</a>
+                    <a href="declaration-accessibilite.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Déclaration d'accessibilité</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-full text-center z-10 px-4 mb-4">
+            <p class="text-gray-700 text-[9px] uppercase tracking-widest font-sans">© 2026 Association Run in Champagney - Tous droits réservés</p>
+        </div>
+        <div aria-hidden="true" class="w-full relative translate-y-[28%] md:translate-y-[22%] pointer-events-none select-none text-center overflow-hidden">
+            <div class="font-display text-[22vw] md:text-[18vw] font-bold uppercase leading-none text-white/[0.03] tracking-tighter whitespace-nowrap">
+                TRAIL DES MINES
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

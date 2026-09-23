@@ -1,0 +1,86 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "L'Association Run in Champagney | Club Organisateur du Trail des Mines";
+const description = "Découvrez Run in Champagney, club de course à pied et trail en Haute-Saône : bureau, entraînements hebdomadaires, adhésion et organisation du Trail des Mines.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Club FFA • Passion & Partage</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Run in <span class="text-brand">Champagney</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Fondée en 2021, l'association rassemble plus de 80 coureurs et trailers de tous niveaux unis par l'amour des sentiers des Vosges du Sud et l'esprit de convivialité.
+            </p>
+        </div>
+    </header>
+
+    <!-- Présentation du Club -->
+    <section class="py-12 px-4 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Nos Rendez-vous Hebdomadaires</h2>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li class="flex items-start gap-3">
+                        <span class="font-mono text-brand font-bold">Mardi 18h30 :</span>
+                        <div>Séance de fractionné / renforcement musculaire au stade municipal de Champagney.</div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="font-mono text-brand font-bold">Jeudi 18h30 :</span>
+                        <div>Sortie footing en sous-bois et travail de côtes sur les terrils (groupes de niveau).</div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <span class="font-mono text-brand font-bold">Dimanche 09h00 :</span>
+                        <div>Sortie longue nature (15 à 30 km) sur les crêtes vosgiennes et découverte de nouveaux singles.</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl flex flex-col justify-between">
+                <div>
+                    <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Rejoindre l'Association</h2>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                        Que vous débutiez la course à pied ou que vous prépariez des ultras de 100 kilomètres, chacun trouve sa place au sein du club. Licence FFA loisir ou compétition disponible.
+                    </p>
+                    <div class="bg-dark/60 p-4 rounded-xl text-xs text-gray-400 mb-4">
+                        <p><strong>Cotisation annuelle :</strong> 35 € (assurance incluse) • Maillot du club offert à chaque nouvel adhérent.</p>
+                    </div>
+                </div>
+                <a href="/contact" class="block w-full text-center bg-brand text-dark hover:bg-white py-3.5 rounded-xl font-display uppercase tracking-widest font-bold text-xs transition-all shadow-md">
+                    Nous contacter pour faire un essai gratuit
+                </a>
+            </div>
+        </div>
+
+        <!-- Le Bureau de l'Association -->
+        <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+            <h2 class="font-display text-2xl font-bold uppercase text-white mb-6 text-center">Le Bureau & Les Bénévoles Référents</h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+                <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                    <span class="font-display font-bold text-white text-base block">Pierre C.</span>
+                    <span class="text-xs text-brand uppercase font-semibold">Président</span>
+                </div>
+                <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                    <span class="font-display font-bold text-white text-base block">Julien B.</span>
+                    <span class="text-xs text-brand uppercase font-semibold">Trésorier</span>
+                </div>
+                <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                    <span class="font-display font-bold text-white text-base block">Sophie M.</span>
+                    <span class="text-xs text-brand uppercase font-semibold">Secrétaire Générale</span>
+                </div>
+                <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                    <span class="font-display font-bold text-white text-base block">Laurent D.</span>
+                    <span class="text-xs text-brand uppercase font-semibold">Resp. Parcours & Balisage</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

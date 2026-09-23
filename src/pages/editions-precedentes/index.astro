@@ -1,0 +1,166 @@
+---
+export const prerender = false;
+
+import Layout from '../../layouts/Layout.astro';
+import { getAllEditionsSync } from '../../lib/db';
+
+const title = "Éditions Précédentes - Trail des Mines | Archives & Palmarès Historique";
+const description = "Revivez les éditions passées du Trail des Mines à Champagney : affiches de chaque année, palmarès complet par course et albums photos officiels.";
+
+const editions = getAllEditionsSync();
+const totalRaces = editions.reduce((acc, e) => acc + (e.races?.length || 0), 0);
+const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length || 0), 0);
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+    <!-- En-tête Hero -->
+    <header class="pt-36 md:pt-44 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-[#0f1b1e]">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">
+                Mémoire & Épopée Minérale
+            </span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-6">
+                Éditions <span class="text-brand">Précédentes</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Depuis la première foulée des pionniers en 2022, le Trail des Mines s'est forgé une histoire unique. 
+                Retrouvez les affiches officielles, les palmarès complets par épreuve et les galeries photos immortalisées par nos photographes bénévoles.
+            </p>
+        </div>
+    </header>
+
+    <!-- Repères Historiques -->
+    <section class="py-8 px-4 max-w-5xl mx-auto -mt-6 relative z-20">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 text-center">
+            <div class="bg-cardBg/90 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-xl hover:border-brand/30 transition">
+                <span class="text-xs uppercase tracking-widest text-gray-400 block mb-1">Éditions Réalisées</span>
+                <span class="font-display text-4xl font-bold text-brand">{editions.length}</span>
+                <span class="text-[10px] text-gray-400 block mt-1">2022 à 2025</span>
+            </div>
+            <div class="bg-cardBg/90 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-xl hover:border-brand/30 transition">
+                <span class="text-xs uppercase tracking-widest text-gray-400 block mb-1">Épreuves Disputées</span>
+                <span class="font-display text-4xl font-bold text-white">{totalRaces}</span>
+                <span class="text-[10px] text-gray-400 block mt-1">Formats de 13km à 52km</span>
+            </div>
+            <div class="bg-cardBg/90 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-xl hover:border-brand/30 transition">
+                <span class="text-xs uppercase tracking-widest text-gray-400 block mb-1">Galeries Photos HD</span>
+                <span class="font-display text-4xl font-bold text-brand">{totalGalleries}</span>
+                <span class="text-[10px] text-gray-400 block mt-1">Albums immortalisés</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Liste Chronologique des Éditions -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="space-y-12">
+            {editions.map((edition, idx) => {
+                const totalPhotosInEdition = edition.galleries.reduce(
+                  (acc, g) => acc + g.subGalleries.reduce((sAcc, s) => sAcc + s.photos.length, 0),
+                  0
+                );
+
+                return (
+                  <div class="bg-cardBg/80 backdrop-blur-md rounded-3xl p-6 md:p-10 border border-white/10 hover:border-brand/40 shadow-2xl transition-all duration-300">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        
+                        <!-- Miniature Affiche Officielle -->
+                        <div class="lg:col-span-4 flex flex-col items-center">
+                            <a href={`/editions-precedentes/${edition.year}`} class="group block relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 hover:scale-[1.02] transition-transform duration-500 max-w-xs w-full aspect-[3/4] bg-dark">
+                                <img 
+                                  src={edition.posterUrl} 
+                                  alt={`Affiche officielle du Trail des Mines ${edition.year}`}
+                                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                  loading="lazy"
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-dark/90 via-transparent to-transparent opacity-60 group-hover:opacity-30 transition-opacity"></div>
+                                <span class="absolute bottom-3 left-3 bg-brand/90 text-dark px-3 py-1 rounded-full text-[10px] font-display font-bold uppercase tracking-wider">
+                                  Affiche Officielle {edition.year}
+                                </span>
+                            </a>
+                        </div>
+
+                        <!-- Contenu & Résumé de l'Édition -->
+                        <div class="lg:col-span-8 flex flex-col justify-between">
+                            <div>
+                                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-white/10 mb-4">
+                                    <div>
+                                        <span class="text-xs font-display uppercase tracking-widest text-brand font-bold">
+                                            {edition.subtitle}
+                                        </span>
+                                        <h2 class="font-display text-3xl md:text-4xl font-bold uppercase text-white mt-1">
+                                            {edition.year} • <span class="text-gray-100">{edition.title}</span>
+                                        </h2>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-brand/20 text-brand border border-brand/30 px-3.5 py-1 rounded-full text-xs font-mono font-bold">
+                                            {edition.races?.length || 0} course(s) au programme
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+                                    {edition.description}
+                                </p>
+
+                                <!-- Liens Résultats Officiels -->
+                                {edition.resultLinks && edition.resultLinks.length > 0 && (
+                                    <div class="bg-dark/70 rounded-2xl p-4 border border-white/5 mb-6">
+                                        <span class="text-[11px] uppercase tracking-wider text-gray-400 font-display font-bold block mb-2.5">
+                                            <i class="fa-solid fa-trophy text-brand mr-1.5"></i> Résultats & Classements {edition.year}
+                                        </span>
+                                        <div class="flex flex-wrap gap-2 text-xs">
+                                            {edition.resultLinks.map(link => (
+                                                <a 
+                                                    href={link.url} 
+                                                    target="_blank" 
+                                                    rel="noopener noreferrer" 
+                                                    class="bg-white/5 hover:bg-brand hover:text-dark text-gray-300 hover:border-brand/40 px-3.5 py-1.5 rounded-xl border border-white/10 text-xs font-medium transition inline-flex items-center gap-2 group"
+                                                >
+                                                    <span>{link.label}</span>
+                                                    <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-70 group-hover:opacity-100 transition"></i>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <!-- Actions & Liens -->
+                            <div class="flex flex-wrap items-center gap-3 pt-2">
+                                <a 
+                                  href={`/editions-precedentes/${edition.year}`} 
+                                  class="bg-brand text-dark px-6 py-3 rounded-xl font-display uppercase tracking-wider font-bold text-xs hover:bg-white hover:scale-105 transition-all shadow-lg shadow-brand/20 inline-flex items-center gap-2"
+                                >
+                                    <span>Résultats & Détails {edition.year}</span>
+                                    <i class="fa-solid fa-arrow-right text-[11px]"></i>
+                                </a>
+
+                                {edition.galleries.length > 0 && (
+                                    <a 
+                                      href={`/editions-precedentes/${edition.year}#galeries`} 
+                                      class="bg-white/10 hover:bg-white/20 text-white px-5 py-3 rounded-xl font-display uppercase tracking-wider text-xs font-semibold transition inline-flex items-center gap-2 border border-white/10"
+                                    >
+                                        <i class="fa-solid fa-camera text-brand"></i>
+                                        <span>Photos ({totalPhotosInEdition} clichés)</span>
+                                    </a>
+                                )}
+                            </div>
+
+                        </div>
+                    </div>
+                  </div>
+                );
+            })}
+        </div>
+    </section>
+
+    <!-- Call to action Back-office en bas discret pour l'organisateur -->
+    <section class="py-8 px-4 text-center">
+        <a href="/admin" class="text-[11px] text-gray-500 hover:text-brand transition uppercase tracking-widest inline-flex items-center gap-1.5 font-mono">
+            <i class="fa-solid fa-lock text-[10px]"></i>
+            <span>Espace d'administration du Trail des Mines</span>
+        </a>
+    </section>
+
+</Layout>

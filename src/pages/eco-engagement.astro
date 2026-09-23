@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Éco-engagement & Territoire - Trail des Mines | Charte Verte & Forêt";
+const description = "Découvrez les engagements éco-responsables du Trail des Mines 2026 à Champagney : zéro déchet, balisage réutilisable, circuits courts et protection du biotope vosgien.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Préserver notre terrain de jeu</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Éco-engagement & <span class="text-brand">Territoire</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Courir en forêt et sur les terrils est un privilège qui exige une responsabilité absolue. Découvrez les actions concrètes menées par Run in Champagney pour un impact environnemental minimal.
+            </p>
+        </div>
+    </header>
+
+    <!-- Nos 4 Engagements Verts -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">1. Zéro Plastique Jetable</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Depuis 2023, aucun gobelet jetable n'est distribué sur la course. Chaque coureur utilise son propre gobelet ou flasque réutilisable. Tous les emballages alimentaires des ravitaillements sont triés et valorisés par les filières locales de recyclage.
+                </p>
+                <span class="text-xs text-brand font-mono font-semibold">Économie estimée : plus de 3 500 gobelets évités par an.</span>
+            </div>
+
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-route"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">2. Balisage 100% Réutilisable</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Aucune bombe de peinture permanente sur les arbres ou les rochers ! Nous utilisons des rubalises en tissu recyclé réutilisables d'année en année et des fanions amovibles, intégralement retirés dans les 24h par nos équipes de débalisage à pied.
+                </p>
+                <span class="text-xs text-brand font-mono font-semibold">Tolérance zéro pour les déchets laissés en forêt.</span>
+            </div>
+
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">3. Circuits Courts & Terroir</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    85% des denrées servies sur nos ravitaillements et le repas chaud d'après-course proviennent de producteurs situés dans un rayon de moins de 40 km (fromages comtois, pain artisanal de Champagney, fruits locaux et bières artisanales des Houillères).
+                </p>
+                <span class="text-xs text-brand font-mono font-semibold">Soutien direct à l'économie locale haut-saônoise.</span>
+            </div>
+
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-medal"></i>
+                </div>
+                <h2 class="font-display text-2xl font-bold uppercase text-white mb-3">4. Récompenses Éthiques</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Pas de médailles en plastique venues de l'autre bout du monde. Les médailles finishers sont façonnées en bois local certifié PEFC issu des forêts vosgiennes et gravées au laser par un artisan du bassin minier.
+                </p>
+                <span class="text-xs text-brand font-mono font-semibold">Un souvenir authentique, écologique et durable.</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

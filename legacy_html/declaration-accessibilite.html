@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déclaration d'Accessibilité Numérique | Trail des Mines 2026</title>
+    <meta name="description" content="Déclaration d'accessibilité numérique (RGAA 4.1 et WCAG 2.1) du site Trail des Mines : engagements, contrastes, navigation clavier et signalement de défauts.">
+    <link rel="canonical" href="https://traildesmines.fr/declaration-accessibilite.html">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#101D20',
+                        brand: '#B0BE42',
+                        cardBg: '#213A40',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-dark text-white font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-dark relative">
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] bg-[#0a1214]/95 backdrop-blur-2xl z-[45] pointer-events-none opacity-0 overflow-y-auto" role="dialog" aria-modal="true">
+        <div class="min-h-full flex flex-col justify-between items-center py-20 px-6">
+            <div class="w-full flex flex-col items-center justify-center flex-1 mt-8 mb-12">
+                <nav class="flex flex-col items-center space-y-6 text-center font-display uppercase tracking-widest w-full max-w-sm">
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>Parcours</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="parcours.html" class="text-gray-400 hover:text-brand text-lg py-1">Tous les Parcours</a>
+                                <a href="galibots.html" class="text-gray-400 hover:text-brand text-lg py-1">Galibots (13 km)</a>
+                                <a href="terrils.html" class="text-gray-400 hover:text-brand text-lg py-1">Terrils (28 km)</a>
+                                <a href="gueules-noires.html" class="text-gray-400 hover:text-brand text-lg py-1">Gueules Noires (52 km)</a>
+                                <a href="autres.html" class="text-gray-400 hover:text-brand text-lg py-1">Autres formats</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>Infos Pratiques</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="infos-pratiques.html" class="text-gray-400 hover:text-brand text-lg py-1">Guide Général</a>
+                                <a href="reglement.html" class="text-gray-400 hover:text-brand text-lg py-1">Règlement</a>
+                                <a href="resultats-medias.html" class="text-gray-400 hover:text-brand text-lg py-1">Résultats & Médias</a>
+                                <a href="editions-precedentes.html" class="text-gray-400 hover:text-brand text-lg py-1">Éditions Précédentes</a>
+                                <a href="preparer-mon-trail.html" class="text-gray-400 hover:text-brand text-lg py-1">Préparer mon trail</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>L'Association</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="a-propos.html" class="text-gray-400 hover:text-brand text-lg py-1">À propos</a>
+                                <a href="association.html" class="text-gray-400 hover:text-brand text-lg py-1">Run in Champagney</a>
+                                <a href="benevoles.html" class="text-gray-400 hover:text-brand text-lg py-1">Bénévoles</a>
+                                <a href="eco-engagement.html" class="text-gray-400 hover:text-brand text-lg py-1">Éco-engagement</a>
+                                <a href="partenaires.html" class="text-gray-400 hover:text-brand text-lg py-1">Partenaires</a>
+                                <a href="dossard-solidaire.html" class="text-gray-400 hover:text-brand text-lg py-1">Dossard solidaire</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full mt-4">
+                        <a href="contact.html" class="text-3xl hover:text-brand py-2 block">Contact</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="mobile-link shrink-0 pb-4">
+                <a href="inscription.html" class="bg-brand text-dark px-12 py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:scale-105 inline-block shadow-[0_10px_30px_rgba(176,190,66,0.2)]">S'inscrire</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Pilule principale -->
+    <div class="fixed w-full top-4 md:top-6 z-50 px-4 flex justify-center nav-container pointer-events-none">
+        <nav class="bg-[#101D20]/80 backdrop-blur-xl rounded-full border border-white/10 shadow-2xl flex items-center px-4 md:px-6 py-2 md:py-3 max-w-6xl w-full justify-between transition-transform duration-500 pointer-events-auto" id="main-nav">
+            <a href="index.html" class="font-display font-bold text-lg md:text-xl uppercase tracking-widest text-white group relative overflow-hidden h-6 flex flex-col justify-start z-50">
+                <span class="block group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1)">TD<span class="text-brand">M</span><span class="hidden sm:inline">26</span></span>
+                <span class="block translate-y-full group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) text-brand absolute inset-0">TD<span class="text-white">M</span><span class="hidden sm:inline text-white">26</span></span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-gray-300">
+                <div class="nav-item relative">
+                    <a href="parcours.html" class="hover:text-brand transition-colors duration-300 py-4 block">Parcours</a>
+                    <div class="dropdown-wrapper w-52">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="parcours.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Tous les Parcours</a>
+                            <a href="galibots.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Galibots (13 km)</a>
+                            <a href="terrils.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Terrils (28 km)</a>
+                            <a href="gueules-noires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Gueules Noires (52 km)</a>
+                            <a href="autres.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Autres formats</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="infos-pratiques.html" class="hover:text-brand transition-colors duration-300 py-4 block">Infos pratiques</a>
+                    <div class="dropdown-wrapper w-60">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="infos-pratiques.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Guide Général</a>
+                            <a href="reglement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Règlement</a>
+                            <a href="resultats-medias.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Résultats & Médias</a>
+                            <a href="editions-precedentes.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éditions précédentes</a>
+                            <a href="preparer-mon-trail.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Préparer mon trail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="a-propos.html" class="hover:text-brand transition-colors duration-300 py-4 block">À propos</a>
+                    <div class="dropdown-wrapper w-64">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="a-propos.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">À propos</a>
+                            <a href="association.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Run in Champagney</a>
+                            <a href="benevoles.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Bénévoles</a>
+                            <a href="eco-engagement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éco-engagement</a>
+                            <a href="partenaires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Partenaires</a>
+                            <a href="dossard-solidaire.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Dossard solidaire</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="contact.html" class="hover:text-brand transition-colors duration-300 py-4">Contact</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="inscription.html" class="bg-brand text-dark font-display uppercase tracking-widest text-[10px] md:text-xs px-5 md:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-bold z-50">S'inscrire</a>
+                <button id="hamburger-btn" aria-label="Ouvrir le menu" class="lg:hidden text-white p-2 z-50 relative focus:outline-none">
+                    <div class="w-6 h-4 relative flex flex-col justify-between">
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-1"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300" id="line-2"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-3"></span>
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Header / Hero Accessibilité -->
+    <header class="pt-32 pb-16 md:pt-44 md:pb-20 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark text-center">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
+                <i class="fa-solid fa-universal-access"></i> Accessibilité & Inclusion Numérique
+            </div>
+            <h1 class="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
+                Déclaration <span class="text-brand">d'Accessibilité</span>
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm max-w-2xl mx-auto font-light leading-relaxed hero-anim">
+                L'Association Run in Champagney s'engage à rendre son site web accessible à tous les internautes, qu'ils soient porteurs de handicap visuel, moteur ou cognitif, conformément au Référentiel Général d'Amélioration de l'Accessibilité (RGAA 4.1).
+            </p>
+        </div>
+    </header>
+
+    <!-- Contenu Textuel RGAA Structuré -->
+    <main class="max-w-4xl mx-auto px-4 pb-24 space-y-10">
+
+        <!-- 1. État de Conformité -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">1. État de Conformité</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Le site internet <strong class="text-white">traildesmines.fr</strong> est <strong class="text-brand">partiellement conforme</strong> avec le Référentiel Général d'Amélioration de l'Accessibilité (RGAA version 4.1) et les directives pour l'accessibilité aux contenus web (WCAG 2.1 niveau Double-A).
+                </p>
+                <p>
+                    Nous travaillons de manière continue pour améliorer l'expérience utilisateur et lever les obstacles éventuels à la consultation autonome de nos contenus.
+                </p>
+            </div>
+        </section>
+
+        <!-- 2. Dispositifs Techniques Mis en Œuvre -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">2. Mesures d'Accessibilité Appliquées</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <ul class="list-disc pl-5 space-y-2">
+                    <li><strong class="text-white">Contrastes chromatiques élevés :</strong> Les combinaisons de couleurs (texte blanc sur fond sombre #101D20, accentuation vert pomme #B0BE42) respectent un ratio de contraste supérieur à 4.5:1, facilitant la lecture pour les personnes malvoyantes.</li>
+                    <li><strong class="text-white">Lecteurs d'écran & Balises ARIA :</strong> Les éléments décoratifs non informatifs (filigranes géants d'arrière-plan, overlay de grain SVG) sont neutralisés via l'attribut standard <code class="text-brand font-mono">aria-hidden="true"</code> pour ne pas polluer la synthèse vocale.</li>
+                    <li><strong class="text-white">Structure sémantique rigoureuse :</strong> Chaque page dispose d'un unique titre principal <code class="text-brand font-mono">&lt;h1&gt;</code> complété d'une arborescence logique de sous-titres <code class="text-brand font-mono">&lt;h2&gt;</code> à <code class="text-brand font-mono">&lt;h4&gt;</code>.</li>
+                    <li><strong class="text-white">Alternatives textuelles explicites :</strong> Toutes les photographies et infographies disposent d'un texte alternatif <code class="text-brand font-mono">alt</code> décrivant précisément le contenu de l'image.</li>
+                    <li><strong class="text-white">Navigation au clavier :</strong> Tous les éléments interactifs (liens de navigation, boutons d'accordéons, formulaires) sont activables par la touche Tabulation avec indicateur de focus distinct.</li>
+                    <li><strong class="text-white">Respect des animations (prefers-reduced-motion) :</strong> Le site est conçu pour adapter la vitesse de défilement pour les utilisateurs ayant activé la réduction de mouvement dans leur système d'exploitation.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 3. Dérogations & Contenus Non Accessibles -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">3. Contenus Non Accessibles (Dérogations)</h2>
+            </div>
+            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>Certains modules spécifiques peuvent présenter des limites d'accessibilité :</p>
+                <ul class="list-disc pl-5 space-y-1.5">
+                    <li><strong class="text-white">Cartes interactives Leaflet :</strong> La manipulation des tracés GPX sur la carte cartographique peut être difficilement accessible via lecteur d'écran. En compensation, les données clés (distances, dénivelés, barrières horaires, points de ravitaillement) sont systématiquement retranscrites sous forme de tableaux textuels entièrement accessibles.</li>
+                    <li><strong class="text-white">Vidéos embarquées YouTube :</strong> Les sous-titres et transcriptions dépendent de l'outil d'hébergement externe tiers.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 4. Contact Référent Accessibilité & Voie de Recours -->
+        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
+            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
+                    <i class="fa-solid fa-headset"></i>
+                </div>
+                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">4. Signalement d'un Défaut & Recours</h2>
+            </div>
+            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
+                <p>
+                    Si vous rencontrez un défaut d'accessibilité qui vous empêche d'accéder à un contenu ou à une fonctionnalité du site, merci de nous le signaler afin que nous puissions vous orienter vers une alternative accessible :
+                </p>
+                <p>
+                    <strong class="text-white">Courriel du Référent Accessibilité :</strong> <a href="mailto:accessibilite@traildesmines.fr" class="text-brand hover:underline">accessibilite@traildesmines.fr</a>
+                    <br><strong class="text-white">Formulaire de contact :</strong> Accessible via notre page <a href="contact.html" class="text-brand hover:underline">Contact</a>.
+                </p>
+                <div class="mt-4 p-4 bg-dark/50 rounded-2xl border border-white/10">
+                    <strong class="text-white block mb-1">Voie de recours légale :</strong>
+                    <p class="text-gray-400 text-xs">
+                        Si vous constatez un défaut d'accessibilité vous privant d'un droit et que vous n'obtenez pas de réponse satisfaisante de notre part sous 15 jours, vous êtes en droit d'adresser une réclamation au Défenseur des droits :
+                        <br>• Écrire un message au Défenseur des droits via son portail en ligne (<a href="https://formulaire.defenseurdesdroits.fr" target="_blank" rel="noopener" class="text-brand underline">formulaire.defenseurdesdroits.fr</a>).
+                        <br>• Contacter le délégué du Défenseur des droits dans votre région.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mega Footer -->
+    <footer class="bg-[#0a1214] pt-16 md:pt-24 flex flex-col relative z-20 overflow-hidden" role="contentinfo">
+        <div class="w-full max-w-7xl mx-auto px-4 mb-16 md:mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-10">
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Les Épreuves</h4>
+                <a href="parcours.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Parcours</a>
+                <a href="galibots.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Galibots (13 km)</a>
+                <a href="terrils.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Terrils (28 km)</a>
+                <a href="gueules-noires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Gueules Noires (52 km)</a>
+                <a href="autres.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Autres formats</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Infos Pratiques</h4>
+                <a href="infos-pratiques.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Guide Général</a>
+                <a href="reglement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Règlement</a>
+                <a href="resultats-medias.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Résultats & Médias</a>
+                <a href="editions-precedentes.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éditions Précédentes</a>
+                <a href="preparer-mon-trail.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Préparer mon trail</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">L'Association</h4>
+                <a href="a-propos.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">À propos</a>
+                <a href="association.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Run in Champagney</a>
+                <a href="benevoles.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Bénévoles</a>
+                <a href="eco-engagement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éco-engagement & Territoire</a>
+                <a href="partenaires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Partenaires & Sponsors</a>
+                <a href="dossard-solidaire.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Dossard Solidaire</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Raccourcis</h4>
+                <a href="inscription.html" class="text-brand hover:text-white text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors mb-2 font-bold">S'inscrire</a>
+                <a href="index.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Page d'accueil</a>
+                <a href="contact.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Contact</a>
+                <a href="presse.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Presse</a>
+                <div class="mt-4 flex flex-col gap-2">
+                    <a href="mentions-legales.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Mentions légales</a>
+                    <a href="politique-confidentialite.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Politique de confidentialité</a>
+                    <a href="declaration-accessibilite.html" class="text-brand text-[9px] uppercase tracking-wider font-sans transition-colors font-bold">Déclaration d'accessibilité</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-full text-center z-10 px-4 mb-4">
+            <p class="text-gray-700 text-[9px] uppercase tracking-widest font-sans">© 2026 Association Run in Champagney - Tous droits réservés</p>
+        </div>
+        <div aria-hidden="true" class="w-full relative translate-y-[28%] md:translate-y-[22%] pointer-events-none select-none text-center overflow-hidden">
+            <div class="font-display text-[22vw] md:text-[18vw] font-bold uppercase leading-none text-white/[0.03] tracking-tighter whitespace-nowrap">
+                TRAIL DES MINES
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

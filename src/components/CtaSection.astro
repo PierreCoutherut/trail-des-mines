@@ -1,0 +1,131 @@
+---
+// CtaSection.astro - Grand bandeau d'appel à l'action avec effet Marvel Flip-Book au survol
+---
+
+<section id="cta-section" class="h-[48vh] md:h-[58vh] bg-brand text-dark relative flex items-center justify-center overflow-hidden z-20 transition-colors duration-500">
+    <!-- Texture Topographique subtile en filigrane minéral (faible opacité) -->
+    <div class="topo-texture-dark pointer-events-none" aria-hidden="true"></div>
+
+    <!-- Calque Marvel : Diaporama dynamique haute vélocité (actif au survol du bouton) -->
+    <div id="cta-marvel-bg" class="absolute inset-0 z-0 opacity-0 pointer-events-none transition-opacity duration-150">
+        <div id="cta-marvel-img" class="w-full h-full bg-cover bg-center transition-transform duration-75 filter brightness-105 contrast-125"></div>
+        <!-- Masque d'assombrissement et dégradé cinématique Marvel -->
+        <div class="absolute inset-0 bg-dark/65 backdrop-blur-[0.5px]"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-dark/80"></div>
+
+    </div>
+
+    <!-- Contenu Central (seul le bouton ci-dessous est cliquable) -->
+    <div class="relative z-10 flex flex-col items-center justify-center text-center px-4 pointer-events-none">
+        <!-- Badge style générique Marvel -->
+        <div id="cta-marvel-badge" class="inline-flex items-center gap-2 px-3.5 py-1 rounded bg-dark/90 border border-white/20 text-white font-display uppercase tracking-[0.35em] text-[10px] md:text-xs mb-3 transition-all duration-300 shadow-lg">
+            <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+            <span>6ème Édition • 16 Mai 2027</span>
+        </div>
+
+        <h2 id="cta-title" class="font-display text-[18vw] md:text-[12vw] font-bold uppercase leading-none text-dark transition-all duration-200 select-none tracking-tight">
+            S'inscrire
+        </h2>
+        
+        <!-- Bouton d'inscription exclusif (seul élément interactif pour s'inscrire) -->
+        <a href="/inscription" id="cta-btn" class="btn-registration-trigger pointer-events-auto inline-flex items-center gap-3.5 mt-5 md:mt-8 px-8 md:px-10 py-4 rounded-full bg-dark text-white hover:bg-brand hover:text-dark border-2 border-white/20 hover:border-brand font-sans font-bold uppercase tracking-wider text-xs md:text-sm transition-all duration-200 shadow-2xl hover:scale-105 active:scale-95 cursor-pointer group hover:shadow-[0_0_40px_rgba(176,190,66,0.6)]" aria-label="Je prends mon dossard pour le Trail des Mines 2027">
+            <span>Je prends mon dossard</span>
+            <i class="fa-solid fa-arrow-right text-xs transition-transform duration-200 group-hover:translate-x-2"></i>
+        </a>
+    </div>
+</section>
+
+<!-- Script Effet Marvel Haute Vélocité (160ms) au Survol du Bouton -->
+<script is:inline>
+    (function() {
+        function initMarvelCta() {
+            var ctaBtn = document.getElementById('cta-btn');
+            var marvelBg = document.getElementById('cta-marvel-bg');
+            var marvelImg = document.getElementById('cta-marvel-img');
+            var ctaTitle = document.getElementById('cta-title');
+            var ctaBadge = document.getElementById('cta-marvel-badge');
+            
+            if (!ctaBtn || !marvelBg || !marvelImg) return;
+
+            var marvelImages = [
+                '/medias/Index/Pierre-Coutherut_TDM-2024-2.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-48.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-71.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-79.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-220.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-231.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-233.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-244.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-274.jpg',
+                '/medias/Index/Pierre-Coutherut_TDM-2024-343.jpg',
+                '/medias/Index/Pierre-Coutherut_Trail-des-mines-2024--3.jpg',
+                '/medias/Index/Pierre-Coutherut_Trail-des-mines-2024-2717.jpg',
+                '/medias/Index/Pierre-Coutherut_Trail-des-mines-2024-2814.jpg',
+                '/medias/Index/Elodie-Bermond_IMG_6221-original.webp',
+                '/medias/Index/Elodie-Bermond_IMG_6698-original.webp',
+                '/medias/Index/Elodie-Bermond_IMG_7139-original.webp',
+                '/medias/Index/Elodie-Bermond_IMG_7238-original.webp',
+                '/medias/Index/Elodie-Bermond_IMG_7330-original.webp',
+                '/medias/Index/Elodie-Bermond_IMG_7464-original.webp'
+            ];
+
+            // Préchargement immédiat des images
+            marvelImages.forEach(function(src) {
+                var img = new Image();
+                img.src = src;
+            });
+
+            var timer = null;
+            var currentIndex = 0;
+            var scales = ['scale(1.02)', 'scale(1.05)', 'scale(1.03)', 'scale(1.06)'];
+            var scaleIdx = 0;
+
+            function nextFrame() {
+                currentIndex = (currentIndex + 1) % marvelImages.length;
+                scaleIdx = (scaleIdx + 1) % scales.length;
+                marvelImg.style.backgroundImage = 'url("' + marvelImages[currentIndex] + '")';
+                marvelImg.style.transform = scales[scaleIdx];
+            }
+
+            ctaBtn.addEventListener('mouseenter', function() {
+                nextFrame();
+                marvelBg.classList.remove('opacity-0');
+                marvelBg.classList.add('opacity-100');
+                if (ctaTitle) {
+                    ctaTitle.classList.remove('text-dark');
+                    ctaTitle.classList.add('text-white');
+                    ctaTitle.style.textShadow = '0 0 35px rgba(0,0,0,0.9), 0 0 70px rgba(176,190,66,0.35)';
+                }
+                if (ctaBadge) {
+                    ctaBadge.classList.remove('bg-dark/90');
+                    ctaBadge.classList.add('bg-brand', 'text-dark', 'font-bold');
+                }
+                
+                clearInterval(timer);
+                // Vitesse Marvel : 160ms par image (~6 images / seconde)
+                timer = setInterval(nextFrame, 160);
+            });
+
+            ctaBtn.addEventListener('mouseleave', function() {
+                clearInterval(timer);
+                marvelBg.classList.remove('opacity-100');
+                marvelBg.classList.add('opacity-0');
+                if (ctaTitle) {
+                    ctaTitle.classList.remove('text-white');
+                    ctaTitle.classList.add('text-dark');
+                    ctaTitle.style.textShadow = 'none';
+                }
+                if (ctaBadge) {
+                    ctaBadge.classList.remove('bg-brand', 'text-dark', 'font-bold');
+                    ctaBadge.classList.add('bg-dark/90', 'text-white');
+                }
+            });
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initMarvelCta);
+        } else {
+            initMarvelCta();
+        }
+    })();
+</script>

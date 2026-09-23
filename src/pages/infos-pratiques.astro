@@ -1,0 +1,174 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Infos Pratiques - Trail des Mines 2027 | Horaires, Accès & Dossards";
+const description = "Toutes les informations pratiques pour participer au Trail des Mines 2027 à Champagney : retrait des dossards, horaires des départs, parkings, hébergements et services.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-6xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Guide du Coureur</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Infos <span class="text-brand">Pratiques</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-lg font-light leading-relaxed">
+                Tout ce que vous devez savoir pour vivre une expérience sportive sans stress : programme du weekend, retrait des dossards, accès, parkings et commodités.
+            </p>
+        </div>
+    </header>
+
+    <!-- Programme du Weekend -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <h2 class="font-display text-2xl md:text-3xl font-bold uppercase text-white mb-8 flex items-center gap-3">
+            <span class="w-2 h-8 bg-brand rounded-full"></span> Programme Officiel 2027
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Samedi 16 Mai -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                    <h3 class="font-display text-2xl font-bold uppercase text-brand">Samedi 15 Mai 2027</h3>
+                    <span class="text-xs uppercase bg-white/10 px-3 py-1 rounded-full text-gray-300">Veille de course</span>
+                </div>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-white bg-dark/60 px-2.5 py-1 rounded">14h00 - 18h30</span>
+                        <div>
+                            <p class="font-bold text-white">Retrait anticipé des dossards</p>
+                            <p class="text-gray-400 text-xs">Gymnase communal de Champagney (Rue des Écoles). Présentation obligatoire d'une pièce d'identité et validation PPS.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-white bg-dark/60 px-2.5 py-1 rounded">17h00</span>
+                        <div>
+                            <p class="font-bold text-white">Briefing d'avant-course des Gueules Noires (52km)</p>
+                            <p class="text-gray-400 text-xs">Point météo détaillé, points de vigilance et barrières horaires.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Dimanche 17 Mai -->
+            <div class="bg-cardBg rounded-3xl p-8 border border-brand/30 shadow-xl">
+                <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
+                    <h3 class="font-display text-2xl font-bold uppercase text-brand">Dimanche 16 Mai 2027</h3>
+                    <span class="text-xs uppercase bg-brand/20 text-brand px-3 py-1 rounded-full font-bold">Jour J</span>
+                </div>
+                <ul class="space-y-4 text-sm text-gray-300">
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-brand bg-dark/80 px-2.5 py-1 rounded">06h00</span>
+                        <div>
+                            <p class="font-bold text-white">Ouverture du village et retrait dossards 52km</p>
+                            <p class="text-gray-400 text-xs">Café d'accueil offert aux coureurs matinaux.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-white bg-dark/80 px-2.5 py-1 rounded">07h00</span>
+                        <div>
+                            <p class="font-bold text-cyan-400">DÉPART Les Gueules Noires (52 km)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-white bg-dark/80 px-2.5 py-1 rounded">09h00</span>
+                        <div>
+                            <p class="font-bold text-brand">DÉPART Les Terrils (28 km)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-white bg-dark/80 px-2.5 py-1 rounded">09h30</span>
+                        <div>
+                            <p class="font-bold text-blue-400">DÉPART Les Galibots (13 km)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-white bg-dark/80 px-2.5 py-1 rounded">10h00</span>
+                        <div>
+                            <p class="font-bold text-gray-300">DÉPART Randonnée du Bassin (10 km)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-white bg-dark/80 px-2.5 py-1 rounded">14h30</span>
+                        <div>
+                            <p class="font-bold text-yellow-400">Départ des Mini-Galibots (Enfants)</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <span class="font-mono font-bold text-brand bg-dark/80 px-2.5 py-1 rounded">15h30</span>
+                        <div>
+                            <p class="font-bold text-white">Cérémonie des Podiums & Remise des Prix</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accès, Parkings & Services -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-square-parking"></i>
+                </div>
+                <h3 class="font-display text-xl font-bold uppercase text-white mb-2">Stationnement Gratuit</h3>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    3 parkings fléchés à l'entrée de Champagney (Parking du Champ de Foire, Parking de la Salle des Fêtes, Parking du Collège). Privilégiez le covoiturage.
+                </p>
+            </div>
+
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-shower"></i>
+                </div>
+                <h3 class="font-display text-xl font-bold uppercase text-white mb-2">Douches & Consignes</h3>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Douches chaudes et vestiaires non mixtes disponibles au Gymnase municipal. Consigne gratuite pour déposer votre sac d'après-course sécurisé par dossard.
+                </p>
+            </div>
+
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5">
+                <div class="w-12 h-12 rounded-xl bg-brand/10 text-brand flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-utensils"></i>
+                </div>
+                <h3 class="font-display text-xl font-bold uppercase text-white mb-2">Restauration & Buvette</h3>
+                <p class="text-xs text-gray-300 leading-relaxed">
+                    Repas chaud complet offert à chaque coureur (compris dans l'inscription). Buvette et friterie artisanale sur place tenues par les bénévoles pour les accompagnateurs.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hébergements Partenaires -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+            <h3 class="font-display text-2xl font-bold uppercase text-brand mb-4 flex items-center gap-3">
+                <i class="fa-solid fa-bed"></i> Où dormir à Champagney et alentours ?
+            </h3>
+            <p class="text-sm text-gray-300 leading-relaxed mb-6">
+                Le secteur des Vosges du Sud offre de multiples solutions d'hébergement : gîtes d'étape, campings nature et hôtels partenaires proposant un petit-déjeuner spécial trail dès 5h30 le dimanche matin.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-dark/60 border border-white/5">
+                    <h4 class="font-bold text-white uppercase mb-1">Camping des Ballastières</h4>
+                    <p class="text-gray-400 mb-2">Au bord du lac, à 2 km du départ.</p>
+                    <span class="text-brand font-mono">Tél : 03 84 23 11 22</span>
+                </div>
+                <div class="p-4 rounded-xl bg-dark/60 border border-white/5">
+                    <h4 class="font-bold text-white uppercase mb-1">Gîte du Puits Arthur</h4>
+                    <p class="text-gray-400 mb-2">Chambres d'hôtes au cœur du bassin minier.</p>
+                    <span class="text-brand font-mono">Tél : 03 84 63 50 14</span>
+                </div>
+                <div class="p-4 rounded-xl bg-dark/60 border border-white/5">
+                    <h4 class="font-bold text-white uppercase mb-1">Hôtel du Cerf (Ronchamp)</h4>
+                    <p class="text-gray-400 mb-2">À 5 minutes en voiture du départ.</p>
+                    <span class="text-brand font-mono">Tél : 03 84 63 52 00</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

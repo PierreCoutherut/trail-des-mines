@@ -1,0 +1,90 @@
+---
+// SponsorMarquee.astro - Double carrousel infini ultra-fluide avec logos agrandis haute visibilité
+const sponsorsRow1 = [
+  { src: '/medias/Sponsors/Sponsor.png', alt: 'Crédit Mutuel - Partenaire Majeur' },
+  { src: '/medias/Sponsors/Sponsor (10).jpg', alt: 'Intermarché Champagney' },
+  { src: '/medias/Sponsors/Sponsor (4).jpg', alt: 'Département de la Haute-Saône' },
+  { src: '/medias/Sponsors/Sponsor (3).jpg', alt: 'idverde' },
+  { src: '/medias/Sponsors/Sponsor (1).jpg', alt: 'Entreprise COTTA' },
+  { src: '/medias/Sponsors/Sponsor (6).jpg', alt: 'Ville de Champagney' },
+  { src: '/medias/Sponsors/Sponsor (5).jpg', alt: 'Cryosculpt' },
+  { src: '/medias/Sponsors/Sponsor (8).jpg', alt: 'Communauté de Communes Rahin et Chérimont' },
+  { src: '/medias/Sponsors/Sponsor (9).jpg', alt: 'Transports BASS' },
+  { src: '/medias/Sponsors/Sponsor (2).jpg', alt: 'Le Franc Brasseur' },
+  { src: '/medias/Sponsors/Sponsor (7).jpg', alt: 'Le Resto de Marine' },
+];
+
+const sponsorsRow2 = [
+  { src: '/medias/Sponsors/Sponsor (6).jpg', alt: 'Ville de Champagney' },
+  { src: '/medias/Sponsors/Sponsor (8).jpg', alt: 'Communauté de Communes Rahin et Chérimont' },
+  { src: '/medias/Sponsors/Sponsor (1).jpg', alt: 'Entreprise COTTA' },
+  { src: '/medias/Sponsors/Sponsor (2).jpg', alt: 'Le Franc Brasseur' },
+  { src: '/medias/Sponsors/Sponsor (9).jpg', alt: 'Transports BASS' },
+  { src: '/medias/Sponsors/Sponsor.png', alt: 'Crédit Mutuel - Partenaire Majeur' },
+  { src: '/medias/Sponsors/Sponsor (7).jpg', alt: 'Le Resto de Marine' },
+  { src: '/medias/Sponsors/Sponsor (10).jpg', alt: 'Intermarché Champagney' },
+  { src: '/medias/Sponsors/Sponsor (3).jpg', alt: 'idverde' },
+  { src: '/medias/Sponsors/Sponsor (4).jpg', alt: 'Département de la Haute-Saône' },
+  { src: '/medias/Sponsors/Sponsor (5).jpg', alt: 'Cryosculpt' },
+];
+---
+
+<section class="py-16 md:py-24 bg-[#0a1214] relative z-20 border-b border-white/5 overflow-hidden">
+  <div class="w-full">
+    <div class="text-center mb-10 md:mb-14 gsap-fade-up max-w-4xl mx-auto px-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 bg-brand/10 border border-brand/30 rounded-full text-brand text-[10px] md:text-xs font-bold uppercase tracking-widest mb-3">
+        Partenaires & Soutiens Officiels
+      </div>
+      <h2 class="font-display text-2xl sm:text-3xl md:text-5xl font-bold uppercase tracking-wide text-white mb-3">
+        Ils soutiennent l'aventure minière
+      </h2>
+      <p class="text-gray-400 text-xs sm:text-sm font-light max-w-xl mx-auto mb-5">
+        Un grand merci aux collectivités territoriales, partenaires majeurs et commerçants locaux engagés à nos côtés.
+      </p>
+      <a href="/partenaires" class="text-xs uppercase tracking-widest text-brand hover:text-white transition-colors font-display inline-flex items-center gap-2 group">
+        <span>Découvrir tous nos partenaires et sponsors</span>
+        <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1.5"></i>
+      </a>
+    </div>
+    
+    <div class="flex flex-col gap-6 md:gap-8 sponsor-track overflow-hidden w-full">
+      <!-- Ligne 1 : Défilement vers la gauche -->
+      <div class="flex w-max animate-scroll-left">
+        <div class="flex items-center gap-5 md:gap-7 pr-5 md:pr-7 shrink-0">
+          {sponsorsRow1.map((sp) => (
+            <div class="w-52 sm:w-64 md:w-72 h-28 sm:h-32 md:h-36 bg-white rounded-2xl md:rounded-3xl border border-white/20 flex items-center justify-center p-4 sm:p-5 shadow-lg group hover:scale-105 hover:shadow-[0_12px_30px_rgba(176,190,66,0.35)] transition-all duration-300 shrink-0">
+              <img src={sp.src} alt={sp.alt} class="max-h-20 sm:max-h-24 md:max-h-24 max-w-[88%] w-auto object-contain transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <!-- Duplication exacte pour boucle infinie parfaite sans saut -->
+        <div class="flex items-center gap-5 md:gap-7 pr-5 md:pr-7 shrink-0" aria-hidden="true">
+          {sponsorsRow1.map((sp) => (
+            <div class="w-52 sm:w-64 md:w-72 h-28 sm:h-32 md:h-36 bg-white rounded-2xl md:rounded-3xl border border-white/20 flex items-center justify-center p-4 sm:p-5 shadow-lg group hover:scale-105 hover:shadow-[0_12px_30px_rgba(176,190,66,0.35)] transition-all duration-300 shrink-0">
+              <img src={sp.src} alt={sp.alt} class="max-h-20 sm:max-h-24 md:max-h-24 max-w-[88%] w-auto object-contain transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Ligne 2 : Défilement vers la droite -->
+      <div class="flex w-max animate-scroll-right">
+        <div class="flex items-center gap-5 md:gap-7 pr-5 md:pr-7 shrink-0">
+          {sponsorsRow2.map((sp) => (
+            <div class="w-52 sm:w-64 md:w-72 h-28 sm:h-32 md:h-36 bg-white rounded-2xl md:rounded-3xl border border-white/20 flex items-center justify-center p-4 sm:p-5 shadow-lg group hover:scale-105 hover:shadow-[0_12px_30px_rgba(176,190,66,0.35)] transition-all duration-300 shrink-0">
+              <img src={sp.src} alt={sp.alt} class="max-h-20 sm:max-h-24 md:max-h-24 max-w-[88%] w-auto object-contain transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <!-- Duplication exacte pour boucle infinie parfaite sans saut -->
+        <div class="flex items-center gap-5 md:gap-7 pr-5 md:pr-7 shrink-0" aria-hidden="true">
+          {sponsorsRow2.map((sp) => (
+            <div class="w-52 sm:w-64 md:w-72 h-28 sm:h-32 md:h-36 bg-white rounded-2xl md:rounded-3xl border border-white/20 flex items-center justify-center p-4 sm:p-5 shadow-lg group hover:scale-105 hover:shadow-[0_12px_30px_rgba(176,190,66,0.35)] transition-all duration-300 shrink-0">
+              <img src={sp.src} alt={sp.alt} class="max-h-20 sm:max-h-24 md:max-h-24 max-w-[88%] w-auto object-contain transition-transform duration-300 group-hover:scale-105" loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

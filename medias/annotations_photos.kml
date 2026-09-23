@@ -1,0 +1,317 @@
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/kml/2.2 https://developers.google.com/kml/schema/kml22gx.xsd">
+	<ExtendedData>
+		<Data name="geoportail:compute">{}</Data>
+		<Data name="description">"export"</Data>
+	</ExtendedData>
+	<Document>
+		<Placemark>
+			<description>Première montée</description>
+			<Style>
+				<LineStyle>
+					<color>ff910000</color>
+					<width>4</width>
+				</LineStyle>
+				<PolyStyle>
+					<color>b2910000</color>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<Data name="measure">
+					<value>36485.69 m^2</value>
+				</Data>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>6.6762093240097435,47.710429008673884 6.674954927511639,47.71076841035935 6.674954927511639,47.71076841035935 6.676676648710437,47.71366565292735 6.678029429652351,47.71329315933491 6.6762093240097435,47.710429008673884</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>Première montée</name>
+			<Style>
+				<IconStyle>
+					<scale>0.03125</scale>
+					<Icon>
+						<href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=</href>
+						<gx:w>1</gx:w>
+						<gx:h>1</gx:h>
+					</Icon>
+					<hotSpot x="0" y="1" xunits="pixels" yunits="pixels"/>
+				</IconStyle>
+				<LabelStyle>
+					<color>ff000000</color>
+					<LabelStyleSimpleExtensionGroup fontSize="16px" fontFamily="sans" haloColor="ffffffff" haloRadius="3" haloOpacity="1"/>
+				</LabelStyle>
+			</Style>
+			<Point>
+				<coordinates>6.676492178581995,47.712266718643065</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<Style>
+				<LineStyle>
+					<color>ff910000</color>
+					<width>4</width>
+				</LineStyle>
+				<PolyStyle>
+					<color>b2910000</color>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<Data name="measure">
+					<value>72602.52 m^2</value>
+				</Data>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>6.6888393793667476,47.71144720757292 6.6879416243663545,47.71128164814607 6.686822504836525,47.71213427319489 6.68574027970769,47.71265577532873 6.685260658124349,47.71369048583361 6.684781035602746,47.71477484026846 6.684571969832483,47.715478417035285 6.6833175714578505,47.71553635829113 6.68235802666334,47.715370811855365 6.681324993756408,47.71508110432711 6.679935318413501,47.714923834041 6.679308120164448,47.71534597990777 6.6805748154217275,47.715817786151206 6.682800754783949,47.715999885544846 6.684534773803657,47.71619026169702 6.685530912309595,47.71551980408171 6.686465561710983,47.713102773071654 6.688174984150607,47.71253160884538 6.6888393793667476,47.71144720757292</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>Fin de parcours, présence de genêts</name>
+			<Style>
+				<IconStyle>
+					<scale>0.03125</scale>
+					<Icon>
+						<href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=</href>
+						<gx:w>1</gx:w>
+						<gx:h>1</gx:h>
+					</Icon>
+					<hotSpot x="0" y="1" xunits="pixels" yunits="pixels"/>
+				</IconStyle>
+				<LabelStyle>
+					<color>ff000000</color>
+					<LabelStyleSimpleExtensionGroup fontSize="16px" fontFamily="sans" haloColor="ffffffff" haloRadius="3" haloOpacity="1"/>
+				</LabelStyle>
+			</Style>
+			<Point>
+				<coordinates>6.686145812737737,47.714609291886944</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<Style>
+				<LineStyle>
+					<color>ff910000</color>
+					<width>4</width>
+				</LineStyle>
+				<PolyStyle>
+					<color>b2910000</color>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<Data name="measure">
+					<value>31534.32 m^2</value>
+				</Data>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>6.690408232993222,47.73645933234704 6.690562142309657,47.73576173375835 6.686438979976515,47.73633398315303 6.686487582951074,47.73754386141738 6.690408232993222,47.73645933234704</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>Descente technique</name>
+			<Style>
+				<IconStyle>
+					<scale>0.03125</scale>
+					<Icon>
+						<href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=</href>
+						<gx:w>1</gx:w>
+						<gx:h>1</gx:h>
+					</Icon>
+					<hotSpot x="0" y="1" xunits="pixels" yunits="pixels"/>
+				</IconStyle>
+				<LabelStyle>
+					<color>ff000000</color>
+					<LabelStyleSimpleExtensionGroup fontSize="16px" fontFamily="sans" haloColor="ffffffff" haloRadius="3" haloOpacity="1"/>
+				</LabelStyle>
+			</Style>
+			<Point>
+				<coordinates>6.687670258216122,47.73747846328294</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<Style>
+				<LineStyle>
+					<color>ff910000</color>
+					<width>4</width>
+				</LineStyle>
+				<PolyStyle>
+					<color>b2910000</color>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<Data name="measure">
+					<value>188470.69 m^2</value>
+				</Data>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>6.7156624977075055,47.75681565048242 6.712495056558671,47.75564781792809 6.713186427291737,47.75423124417827 6.714376227489099,47.753549977011545 6.718186802520452,47.75520446704445 6.719312288961557,47.75749687530646 6.720887970469776,47.75899986213503 6.717270335480511,47.75942155538169 6.714746029440881,47.757107605659854 6.7156624977075055,47.75681565048242</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>chevestraye : col accessible facilement</name>
+			<Style>
+				<IconStyle>
+					<scale>0.03125</scale>
+					<Icon>
+						<href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=</href>
+						<gx:w>1</gx:w>
+						<gx:h>1</gx:h>
+					</Icon>
+					<hotSpot x="0" y="1" xunits="pixels" yunits="pixels"/>
+				</IconStyle>
+				<LabelStyle>
+					<color>ff000000</color>
+					<LabelStyleSimpleExtensionGroup fontSize="16px" fontFamily="sans" haloColor="ffffffff" haloRadius="3" haloOpacity="1"/>
+				</LabelStyle>
+			</Style>
+			<Point>
+				<coordinates>6.715791123993336,47.756469629228036</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<Style>
+				<LineStyle>
+					<color>ff910000</color>
+					<width>4</width>
+				</LineStyle>
+				<PolyStyle>
+					<color>b2910000</color>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<Data name="measure">
+					<value>55191.17 m^2</value>
+				</Data>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>6.760870568869869,47.78474693193357 6.760946044074594,47.78381925068109 6.761646888316779,47.782761094088215 6.763080923787528,47.782029068527464 6.765129545418527,47.78234072426707 6.765506923087397,47.782188520753266 6.766347936507066,47.78295678200408 6.764568870353828,47.78323944145649 6.763458301456396,47.78348586100125 6.761840968589816,47.784297588312256 6.76189487968537,47.78483390126266 6.760870568869869,47.78474693193357</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>Cascades /!\ que 100 coureurs</name>
+			<Style>
+				<IconStyle>
+					<scale>0.03125</scale>
+					<Icon>
+						<href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=</href>
+						<gx:w>1</gx:w>
+						<gx:h>1</gx:h>
+					</Icon>
+					<hotSpot x="0" y="1" xunits="pixels" yunits="pixels"/>
+				</IconStyle>
+				<LabelStyle>
+					<color>ff000000</color>
+					<LabelStyleSimpleExtensionGroup fontSize="16px" fontFamily="sans" haloColor="ffffffff" haloRadius="3" haloOpacity="1"/>
+				</LabelStyle>
+			</Style>
+			<Point>
+				<coordinates>6.763167181869459,47.78402942976206</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<Style>
+				<LineStyle>
+					<color>ff910000</color>
+					<width>4</width>
+				</LineStyle>
+				<PolyStyle>
+					<color>b2910000</color>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<Data name="measure">
+					<value>614272.72 m^2</value>
+				</Data>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>6.778307212246024,47.77618708848729 6.772705707723866,47.77289833147336 6.772705707723866,47.7700013264575 6.770196435907332,47.76812670780373 6.769258628166675,47.76741092571274 6.771159591371055,47.76562142933926 6.77564586375989,47.76635427867518 6.779346407011426,47.7695411982649 6.782159832167158,47.773239144982995 6.782134484444093,47.77562477700826 6.781475486187085,47.77657899891287 6.779498483681025,47.77649380121727 6.778307212246024,47.77618708848729</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>Planche des Belles Filles /!\ que 100 coureurs</name>
+			<Style>
+				<IconStyle>
+					<scale>0.03125</scale>
+					<Icon>
+						<href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=</href>
+						<gx:w>1</gx:w>
+						<gx:h>1</gx:h>
+					</Icon>
+					<hotSpot x="0" y="1" xunits="pixels" yunits="pixels"/>
+				</IconStyle>
+				<LabelStyle>
+					<color>ff000000</color>
+					<LabelStyleSimpleExtensionGroup fontSize="16px" fontFamily="sans" haloColor="ffffffff" haloRadius="3" haloOpacity="1"/>
+				</LabelStyle>
+			</Style>
+			<Point>
+				<coordinates>6.778788789977885,47.76799036874576</coordinates>
+			</Point>
+		</Placemark>
+		<Placemark>
+			<Style>
+				<LineStyle>
+					<color>ff910000</color>
+					<width>4</width>
+				</LineStyle>
+				<PolyStyle>
+					<color>b2910000</color>
+				</PolyStyle>
+			</Style>
+			<ExtendedData>
+				<Data name="measure">
+					<value>186285.82 m^2</value>
+				</Data>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>6.759897541126562,47.748703111342934 6.7565237460619,47.74825333384524 6.757557161017084,47.74563636828475 6.760034315646384,47.74284547440246 6.761082927641609,47.742201401258285 6.762861009153371,47.742804580920705 6.762602654834844,47.74452207325635 6.760596615403557,47.74743554638803 6.759897541126562,47.748703111342934</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+		<Placemark>
+			<name>Belle descente, genêts, belle vue</name>
+			<Style>
+				<IconStyle>
+					<scale>0.03125</scale>
+					<Icon>
+						<href>data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNiYAAAAAkAAxkR2eQAAAAASUVORK5CYII=</href>
+						<gx:w>1</gx:w>
+						<gx:h>1</gx:h>
+					</Icon>
+					<hotSpot x="0" y="1" xunits="pixels" yunits="pixels"/>
+				</IconStyle>
+				<LabelStyle>
+					<color>ff000000</color>
+					<LabelStyleSimpleExtensionGroup fontSize="16px" fontFamily="sans" haloColor="ffffffff" haloRadius="3" haloOpacity="1"/>
+				</LabelStyle>
+			</Style>
+			<Point>
+				<coordinates>6.76199476395755,47.74675063906946</coordinates>
+			</Point>
+		</Placemark>
+	</Document>
+</kml>

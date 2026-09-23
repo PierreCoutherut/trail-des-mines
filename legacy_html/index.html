@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta SEO avancées -->
+    <title>Trail des Mines 2026 - Champagney | Course Nature, Terrils & Vosges du Sud</title>
+    <meta name="description" content="Participez à la 5ème édition du Trail des Mines le 17 mai 2026 à Champagney. 4 épreuves authentiques au cœur des terrils et du massif vosgien : 52km, 28km, 13km et marches.">
+    <meta name="keywords" content="Trail des Mines, Champagney, Trail Haute-Saône, course nature, terrils, Vosges du Sud, Planche des Belles Filles, Run in Champagney">
+    <link rel="canonical" href="https://traildesmines.fr/">
+    
+    <!-- Open Graph & Réseaux Sociaux -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Trail des Mines 2026 - Champagney | Course Nature & Terrils">
+    <meta property="og:description" content="L'épreuve nature au cœur de l'histoire minière. 5ème édition le 17 mai 2026. Inscriptions ouvertes.">
+    <meta property="og:url" content="https://traildesmines.fr/">
+    <meta property="og:image" content="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Trail des Mines 2026 - Champagney">
+    <meta name="twitter:description" content="Une course nature exigeante et authentique au cœur des terrils vosgiens.">
+
+    <!-- Données Structurées Schema.org (SportsEvent) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SportsEvent",
+      "name": "Trail des Mines 2026 - 5ème Édition",
+      "startDate": "2026-05-17T07:00:00+02:00",
+      "endDate": "2026-05-17T18:00:00+02:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "Bassin Minier de Champagney",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Place du Général de Gaulle",
+          "addressLocality": "Champagney",
+          "postalCode": "70290",
+          "addressRegion": "Bourgogne-Franche-Comté",
+          "addressCountry": "FR"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 47.7079,
+          "longitude": 6.6784
+        }
+      },
+      "image": [
+        "https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ"
+      ],
+      "description": "Trail des Mines : courses nature de 13km à 52km sur les sentiers et terrils historiques de Champagney et du massif des Vosges du Sud.",
+      "organizer": {
+        "@type": "Organization",
+        "name": "Association Run in Champagney",
+        "url": "https://traildesmines.fr/association.html"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://traildesmines.fr/inscription.html",
+        "priceCurrency": "EUR",
+        "price": "16.00",
+        "availability": "https://schema.org/InStock"
+      }
+    }
+    </script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#101D20',
+                        brand: '#B0BE42',
+                        cardBg: '#213A40',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Lenis (Smooth Scroll) & GSAP -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Feuille de Style Globale -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-dark text-white font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-dark relative">
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Menu Mobile (Overlay plein écran avec accordéons et dvh) -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] bg-[#0a1214]/95 backdrop-blur-2xl z-[45] pointer-events-none opacity-0 overflow-y-auto" role="dialog" aria-modal="true" aria-label="Menu de navigation mobile">
+        <div class="min-h-full flex flex-col justify-between items-center py-20 px-6">
+            <div class="w-full flex flex-col items-center justify-center flex-1 mt-8 mb-12">
+                <nav class="flex flex-col items-center space-y-6 text-center font-display uppercase tracking-widest w-full max-w-sm" aria-label="Navigation mobile principale">
+                    
+                    <!-- Accordéon : Parcours -->
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand transition-colors py-2" aria-expanded="false">
+                            <span>Parcours</span>
+                            <svg class="w-6 h-6 chevron transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 transition-all duration-500 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="parcours.html" class="text-white hover:text-brand text-lg font-bold transition-colors py-1">Tous les Parcours</a>
+                                <a href="galibots.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Galibots (13 km)</a>
+                                <a href="terrils.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Terrils (28 km)</a>
+                                <a href="gueules-noires.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Gueules Noires (52 km)</a>
+                                <a href="autres.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Autres formats</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordéon : Infos Pratiques -->
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand transition-colors py-2" aria-expanded="false">
+                            <span>Infos Pratiques</span>
+                            <svg class="w-6 h-6 chevron transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 transition-all duration-500 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="infos-pratiques.html" class="text-white hover:text-brand text-lg font-bold transition-colors py-1">Guide Pratique</a>
+                                <a href="reglement.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Règlement</a>
+                                <a href="resultats-medias.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Résultats & Médias</a>
+                                <a href="editions-precedentes.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Éditions Précédentes</a>
+                                <a href="preparer-mon-trail.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Préparer mon trail</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Accordéon : L'Association -->
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand transition-colors py-2" aria-expanded="false">
+                            <span>L'Association</span>
+                            <svg class="w-6 h-6 chevron transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 transition-all duration-500 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="a-propos.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">À propos</a>
+                                <a href="association.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Run in Champagney</a>
+                                <a href="benevoles.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Bénévoles</a>
+                                <a href="eco-engagement.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Éco-engagement</a>
+                                <a href="partenaires.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Partenaires</a>
+                                <a href="dossard-solidaire.html" class="text-gray-400 hover:text-brand text-lg transition-colors py-1">Dossard solidaire</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lien Simple : Contact -->
+                    <div class="mobile-link w-full mt-4">
+                        <a href="contact.html" class="text-3xl hover:text-brand transition-colors py-2 block">Contact</a>
+                    </div>
+                </nav>
+            </div>
+            
+            <div class="mobile-link shrink-0 pb-4">
+                <a href="inscription.html" class="bg-brand text-dark px-12 py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:scale-105 transition-transform inline-block shadow-[0_10px_30px_rgba(176,190,66,0.2)]">S'inscrire</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Pilule principale (Desktop) -->
+    <div class="fixed w-full top-4 md:top-6 z-50 px-4 flex justify-center nav-container pointer-events-none">
+        <nav class="bg-[#101D20]/80 backdrop-blur-xl rounded-full border border-white/10 shadow-2xl flex items-center px-4 md:px-6 py-2 md:py-3 max-w-6xl w-full justify-between transition-transform duration-500 pointer-events-auto" id="main-nav" aria-label="Navigation principale">
+            
+            <!-- Logo -->
+            <a href="index.html" class="font-display font-bold text-lg md:text-xl uppercase tracking-widest text-white group relative overflow-hidden h-6 flex flex-col justify-start z-50" aria-label="Retour à l'accueil du Trail des Mines">
+                <span class="block group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1)">TD<span class="text-brand">M</span><span class="hidden sm:inline">26</span></span>
+                <span class="block translate-y-full group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) text-brand absolute inset-0" aria-hidden="true">TD<span class="text-white">M</span><span class="hidden sm:inline text-white">26</span></span>
+            </a>
+
+            <!-- Liens Desktop -->
+            <div class="hidden lg:flex items-center space-x-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-gray-300">
+                <div class="nav-item relative">
+                    <a href="parcours.html" class="hover:text-brand transition-colors duration-300 py-4 block">Parcours</a>
+                    <div class="dropdown-wrapper w-52">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="parcours.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center font-bold">Tous les Parcours</a>
+                            <a href="galibots.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Galibots (13 km)</a>
+                            <a href="terrils.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Terrils (28 km)</a>
+                            <a href="gueules-noires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Gueules Noires (52 km)</a>
+                            <a href="autres.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Autres formats</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="infos-pratiques.html" class="hover:text-brand transition-colors duration-300 py-4 block">Infos pratiques</a>
+                    <div class="dropdown-wrapper w-60">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="infos-pratiques.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center font-bold">Guide Général</a>
+                            <a href="reglement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Règlement</a>
+                            <a href="resultats-medias.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Résultats & Médias</a>
+                            <a href="editions-precedentes.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éditions précédentes</a>
+                            <a href="preparer-mon-trail.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Préparer mon trail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="a-propos.html" class="hover:text-brand transition-colors duration-300 py-4 block">À propos</a>
+                    <div class="dropdown-wrapper w-64">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="a-propos.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">L'Histoire du Trail</a>
+                            <a href="association.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Run in Champagney</a>
+                            <a href="benevoles.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Bénévoles</a>
+                            <a href="eco-engagement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éco-engagement</a>
+                            <a href="partenaires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Partenaires & Sponsors</a>
+                            <a href="dossard-solidaire.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Dossard solidaire</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="contact.html" class="hover:text-brand transition-colors duration-300 py-4">Contact</a>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <a href="inscription.html" class="bg-brand text-dark font-display uppercase tracking-widest text-[10px] md:text-xs px-5 md:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-bold z-50">S'inscrire</a>
+                <button id="hamburger-btn" aria-label="Ouvrir le menu" class="lg:hidden text-white p-2 z-50 relative focus:outline-none" aria-controls="mobile-menu">
+                    <div class="w-6 h-4 relative flex flex-col justify-between">
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-1"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300" id="line-2"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-3"></span>
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Hero Section avec H1 unique consolidé -->
+    <header class="min-h-[100svh] relative flex items-center justify-center overflow-hidden w-full img-container">
+        <div class="absolute inset-0 z-0 bg-dark">
+            <img src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ" alt="Coureur en plein effort dans la forêt de Champagney lors du Trail des Mines" class="w-full h-full object-cover opacity-60 img-parallax scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent"></div>
+        </div>
+
+        <!-- H1 Unique SEO Friendly -->
+        <h1 class="relative z-10 flex flex-col items-center justify-center w-full mt-12 mix-blend-lighten">
+            <span class="font-display text-[15vw] md:text-[12vw] leading-[0.8] uppercase tracking-tighter text-center m-0 text-outline hero-anim drop-shadow-2xl block">
+                TRAIL DES
+            </span>
+            <span class="font-display text-[17vw] md:text-[14vw] leading-[0.85] uppercase tracking-tighter text-center m-0 text-brand hero-anim drop-shadow-2xl block">
+                MINES
+            </span>
+        </h1>
+
+        <div class="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center hero-anim text-center w-full px-4 pointer-events-none">
+            <p class="text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] mb-4 md:mb-6 text-white/70 font-semibold max-w-xs md:max-w-none drop-shadow-md">
+                L'épreuve nature au cœur de l'histoire</p>
+            <div class="w-[1px] h-10 md:h-12 bg-gradient-to-b from-brand to-transparent"></div>
+        </div>
+
+        <div class="absolute bottom-6 right-4 md:bottom-8 md:right-8 z-30 hero-anim">
+            <a href="#video-section" class="group flex items-center gap-0 md:gap-4 bg-[#101D20]/60 backdrop-blur-lg p-1.5 md:p-2 pr-1.5 md:pr-5 rounded-full md:rounded-[1.5rem] border border-white/10 hover:border-brand/40 hover:bg-[#101D20]/80 transition-all duration-500 shadow-xl shadow-black/50" aria-label="Voir la vidéo aftermovie du trail">
+                <div class="w-12 h-12 md:w-20 md:h-20 rounded-full md:rounded-xl overflow-hidden relative border border-white/5 shrink-0">
+                    <img src="https://img.youtube.com/vi/O5vLogBuP20/maxresdefault.jpg" alt="Miniature de la vidéo aftermovie du Trail des Mines" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-brand transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                    </div>
+                </div>
+                <span class="hidden md:block font-display uppercase text-[10px] md:text-xs tracking-widest text-white max-w-[120px] leading-tight group-hover:text-brand transition-colors duration-300">
+                    Découvrez le trail en vidéo
+                </span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Marquee Piloté au scroll -->
+    <div class="marquee-section bg-brand text-dark py-3 md:py-5 overflow-hidden border-y border-white/10 relative z-10" aria-hidden="true">
+        <div class="flex w-[300vw] md:w-[200vw] marquee-text-gsap select-none">
+            <div class="font-display text-2xl md:text-5xl uppercase tracking-widest px-2 md:px-4 whitespace-nowrap">
+                17 mai 2026 • 17 mai 2026 • 17 mai 2026 • 17 mai 2026 • 17 mai 2026 • 17 mai 2026 •
+            </div>
+            <div class="font-display text-2xl md:text-5xl uppercase tracking-widest px-2 md:px-4 whitespace-nowrap">
+                17 mai 2026 • 17 mai 2026 • 17 mai 2026 • 17 mai 2026 • 17 mai 2026 • 17 mai 2026 •
+            </div>
+        </div>
+    </div>
+
+    <!-- Intro -->
+    <section class="py-16 md:py-32 px-4 flex justify-center items-center min-h-[40vh] md:min-h-[50vh] text-center">
+        <div class="max-w-4xl gsap-fade-up">
+            <h2 class="font-display text-2xl sm:text-3xl md:text-5xl font-bold uppercase leading-snug">
+                Le Trail des Mines est une course nature organisée par l’association <a href="association.html" class="text-brand italic font-medium hover:underline">Run in Champagney.</a>
+                <br><span class="text-outline-white font-medium">La cinquième édition se déroulera le 17/05/2026</span>
+            </h2>
+            <div class="mt-8 flex justify-center items-center gap-6 text-sm md:text-base text-gray-400">
+                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand"></span> Bassin houiller de Ronchamp</span>
+                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand"></span> Massif des Vosges du Sud</span>
+                <span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand"></span> Planche des Belles Filles</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Les Courses -->
+    <section class="py-16 md:py-24 px-4 bg-cardBg relative border-y border-white/5 rounded-t-[2rem] md:rounded-t-[3rem]">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-16 gsap-fade-up gap-4">
+                <div>
+                    <h3 class="font-display text-[10px] md:text-xs text-brand tracking-[0.4em] uppercase mb-2">01 // Les Épreuves</h3>
+                    <p class="text-2xl md:text-3xl font-display uppercase font-bold text-white">Choisissez votre défi minier</p>
+                </div>
+                <a href="parcours.html" class="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-brand hover:text-white transition-colors group font-display">
+                    <span>Explorer la carte interactive</span>
+                    <svg class="w-4 h-4 arrow-kinetic" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <!-- Course 1 : Galibots -->
+                <a href="galibots.html" class="group relative pt-8 md:pt-12 course-card cursor-pointer bg-dark/20 md:bg-transparent rounded-2xl md:rounded-none p-6 md:p-0 border border-white/5 md:border-none block transition-all">
+                    <div class="absolute top-2 md:top-0 right-4 md:right-auto md:left-0 text-[60px] md:text-[100px] leading-none font-display font-bold text-white/[0.03] group-hover:text-brand/10 transition-colors duration-700 -z-10" aria-hidden="true">01</div>
+                    <h4 class="font-display text-2xl md:text-3xl font-bold uppercase mb-2 md:mb-4 text-white group-hover:text-brand transition-colors duration-500">Galibots</h4>
+                    <p class="text-gray-400 text-xs md:text-sm mb-8 md:mb-12 font-sans font-light leading-relaxed">Une course rapide et accessible pour découvrir la magie du trail dans les sous-bois vosgiens.</p>
+                    <div class="hidden md:block h-[1px] w-full bg-white/10 mb-6 group-hover:bg-brand transition-colors duration-500"></div>
+                    <div class="flex justify-between font-display text-lg md:text-xl border-t border-white/10 md:border-none pt-4 md:pt-0">
+                        <span>13 KM</span><span class="text-brand">550 D+</span>
+                    </div>
+                </a>
+
+                <!-- Course 2 : Terrils -->
+                <a href="terrils.html" class="group relative pt-8 md:pt-12 course-card md:mt-12 cursor-pointer bg-brand/5 md:bg-transparent rounded-2xl md:rounded-none p-6 md:p-0 border border-brand/20 md:border-none block transition-all">
+                    <div class="absolute top-2 md:top-0 right-4 md:right-auto md:left-0 text-[60px] md:text-[100px] leading-none font-display font-bold text-brand/[0.05] group-hover:text-brand/10 transition-colors duration-700 -z-10" aria-hidden="true">02</div>
+                    <h4 class="font-display text-2xl md:text-3xl font-bold uppercase mb-2 md:mb-4 text-white group-hover:text-brand transition-colors duration-500">Terrils</h4>
+                    <p class="text-gray-400 text-xs md:text-sm mb-8 md:mb-12 font-sans font-light leading-relaxed">Le format dynamique et technique à l'assaut des anciens terrils et singles historiques.</p>
+                    <div class="hidden md:block h-[1px] w-full bg-brand/30 mb-6 group-hover:bg-brand transition-colors duration-500"></div>
+                    <div class="flex justify-between font-display text-lg md:text-xl border-t border-white/10 md:border-none pt-4 md:pt-0">
+                        <span>28 KM</span><span class="text-brand">1380 D+</span>
+                    </div>
+                </a>
+
+                <!-- Course 3 : Gueules Noires -->
+                <a href="gueules-noires.html" class="group relative pt-8 md:pt-12 course-card cursor-pointer bg-dark/20 md:bg-transparent rounded-2xl md:rounded-none p-6 md:p-0 border border-white/5 md:border-none block transition-all">
+                    <div class="absolute top-2 md:top-0 right-4 md:right-auto md:left-0 text-[60px] md:text-[100px] leading-none font-display font-bold text-white/[0.03] group-hover:text-brand/10 transition-colors duration-700 -z-10" aria-hidden="true">03</div>
+                    <h4 class="font-display text-2xl md:text-3xl font-bold uppercase mb-2 md:mb-4 text-white group-hover:text-brand transition-colors duration-500">Gueules Noires</h4>
+                    <p class="text-gray-400 text-xs md:text-sm mb-8 md:mb-12 font-sans font-light leading-relaxed">L'épreuve reine : 52 km d'endurance pure jusqu'au sommet de la Planche des Belles Filles.</p>
+                    <div class="hidden md:block h-[1px] w-full bg-white/10 mb-6 group-hover:bg-brand transition-colors duration-500"></div>
+                    <div class="flex justify-between font-display text-lg md:text-xl border-t border-white/10 md:border-none pt-4 md:pt-0">
+                        <span>52 KM</span><span class="text-brand">2500 D+</span>
+                    </div>
+                </a>
+
+                <!-- Course 4 : Autres formats -->
+                <a href="autres.html" class="group relative pt-8 md:pt-12 course-card md:mt-12 cursor-pointer bg-dark/20 md:bg-transparent rounded-2xl md:rounded-none p-6 md:p-0 border border-white/5 md:border-none block transition-all">
+                    <div class="absolute top-2 md:top-0 right-4 md:right-auto md:left-0 text-[60px] md:text-[100px] leading-none font-display font-bold text-white/[0.03] group-hover:text-brand/10 transition-colors duration-700 -z-10" aria-hidden="true">04</div>
+                    <h4 class="font-display text-2xl md:text-3xl font-bold uppercase mb-2 md:mb-4 text-white group-hover:text-brand transition-colors duration-500">Autres</h4>
+                    <p class="text-gray-400 text-xs md:text-sm mb-8 md:mb-12 font-sans font-light leading-relaxed">Marche solidaire, randonnée nature et courses pour les jeunes coureurs.</p>
+                    <div class="hidden md:block h-[1px] w-full bg-white/10 mb-6 group-hover:bg-brand transition-colors duration-500"></div>
+                    <div class="flex justify-between font-display text-lg md:text-xl border-t border-white/10 md:border-none pt-4 md:pt-0">
+                        <span class="uppercase text-gray-500 group-hover:text-white transition-colors duration-500">Tous publics</span>
+                        <span class="text-brand font-bold">100% Plaisir</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vidéo Section (Ancre) -->
+    <section id="video-section" class="py-16 md:py-32 bg-dark relative overflow-hidden flex flex-col items-center">
+        <div class="text-center mb-10 md:mb-16 relative z-10 w-full px-4 gsap-fade-up">
+            <div aria-hidden="true" class="font-display text-[12vw] md:text-[9vw] leading-none font-bold uppercase text-outline-white mix-blend-overlay opacity-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full pointer-events-none block select-none">
+                AFTERMOVIE
+            </div>
+            <h2 class="font-display text-3xl md:text-5xl font-bold uppercase relative z-20">Revivez l'intensité</h2>
+            <p class="text-gray-400 text-sm md:text-base mt-2 max-w-xl mx-auto font-sans">L'aftermovie officiel de l'édition précédente au cœur des crêtes et des forêts vosgiennes.</p>
+        </div>
+
+        <div class="video-container w-[95%] md:w-[75vw] aspect-video relative z-20 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-[0_15px_40px_rgba(176,190,66,0.1)] gsap-fade-up border border-white/10">
+            <iframe class="w-full h-full object-cover" src="https://www.youtube.com/embed/O5vLogBuP20?rel=0&modestbranding=1" title="Trail des mines 2026 - after movie" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Tuiles Bento Box -->
+    <section class="py-16 md:py-24 px-4 max-w-7xl mx-auto">
+        <h3 class="font-display text-[10px] md:text-xs text-brand tracking-[0.4em] uppercase mb-10 md:mb-16 gsap-fade-up">02 // Explorer</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 h-auto md:h-[60vh] bento-container">
+
+            <a href="reglement.html" class="group relative rounded-2xl md:rounded-[2rem] overflow-hidden bg-cardBg border border-white/5 flex items-end p-6 md:p-10 md:col-span-2 bento-item min-h-[250px] md:min-h-0">
+                <div class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:scale-105 group-hover:opacity-40 transition-all duration-1000 ease-out" style="background-image: url('https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcR-eYNsnkVA6wvHpDhNYBJ2UDJTsGAdz81pf4i1E_SIoCRKju4-BG8N-bb_JEsz4-jqD3Jtk_H4HauA25U');"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
+                <div>
+                    <span class="text-brand text-xs uppercase tracking-widest font-semibold block mb-2 font-display">Sécurité & Éthique</span>
+                    <h4 class="relative z-10 font-display text-3xl md:text-5xl font-bold uppercase group-hover:text-brand transition-colors duration-500">Règlement</h4>
+                </div>
+                <div class="absolute top-6 right-6 md:top-8 md:right-8 w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-brand group-hover:border-brand group-hover:text-dark transition-all duration-500 backdrop-blur-sm">
+                    <svg class="w-5 h-5 md:w-6 md:h-6 arrow-kinetic" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
+                </div>
+            </a>
+
+            <a href="dossard-solidaire.html" class="group relative rounded-2xl md:rounded-[2rem] overflow-hidden bg-brand flex items-end p-6 md:p-10 bento-item shadow-lg md:shadow-[0_10px_40px_rgba(176,190,66,0.2)] min-h-[250px] md:min-h-0">
+                <div>
+                    <span class="text-dark/70 text-xs uppercase tracking-widest font-bold block mb-2 font-display">Courir Utile</span>
+                    <h4 class="relative z-10 font-display text-3xl md:text-4xl font-bold uppercase text-dark leading-tight">Dossard<br>Solidaire</h4>
+                </div>
+                <div class="absolute top-6 right-6 md:top-8 md:right-8 w-10 h-10 md:w-14 md:h-14 rounded-full border border-dark/30 text-dark flex items-center justify-center group-hover:bg-dark group-hover:border-dark group-hover:text-brand transition-all duration-500">
+                    <svg class="w-5 h-5 md:w-6 md:h-6 arrow-kinetic" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
+                </div>
+            </a>
+
+            <a href="preparer-mon-trail.html" class="group relative rounded-2xl md:rounded-[2rem] overflow-hidden bg-cardBg border border-white/5 flex items-end p-6 md:p-10 md:col-span-3 bento-item min-h-[250px] md:min-h-0">
+                <div class="absolute inset-0 bg-cover bg-center opacity-30 group-hover:scale-105 group-hover:opacity-40 transition-all duration-1000 ease-out" style="background-image: url('https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQla-zqhafd4zaBY6RRUCEm5r8VUG_ezqxIByqLG181aw0vLXY8ZwKf4zRggFeEgypVqN3mV_1ZpX5azjs');"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/50 to-transparent"></div>
+                <div>
+                    <span class="text-brand text-xs uppercase tracking-widest font-semibold block mb-2 font-display">Conseils & Matériel</span>
+                    <h4 class="relative z-10 font-display text-3xl md:text-5xl font-bold uppercase group-hover:text-brand transition-colors duration-500">Préparer mon trail</h4>
+                </div>
+                <div class="absolute top-6 right-6 md:top-8 md:right-8 w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/30 flex items-center justify-center group-hover:bg-brand group-hover:border-brand group-hover:text-dark transition-all duration-500 backdrop-blur-sm">
+                    <svg class="w-5 h-5 md:w-6 md:h-6 arrow-kinetic" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19L19 5M19 5v10M19 5H9"></path></svg>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Galerie Animée au Scroll -->
+    <section class="py-16 md:py-24 overflow-hidden bg-[#0a1214] galerie-section border-t border-white/5">
+        <div class="flex items-center justify-between px-4 max-w-7xl mx-auto mb-10 md:mb-16 gsap-fade-up">
+            <h3 class="font-display text-[10px] md:text-xs text-brand tracking-[0.4em] uppercase">03 // Galerie Immersive</h3>
+            <a href="resultats-medias.html" class="text-xs uppercase tracking-widest text-gray-400 hover:text-brand transition-colors font-display">Voir toutes les photos &rarr;</a>
+        </div>
+        
+        <div class="w-[200vw] md:w-[150vw] flex gap-4 md:gap-8 pl-4 pr-4 h-[30vh] md:h-[45vh] galerie-scroll-track">
+            <div class="h-full w-auto aspect-[4/3] rounded-xl md:rounded-[2rem] overflow-hidden group">
+                <img src="https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTQXptwQdNJsEUsMZQOH34HsNK_Y4k1Mr2jPCyjBrEtUUv--bDRbn1izE_1Ja--etxCgUVI5kzLwobitm0" alt="Coureur traversant une passerelle en bois dans la forêt vosgienne de Champagney" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 cursor-pointer">
+            </div>
+            <div class="h-full w-auto aspect-[3/4] rounded-xl md:rounded-[2rem] overflow-hidden group">
+                <img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcRSpg4p7rfwxDVXuNoTFsQC7JMS35siUrcM3fZ8PGI9HdmQNgffF_gEk_ctU2VBM7ku4i8VZNxOGwXHASU" alt="Ambiance brumeuse et nature authentique sur les terrils miniers du Trail des Mines" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 cursor-pointer">
+            </div>
+            <div class="h-full w-auto aspect-square rounded-xl md:rounded-[2rem] overflow-hidden group">
+                <img src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcTgaF7vDPBWpKw91KIwreIJ-g_MCeYaLGaIC4H3ErAaB6cvCvEANWg_SsF6EefbRC_ZON7uvvJzn5o1ajI" alt="Passage technique sur les rochers de grès et boue caractéristique des Vosges du Sud" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 cursor-pointer">
+            </div>
+            <div class="h-full w-auto aspect-[16/9] rounded-xl md:rounded-[2rem] overflow-hidden group">
+                <img src="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ" alt="Vue panoramique sur la forêt vosgienne environnante lors de la course des Gueules Noires" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 cursor-pointer">
+            </div>
+            <div class="h-full w-auto aspect-[4/3] rounded-xl md:rounded-[2rem] overflow-hidden group">
+                <img src="https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcQla-zqhafd4zaBY6RRUCEm5r8VUG_ezqxIByqLG181aw0vLXY8ZwKf4zRggFeEgypVqN3mV_1ZpX5azjs" alt="Coureur en pleine relance sous la canopée des Vosges" class="w-full h-full object-cover grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 cursor-pointer">
+            </div>
+        </div>
+    </section>
+
+    <!-- Massive CTA -->
+    <section class="h-[50vh] md:h-[60vh] bg-brand text-dark relative flex items-center justify-center overflow-hidden z-20">
+        <a href="inscription.html" class="absolute inset-0 z-10 flex flex-col items-center justify-center group text-decoration-none cursor-pointer" aria-label="Accéder à la page d'inscription officielle">
+            <h2 class="font-display text-[20vw] md:text-[12vw] font-bold uppercase leading-none text-dark group-hover:scale-[1.02] transition-transform duration-700 cubic-bezier(0.16, 1, 0.3, 1)">S'inscrire</h2>
+            <div class="flex items-center gap-2 md:gap-4 mt-4 md:mt-8 opacity-80 md:opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+                <span class="font-sans font-semibold uppercase tracking-[0.1em] md:tracking-[0.2em] text-[10px] md:text-sm">Rejoindre la meute</span>
+                <div class="w-8 h-8 md:w-10 md:h-10 rounded-full border border-dark flex items-center justify-center group-hover:bg-dark group-hover:text-brand transition-colors duration-500">
+                    <svg class="w-3 h-3 md:w-4 md:h-4 arrow-kinetic" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </div>
+            </div>
+        </a>
+    </section>
+
+    <!-- Partenaires (Carrousels Infinis) -->
+    <section class="py-16 md:py-24 bg-[#0a1214] relative z-20 border-b border-white/5 overflow-hidden">
+        <div class="w-full">
+            <div class="text-center mb-10 md:mb-16 gsap-fade-up">
+                <h3 class="font-display text-[10px] md:text-xs text-brand tracking-[0.4em] uppercase mb-2">Ils nous soutiennent</h3>
+                <a href="partenaires.html" class="text-xs uppercase tracking-widest text-gray-400 hover:text-white transition-colors font-display">Découvrir tous nos partenaires et sponsors &rarr;</a>
+            </div>
+            
+            <div class="flex flex-col gap-4 md:gap-6 sponsor-track">
+                <!-- Ligne 1 : Défilement vers la gauche -->
+                <div class="flex gap-4 md:gap-6 w-max animate-scroll-left">
+                    <div class="flex gap-4 md:gap-6">
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Champagney</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Ville Hôte</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Haute-Saône</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Département 70</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Bourgogne Franche-Comté</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Région</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Bassin Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Ronchamp</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Crédit Mutuel</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Banque Partenaire</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Trail Mag</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Partenaire Média</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Run in Champagney</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Club Organisateur</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Vosges du Sud</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Tourisme</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Bio Coop</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Ravitaillement Local</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Planche des Belles Filles</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Station 1148m</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Optique Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Commerçant Local</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">FFA Trail</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Fédération</span>
+                        </div>
+                    </div>
+                    <!-- Duplication pour boucle parfaite -->
+                    <div class="flex gap-4 md:gap-6" aria-hidden="true">
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Champagney</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Ville Hôte</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Haute-Saône</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Département 70</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Bourgogne Franche-Comté</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Région</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Bassin Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Ronchamp</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Crédit Mutuel</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Banque Partenaire</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Trail Mag</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Partenaire Média</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Run in Champagney</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Club Organisateur</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Vosges du Sud</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Tourisme</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Bio Coop</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Ravitaillement Local</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Planche des Belles Filles</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Station 1148m</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Optique Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Commerçant Local</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">FFA Trail</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Fédération</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ligne 2 : Défilement vers la droite -->
+                <div class="flex gap-4 md:gap-6 w-max animate-scroll-right">
+                    <div class="flex gap-4 md:gap-6">
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">ONF Vosges</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Gestion Forestière</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Boulangerie du Puits</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Artisan Local</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Secours Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Poste Médical</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Éco-Trail Label</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Engagement Vert</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Hôtel de la Paix</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Hébergement</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Radio Vosges</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Direct & Live</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Brasserie des Houillères</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Bière Artisanale</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Pharmacie Centrale</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Soins & Matériel</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Trace de Trail</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Cartographie GPX</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Transports 70</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Navettes Coureurs</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Sports & Nature</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Équipementier</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Amis du Musée Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Patrimoine</span>
+                        </div>
+                    </div>
+                    <!-- Duplication pour boucle parfaite -->
+                    <div class="flex gap-4 md:gap-6" aria-hidden="true">
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">ONF Vosges</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Gestion Forestière</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Boulangerie du Puits</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Artisan Local</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Secours Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Poste Médical</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Éco-Trail Label</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Engagement Vert</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Hôtel de la Paix</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Hébergement</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Radio Vosges</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Direct & Live</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Brasserie des Houillères</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Bière Artisanale</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Pharmacie Centrale</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Soins & Matériel</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Trace de Trail</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Cartographie GPX</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Transports 70</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Navettes Coureurs</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Sports & Nature</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Équipementier</span>
+                        </div>
+                        <div class="w-32 md:w-48 aspect-[4/3] bg-white/[0.02] rounded-xl border border-white/5 flex flex-col items-center justify-center group hover:bg-white/5 hover:border-brand/30 transition-all duration-300 p-3 text-center">
+                            <span class="font-display uppercase text-white/30 text-[10px] md:text-xs tracking-widest group-hover:text-brand transition-colors">Amis du Musée Minier</span>
+                            <span class="text-[9px] text-gray-500 font-sans mt-1">Patrimoine</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mega Footer avec Sitemap & Oversized Typography -->
+    <footer class="bg-[#0a1214] pt-16 md:pt-24 flex flex-col relative z-20 overflow-hidden" role="contentinfo">
+        
+        <!-- Sitemap Grid -->
+        <div class="w-full max-w-7xl mx-auto px-4 mb-16 md:mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-10">
+            <!-- Colonne 1 -->
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Les Épreuves</h4>
+                <a href="parcours.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Parcours</a>
+                <a href="galibots.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Galibots (13 km)</a>
+                <a href="terrils.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Terrils (28 km)</a>
+                <a href="gueules-noires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Gueules Noires (52 km)</a>
+                <a href="autres.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Autres formats</a>
+            </div>
+
+            <!-- Colonne 2 -->
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Infos Pratiques</h4>
+                <a href="infos-pratiques.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Infos pratiques</a>
+                <a href="reglement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Règlement</a>
+                <a href="resultats-medias.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Résultats & Médias</a>
+                <a href="editions-precedentes.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éditions Précédentes</a>
+                <a href="preparer-mon-trail.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Préparer mon trail</a>
+            </div>
+
+            <!-- Colonne 3 -->
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">L'Association</h4>
+                <a href="a-propos.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">À propos</a>
+                <a href="association.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Run in Champagney</a>
+                <a href="benevoles.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Bénévoles</a>
+                <a href="eco-engagement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éco-engagement & Territoire</a>
+                <a href="partenaires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Partenaires & Sponsors</a>
+                <a href="dossard-solidaire.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Dossard Solidaire</a>
+            </div>
+
+            <!-- Colonne 4 -->
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Raccourcis</h4>
+                <a href="inscription.html" class="text-brand hover:text-white text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors mb-2 font-bold">S'inscrire</a>
+                <a href="index.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Page d'accueil</a>
+                <a href="contact.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Contact</a>
+                <a href="presse.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Presse</a>
+                <div class="mt-4 flex flex-col gap-2">
+                    <a href="mentions-legales.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Mentions légales</a>
+                    <a href="politique-confidentialite.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Politique de confidentialité</a>
+                    <a href="declaration-accessibilite.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Déclaration d'accessibilité</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="w-full text-center z-10 px-4 mb-4">
+            <p class="text-gray-700 text-[9px] uppercase tracking-widest font-sans">© 2026 Association Run in Champagney - Tous droits réservés</p>
+        </div>
+
+        <!-- Div Décorative (Ignorée par Google grâce à aria-hidden) -->
+        <div aria-hidden="true" class="w-full relative translate-y-[28%] md:translate-y-[22%] pointer-events-none select-none text-center overflow-hidden">
+            <div class="font-display text-[22vw] md:text-[18vw] font-bold uppercase leading-none text-white/[0.03] tracking-tighter whitespace-nowrap">
+                TRAIL DES MINES
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts : Moteur d'Animation Partagé -->
+    <script src="js/main.js"></script>
+</body>
+</html>

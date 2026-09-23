@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscriptions & Tarifs 2026 | Trail des Mines - Champagney</title>
+    <meta name="description" content="Inscrivez-vous au Trail des Mines 2026 : réservez votre dossard pour Les Gueules Noires (52 km), Les Terrils (28 km), Les Galibots (13 km) ou la Randonnée solidaire.">
+    <link rel="canonical" href="https://traildesmines.fr/inscription.html">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#101D20',
+                        brand: '#B0BE42',
+                        cardBg: '#213A40',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-dark text-white font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-dark relative">
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- Menu Mobile -->
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] bg-[#0a1214]/95 backdrop-blur-2xl z-[45] pointer-events-none opacity-0 overflow-y-auto" role="dialog" aria-modal="true">
+        <div class="min-h-full flex flex-col justify-between items-center py-20 px-6">
+            <div class="w-full flex flex-col items-center justify-center flex-1 mt-8 mb-12">
+                <nav class="flex flex-col items-center space-y-6 text-center font-display uppercase tracking-widest w-full max-w-sm">
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>Parcours</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="parcours.html" class="text-gray-400 hover:text-brand text-lg py-1">Tous les Parcours</a>
+                                <a href="galibots.html" class="text-gray-400 hover:text-brand text-lg py-1">Galibots (13 km)</a>
+                                <a href="terrils.html" class="text-gray-400 hover:text-brand text-lg py-1">Terrils (28 km)</a>
+                                <a href="gueules-noires.html" class="text-gray-400 hover:text-brand text-lg py-1">Gueules Noires (52 km)</a>
+                                <a href="autres.html" class="text-gray-400 hover:text-brand text-lg py-1">Autres formats</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>Infos Pratiques</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="infos-pratiques.html" class="text-gray-400 hover:text-brand text-lg py-1">Guide Général</a>
+                                <a href="reglement.html" class="text-gray-400 hover:text-brand text-lg py-1">Règlement</a>
+                                <a href="resultats-medias.html" class="text-gray-400 hover:text-brand text-lg py-1">Résultats & Médias</a>
+                                <a href="editions-precedentes.html" class="text-gray-400 hover:text-brand text-lg py-1">Éditions Précédentes</a>
+                                <a href="preparer-mon-trail.html" class="text-gray-400 hover:text-brand text-lg py-1">Préparer mon trail</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full">
+                        <button class="accordion-btn flex items-center justify-center gap-3 w-full text-3xl hover:text-brand py-2">
+                            <span>L'Association</span>
+                            <svg class="w-6 h-6 chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="accordion-content overflow-hidden max-h-0 opacity-0 flex flex-col items-center">
+                            <div class="flex flex-col gap-4 mt-4 pb-4 border-b border-white/10 w-3/4">
+                                <a href="a-propos.html" class="text-gray-400 hover:text-brand text-lg py-1">À propos</a>
+                                <a href="association.html" class="text-gray-400 hover:text-brand text-lg py-1">Run in Champagney</a>
+                                <a href="benevoles.html" class="text-gray-400 hover:text-brand text-lg py-1">Bénévoles</a>
+                                <a href="eco-engagement.html" class="text-gray-400 hover:text-brand text-lg py-1">Éco-engagement</a>
+                                <a href="partenaires.html" class="text-gray-400 hover:text-brand text-lg py-1">Partenaires</a>
+                                <a href="dossard-solidaire.html" class="text-gray-400 hover:text-brand text-lg py-1">Dossard solidaire</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobile-link w-full mt-4">
+                        <a href="contact.html" class="text-3xl hover:text-brand py-2 block">Contact</a>
+                    </div>
+                </nav>
+            </div>
+            <div class="mobile-link shrink-0 pb-4">
+                <a href="inscription.html" class="bg-brand text-dark px-12 py-5 rounded-full font-bold uppercase tracking-widest text-sm hover:scale-105 inline-block shadow-[0_10px_30px_rgba(176,190,66,0.2)]">S'inscrire</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Pilule principale -->
+    <div class="fixed w-full top-4 md:top-6 z-50 px-4 flex justify-center nav-container pointer-events-none">
+        <nav class="bg-[#101D20]/80 backdrop-blur-xl rounded-full border border-white/10 shadow-2xl flex items-center px-4 md:px-6 py-2 md:py-3 max-w-6xl w-full justify-between transition-transform duration-500 pointer-events-auto" id="main-nav">
+            <a href="index.html" class="font-display font-bold text-lg md:text-xl uppercase tracking-widest text-white group relative overflow-hidden h-6 flex flex-col justify-start z-50">
+                <span class="block group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1)">TD<span class="text-brand">M</span><span class="hidden sm:inline">26</span></span>
+                <span class="block translate-y-full group-hover:-translate-y-full transition-transform duration-500 cubic-bezier(0.16, 1, 0.3, 1) text-brand absolute inset-0">TD<span class="text-white">M</span><span class="hidden sm:inline text-white">26</span></span>
+            </a>
+            <div class="hidden lg:flex items-center space-x-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-gray-300">
+                <div class="nav-item relative">
+                    <a href="parcours.html" class="hover:text-brand transition-colors duration-300 py-4 block">Parcours</a>
+                    <div class="dropdown-wrapper w-52">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="parcours.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Tous les Parcours</a>
+                            <a href="galibots.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Galibots (13 km)</a>
+                            <a href="terrils.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Terrils (28 km)</a>
+                            <a href="gueules-noires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Gueules Noires (52 km)</a>
+                            <a href="autres.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Autres formats</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="infos-pratiques.html" class="hover:text-brand transition-colors duration-300 py-4 block">Infos pratiques</a>
+                    <div class="dropdown-wrapper w-60">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="infos-pratiques.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Guide Général</a>
+                            <a href="reglement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Règlement</a>
+                            <a href="resultats-medias.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Résultats & Médias</a>
+                            <a href="editions-precedentes.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éditions précédentes</a>
+                            <a href="preparer-mon-trail.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Préparer mon trail</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="nav-item relative">
+                    <a href="a-propos.html" class="hover:text-brand transition-colors duration-300 py-4 block">À propos</a>
+                    <div class="dropdown-wrapper w-64">
+                        <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
+                            <a href="a-propos.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">À propos</a>
+                            <a href="association.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Run in Champagney</a>
+                            <a href="benevoles.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Bénévoles</a>
+                            <a href="eco-engagement.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Éco-engagement</a>
+                            <a href="partenaires.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Partenaires</a>
+                            <a href="dossard-solidaire.html" class="block px-4 py-2.5 rounded-xl hover:bg-brand hover:text-dark transition-all text-center">Dossard solidaire</a>
+                        </div>
+                    </div>
+                </div>
+                <a href="contact.html" class="hover:text-brand transition-colors duration-300 py-4">Contact</a>
+            </div>
+            <div class="flex items-center gap-2">
+                <a href="inscription.html" class="bg-brand text-dark font-display uppercase tracking-widest text-[10px] md:text-xs px-5 md:px-6 py-2.5 md:py-3 rounded-full transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-bold z-50">S'inscrire</a>
+                <button id="hamburger-btn" aria-label="Ouvrir le menu" class="lg:hidden text-white p-2 z-50 relative focus:outline-none">
+                    <div class="w-6 h-4 relative flex flex-col justify-between">
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-1"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300" id="line-2"></span>
+                        <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-3"></span>
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Header / Hero Inscriptions avec Compteur -->
+    <header class="pt-32 pb-16 md:pt-44 md:pb-24 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark text-center">
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
+                <i class="fa-solid fa-ticket"></i> Inscriptions Ouvertes • Édition 2026
+            </div>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
+                Prenez Votre <span class="text-brand">Dossard</span>
+            </h1>
+            <p class="text-gray-300 text-sm md:text-lg max-w-2xl mx-auto font-light leading-relaxed mb-12 hero-anim">
+                Rejoignez les 1 200 coureurs au départ du bassin minier de Champagney. Choisissez votre défi, validez votre justificatif de santé et préparez-vous pour une immersion totale dans les Vosges Saônoises.
+            </p>
+
+            <!-- Compteur Dynamique (piloté par main.js) -->
+            <div class="inline-flex flex-wrap items-center justify-center gap-3 sm:gap-6 bg-cardBg/80 backdrop-blur-xl px-6 py-6 rounded-3xl border border-white/10 shadow-2xl hero-anim">
+                <div class="flex flex-col items-center min-w-[65px] sm:min-w-[85px]">
+                    <span id="cd-days" class="font-display text-3xl sm:text-5xl font-bold text-brand leading-none">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 mt-2 font-medium">Jours</span>
+                </div>
+                <span class="text-2xl sm:text-3xl text-white/20 font-light">:</span>
+                <div class="flex flex-col items-center min-w-[65px] sm:min-w-[85px]">
+                    <span id="cd-hours" class="font-display text-3xl sm:text-5xl font-bold text-white leading-none">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 mt-2 font-medium">Heures</span>
+                </div>
+                <span class="text-2xl sm:text-3xl text-white/20 font-light">:</span>
+                <div class="flex flex-col items-center min-w-[65px] sm:min-w-[85px]">
+                    <span id="cd-minutes" class="font-display text-3xl sm:text-5xl font-bold text-white leading-none">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 mt-2 font-medium">Minutes</span>
+                </div>
+                <span class="text-2xl sm:text-3xl text-white/20 font-light">:</span>
+                <div class="flex flex-col items-center min-w-[65px] sm:min-w-[85px]">
+                    <span id="cd-seconds" class="font-display text-3xl sm:text-5xl font-bold text-brand leading-none">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-gray-400 mt-2 font-medium">Secondes</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Grille des Épreuves & Tarifs -->
+    <main class="max-w-7xl mx-auto px-4 pb-24">
+        
+        <div class="text-center mb-12 gsap-fade-up">
+            <span class="text-brand font-display text-xs uppercase tracking-widest block mb-2">Choisissez Votre Format</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase text-white">4 Épreuves Disponibles</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+
+            <!-- Format 1 : Galibots (13 km) -->
+            <div class="bg-cardBg/70 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl flex flex-col justify-between course-card group hover:border-brand/40 transition-all duration-300">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-300">Format Découverte</span>
+                        <span class="font-display text-2xl font-bold text-brand">16 €</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-bold uppercase text-white group-hover:text-brand transition-colors mb-1">Les Galibots</h3>
+                    <p class="text-xs text-gray-400 mb-6 font-light">Le trail accessible au cœur des forêts et des anciens puits de mine.</p>
+                    
+                    <div class="space-y-3 pb-6 border-b border-white/10 text-xs">
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Distance</span><span class="font-bold text-white">13 KM</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Dénivelé positif</span><span class="font-bold text-brand">550 M D+</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Heure de départ</span><span class="font-bold text-white">09h45</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Ravitaillements</span><span class="font-bold text-white">1 en course + Arrivée</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Âge minimum</span><span class="font-bold text-white">Cadets (16 ans)</span></div>
+                    </div>
+
+                    <!-- Jauge de remplissage -->
+                    <div class="mt-6 mb-6">
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="text-gray-400 font-semibold">Dossards restants</span>
+                            <span class="text-brand font-bold">90 / 400</span>
+                        </div>
+                        <div class="w-full h-2 bg-dark/60 rounded-full overflow-hidden">
+                            <div class="bg-brand h-full rounded-full" style="width: 78%;"></div>
+                        </div>
+                        <span class="text-[10px] text-gray-500 mt-1 block text-right">78% réservé</span>
+                    </div>
+                </div>
+
+                <a href="https://inscriptions-exemple.fr/tdm2026/galibots" target="_blank" rel="noopener" class="block w-full text-center bg-white/10 hover:bg-brand hover:text-dark py-3.5 rounded-xl font-display uppercase tracking-widest font-bold text-xs transition-all shadow-md">
+                    S'inscrire (13 KM)
+                </a>
+            </div>
+
+            <!-- Format 2 : Terrils (28 km) -->
+            <div class="bg-cardBg/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border-2 border-brand/50 shadow-2xl flex flex-col justify-between course-card group relative transform lg:-translate-y-2">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-dark text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full shadow-lg">
+                    Le Plus Populaire
+                </div>
+                <div>
+                    <div class="flex justify-between items-start mb-4 mt-2">
+                        <span class="px-3 py-1 bg-brand/10 text-brand rounded-full text-[10px] font-bold uppercase tracking-widest">Épreuve Historique</span>
+                        <span class="font-display text-2xl font-bold text-brand">28 €</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-bold uppercase text-white group-hover:text-brand transition-colors mb-1">Les Terrils</h3>
+                    <p class="text-xs text-gray-400 mb-6 font-light">Le défi nerveux des 5 terrils emblématiques et crêtes minières.</p>
+                    
+                    <div class="space-y-3 pb-6 border-b border-white/10 text-xs">
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Distance</span><span class="font-bold text-white">28 KM</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Dénivelé positif</span><span class="font-bold text-brand">1 380 M D+</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Heure de départ</span><span class="font-bold text-white">08h30</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Ravitaillements</span><span class="font-bold text-white">2 en course + Arrivée</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Âge minimum</span><span class="font-bold text-white">Espoirs (20 ans)</span></div>
+                    </div>
+
+                    <!-- Jauge de remplissage -->
+                    <div class="mt-6 mb-6">
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="text-gray-400 font-semibold">Dossards restants</span>
+                            <span class="text-brand font-bold">58 / 350</span>
+                        </div>
+                        <div class="w-full h-2 bg-dark/60 rounded-full overflow-hidden">
+                            <div class="bg-brand h-full rounded-full" style="width: 83%;"></div>
+                        </div>
+                        <span class="text-[10px] text-gray-500 mt-1 block text-right">83% réservé</span>
+                    </div>
+                </div>
+
+                <a href="https://inscriptions-exemple.fr/tdm2026/terrils" target="_blank" rel="noopener" class="block w-full text-center bg-brand text-dark hover:bg-white py-3.5 rounded-xl font-display uppercase tracking-widest font-bold text-xs transition-all shadow-[0_10px_25px_rgba(176,190,66,0.3)]">
+                    S'inscrire (28 KM)
+                </a>
+            </div>
+
+            <!-- Format 3 : Gueules Noires (52 km) -->
+            <div class="bg-cardBg/70 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl flex flex-col justify-between course-card group hover:border-brand/40 transition-all duration-300">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-300">Épreuve Reine</span>
+                        <span class="font-display text-2xl font-bold text-brand">48 €</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-bold uppercase text-white group-hover:text-brand transition-colors mb-1">Gueules Noires</h3>
+                    <p class="text-xs text-gray-400 mb-6 font-light">L'ultra vosgien avec l'ascension mythique de La Planche des Belles Filles.</p>
+                    
+                    <div class="space-y-3 pb-6 border-b border-white/10 text-xs">
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Distance</span><span class="font-bold text-white">52 KM</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Dénivelé positif</span><span class="font-bold text-brand">2 500 M D+</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Heure de départ</span><span class="font-bold text-white">06h30</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Ravitaillements</span><span class="font-bold text-white">4 en course + Arrivée</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Points ITRA / UTMB</span><span class="font-bold text-brand">2 Points Qualif.</span></div>
+                    </div>
+
+                    <!-- Jauge de remplissage -->
+                    <div class="mt-6 mb-6">
+                        <div class="flex justify-between text-xs mb-1.5">
+                            <span class="text-gray-400 font-semibold">Dossards restants</span>
+                            <span class="text-brand font-bold">66 / 250</span>
+                        </div>
+                        <div class="w-full h-2 bg-dark/60 rounded-full overflow-hidden">
+                            <div class="bg-brand h-full rounded-full" style="width: 74%;"></div>
+                        </div>
+                        <span class="text-[10px] text-gray-500 mt-1 block text-right">74% réservé</span>
+                    </div>
+                </div>
+
+                <a href="https://inscriptions-exemple.fr/tdm2026/gueules-noires" target="_blank" rel="noopener" class="block w-full text-center bg-white/10 hover:bg-brand hover:text-dark py-3.5 rounded-xl font-display uppercase tracking-widest font-bold text-xs transition-all shadow-md">
+                    S'inscrire (52 KM)
+                </a>
+            </div>
+
+            <!-- Format 4 : Randonnée & Enfants -->
+            <div class="bg-cardBg/70 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl flex flex-col justify-between course-card group hover:border-brand/40 transition-all duration-300">
+                <div>
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="px-3 py-1 bg-white/10 rounded-full text-[10px] font-bold uppercase tracking-widest text-gray-300">Grand Public</span>
+                        <span class="font-display text-2xl font-bold text-brand">8 € / 0 €</span>
+                    </div>
+                    <h3 class="font-display text-2xl font-bold uppercase text-white group-hover:text-brand transition-colors mb-1">Rando & Enfants</h3>
+                    <p class="text-xs text-gray-400 mb-6 font-light">Randonnée pédestre 10 km ouverte à tous et courses Mini-Galibots gratuites.</p>
+                    
+                    <div class="space-y-3 pb-6 border-b border-white/10 text-xs">
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Rando 10 km</span><span class="font-bold text-white">8 € (ravito inclus)</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Mini-Galibots</span><span class="font-bold text-brand">Gratuit (1 à 3 km)</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Départ Randonnée</span><span class="font-bold text-white">09h00</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Départ Enfants</span><span class="font-bold text-white">11h15</span></div>
+                        <div class="flex justify-between py-1"><span class="text-gray-400">Certificat médical</span><span class="font-bold text-white">Non requis (Rando)</span></div>
+                    </div>
+
+                    <!-- Info Rando -->
+                    <div class="mt-6 mb-6 p-3 bg-dark/40 rounded-xl border border-white/5 text-center">
+                        <span class="text-xs text-gray-300 font-medium">Inscription sur place possible</span>
+                        <span class="text-[10px] text-brand block mt-0.5">+ 2€ reversés aux Enfants de l'Espoir</span>
+                    </div>
+                </div>
+
+                <a href="https://inscriptions-exemple.fr/tdm2026/rando" target="_blank" rel="noopener" class="block w-full text-center bg-white/10 hover:bg-brand hover:text-dark py-3.5 rounded-xl font-display uppercase tracking-widest font-bold text-xs transition-all shadow-md">
+                    S'inscrire Rando / Enfants
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Ce qui est inclus dans votre dossard -->
+        <section class="bg-cardBg/40 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border border-white/10 mb-20 gsap-fade-up">
+            <div class="text-center max-w-3xl mx-auto mb-10">
+                <span class="text-brand font-display text-xs uppercase tracking-widest block mb-2">Prestations Coureurs</span>
+                <h2 class="font-display text-3xl font-bold uppercase text-white">Inclus Dans Chaque Inscription</h2>
+                <p class="text-gray-400 text-xs sm:text-sm mt-2">Nous mettons un point d'honneur à offrir une expérience coureur chaleureuse, éco-responsable et complète.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                <div class="p-4 bg-dark/50 rounded-2xl border border-white/5">
+                    <i class="fa-solid fa-stopwatch text-2xl text-brand mb-2"></i>
+                    <span class="font-display uppercase text-xs font-bold text-white block">Chrono RFID</span>
+                    <span class="text-[10px] text-gray-400">Temps officiel au centième</span>
+                </div>
+                <div class="p-4 bg-dark/50 rounded-2xl border border-white/5">
+                    <i class="fa-solid fa-medal text-2xl text-brand mb-2"></i>
+                    <span class="font-display uppercase text-xs font-bold text-white block">Médaille Bois PEFC</span>
+                    <span class="text-[10px] text-gray-400">Gravure locale artisanale</span>
+                </div>
+                <div class="p-4 bg-dark/50 rounded-2xl border border-white/5">
+                    <i class="fa-solid fa-apple-whole text-2xl text-brand mb-2"></i>
+                    <span class="font-display uppercase text-xs font-bold text-white block">Buffet Terroir</span>
+                    <span class="text-[10px] text-gray-400">Comptoir Haute-Saône</span>
+                </div>
+                <div class="p-4 bg-dark/50 rounded-2xl border border-white/5">
+                    <i class="fa-solid fa-beer-mug-empty text-2xl text-brand mb-2"></i>
+                    <span class="font-display uppercase text-xs font-bold text-white block">Bière Finisher</span>
+                    <span class="text-[10px] text-gray-400">Brasserie locale artisanale</span>
+                </div>
+                <div class="p-4 bg-dark/50 rounded-2xl border border-white/5">
+                    <i class="fa-solid fa-shower text-2xl text-brand mb-2"></i>
+                    <span class="font-display uppercase text-xs font-bold text-white block">Douches Chaudes</span>
+                    <span class="text-[10px] text-gray-400">Vestiaires et consignes</span>
+                </div>
+                <div class="p-4 bg-dark/50 rounded-2xl border border-white/5">
+                    <i class="fa-solid fa-camera text-2xl text-brand mb-2"></i>
+                    <span class="font-display uppercase text-xs font-bold text-white block">Photos HD Gratuites</span>
+                    <span class="text-[10px] text-gray-400">Téléchargement libre</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Règlementation Médicale FFA & Parcours Prévention Santé -->
+        <section class="bg-gradient-to-r from-cardBg via-[#1c3338] to-cardBg rounded-3xl p-8 sm:p-12 border border-brand/30 shadow-2xl mb-20 gsap-fade-up">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-8">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand/20 text-brand text-xs uppercase font-bold tracking-widest rounded-full mb-4">
+                        <i class="fa-solid fa-heart-pulse"></i> Justificatif Médical Obligatoire
+                    </div>
+                    <h2 class="font-display text-2xl sm:text-4xl font-bold uppercase text-white mb-4">
+                        Le PPS (Parcours Prévention Santé) FFA
+                    </h2>
+                    <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed mb-4">
+                        Conformément à la nouvelle réglementation de la Fédération Française d'Athlétisme (FFA) et à la loi sport, le certificat médical traditionnel n'est plus obligatoire pour les participants majeurs.
+                    </p>
+                    <ul class="space-y-2 text-xs sm:text-sm text-gray-300 font-light mb-6">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Réalisez votre module PPS en 3 minutes sur <strong class="text-white">pps.athle.fr</strong></li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> L'attestation générée doit être datée de moins de 3 mois au jour de l'épreuve (valable à partir du 17 février 2026).</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-brand"></i> Les licenciés FFA (Compétition, Running, Pass) renseignent simplement leur numéro de licence valide 2025-2026.</li>
+                    </ul>
+                </div>
+                <div class="lg:col-span-4 flex flex-col gap-3">
+                    <a href="https://pps.athle.fr" target="_blank" rel="noopener" class="w-full text-center bg-brand text-dark hover:bg-white py-4 rounded-2xl font-display uppercase tracking-widest font-bold text-xs transition-all shadow-[0_10px_25px_rgba(176,190,66,0.3)]">
+                        Générer mon attestation PPS (FFA) <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                    </a>
+                    <a href="reglement.html" class="w-full text-center bg-white/10 hover:bg-white/20 text-white py-3.5 rounded-2xl font-display uppercase tracking-widest font-semibold text-xs transition-all">
+                        Consulter le Règlement Complet
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Retrait des Dossards & Modalités -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 gsap-fade-up">
+            <div class="bg-cardBg/60 rounded-3xl p-8 border border-white/10">
+                <h3 class="font-display text-xl font-bold uppercase text-white mb-4 flex items-center gap-3">
+                    <i class="fa-solid fa-calendar-check text-brand"></i> Horaires Retrait Dossards
+                </h3>
+                <div class="space-y-4 text-xs sm:text-sm text-gray-300">
+                    <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                        <strong class="text-brand uppercase block mb-1">Samedi 16 Mai 2026</strong>
+                        <span>De 15h00 à 19h00 — Complexe Sportif de Champagney (évitez l'attente du dimanche matin !)</span>
+                    </div>
+                    <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                        <strong class="text-brand uppercase block mb-1">Dimanche 17 Mai 2026 (Jour de course)</strong>
+                        <span>À partir de 05h30 et jusqu'à 30 minutes avant le départ de votre course respective.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-cardBg/60 rounded-3xl p-8 border border-white/10">
+                <h3 class="font-display text-xl font-bold uppercase text-white mb-4 flex items-center gap-3">
+                    <i class="fa-solid fa-shield-halved text-brand"></i> Garantie Annulation & Cession
+                </h3>
+                <div class="space-y-4 text-xs sm:text-sm text-gray-300">
+                    <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                        <strong class="text-brand uppercase block mb-1">Option Sérénité (3 €)</strong>
+                        <span>Remboursement à 100% de votre inscription en cas de blessure ou motif médical justifié jusqu'au 10 mai 2026.</span>
+                    </div>
+                    <div class="p-4 bg-dark/40 rounded-2xl border border-white/5">
+                        <strong class="text-brand uppercase block mb-1">Changement de coureur gratuit</strong>
+                        <span>Possibilité de céder son dossard à un autre coureur sans surcoût jusqu'au 10 mai 2026 via la plateforme officielle.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mega Footer -->
+    <footer class="bg-[#0a1214] pt-16 md:pt-24 flex flex-col relative z-20 overflow-hidden" role="contentinfo">
+        <div class="w-full max-w-7xl mx-auto px-4 mb-16 md:mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-10">
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Les Épreuves</h4>
+                <a href="parcours.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Parcours</a>
+                <a href="galibots.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Galibots (13 km)</a>
+                <a href="terrils.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Terrils (28 km)</a>
+                <a href="gueules-noires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Gueules Noires (52 km)</a>
+                <a href="autres.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Autres formats</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Infos Pratiques</h4>
+                <a href="infos-pratiques.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Guide Général</a>
+                <a href="reglement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Règlement</a>
+                <a href="resultats-medias.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Résultats & Médias</a>
+                <a href="editions-precedentes.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éditions Précédentes</a>
+                <a href="preparer-mon-trail.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Préparer mon trail</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">L'Association</h4>
+                <a href="a-propos.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">À propos</a>
+                <a href="association.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Run in Champagney</a>
+                <a href="benevoles.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Bénévoles</a>
+                <a href="eco-engagement.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éco-engagement & Territoire</a>
+                <a href="partenaires.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Partenaires & Sponsors</a>
+                <a href="dossard-solidaire.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Dossard Solidaire</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Raccourcis</h4>
+                <a href="inscription.html" class="text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors mb-2 font-bold">S'inscrire</a>
+                <a href="index.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Page d'accueil</a>
+                <a href="contact.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Contact</a>
+                <a href="presse.html" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Presse</a>
+                <div class="mt-4 flex flex-col gap-2">
+                    <a href="mentions-legales.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Mentions légales</a>
+                    <a href="politique-confidentialite.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Politique de confidentialité</a>
+                    <a href="declaration-accessibilite.html" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Déclaration d'accessibilité</a>
+                </div>
+            </div>
+        </div>
+        <div class="w-full text-center z-10 px-4 mb-4">
+            <p class="text-gray-700 text-[9px] uppercase tracking-widest font-sans">© 2026 Association Run in Champagney - Tous droits réservés</p>
+        </div>
+        <div aria-hidden="true" class="w-full relative translate-y-[28%] md:translate-y-[22%] pointer-events-none select-none text-center overflow-hidden">
+            <div class="font-display text-[22vw] md:text-[18vw] font-bold uppercase leading-none text-white/[0.03] tracking-tighter whitespace-nowrap">
+                TRAIL DES MINES
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

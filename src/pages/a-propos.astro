@@ -1,0 +1,52 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "À Propos - Trail des Mines | Histoire Minière & Genèse de la Course";
+const description = "Découvrez l";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Patrimoine & Racines</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                L'Histoire <span class="text-brand">des Mines</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Le Trail des Mines n'est pas une simple course à pied : c'est un hommage vibrant aux mineurs de fond qui ont façonné le paysage des Vosges du Sud pendant plus de deux siècles.
+            </p>
+        </div>
+    </header>
+
+    <!-- Récit Historique -->
+    <section class="py-12 px-4 max-w-4xl mx-auto">
+        <div class="space-y-12">
+            
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Le Bassin Houiller de Ronchamp-Champagney</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Découverte au milieu du XVIIIème siècle, la houille a transformé les paisibles vallées de Haute-Saône en un pôle industriel majeur. Pendant plus de 200 ans, des milliers d'hommes et de jeunes garçons — les <em>galibots</em> — sont descendus jusqu'à plus de 1 000 mètres sous terre pour extraire le charbon.
+                </p>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    Le Puits Arthur de Buyer, creusé à Champagney, fut le premier puits en France à franchir la barre mythique des 1 000 mètres de profondeur en 1900. Ses vestiges imposants et ses terrils jalonnent aujourd'hui le tracé des coureurs.
+                </p>
+            </div>
+
+            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
+                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">La Renaissance par la Course Nature</h2>
+                <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    Après la fermeture des puits en 1958, la forêt vosgienne a progressivement reconquis son territoire. Les anciens terrils de schiste noir se sont couverts de bouleaux, de mousses et de sentiers escarpés.
+                </p>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                    En créant le Trail des Mines en 2022, l'association <strong>Run in Champagney</strong> a voulu valoriser ce patrimoine industriel unique. Courir sur ces sentiers, c'est fouler la mémoire d'un labeur herculéen, là où chaque dénivelé raconte la sueur et le courage des gueules noires.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>

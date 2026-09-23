@@ -1,0 +1,20 @@
+{
+  "name": "trail-des-mines-2027",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev --host",
+    "start": "node ./dist/server/entry.mjs",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.5.5",
+    "@astrojs/tailwind": "^5.1.5",
+    "astro": "^5.4.2",
+    "mysql2": "^3.24.4",
+    "pdf-parse": "^2.4.5",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^3.4.17"
+  }
+}

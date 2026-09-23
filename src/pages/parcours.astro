@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Parcours à venir - Trail des Mines 2027 | Champagney";
+const description = "Le Trail des Mines revient le 16/05/2027 : les parcours officiels seront dévoilés prochainement. Rendez-vous le 16 mai 2027 à Champagney.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+    <!-- Page Header -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <!-- Texture Topographique subtile en fond de composant -->
+        <div class="topo-texture pointer-events-none" aria-hidden="true"></div>
+        <div class="max-w-7xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Édition 2027 • 16 Mai</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-6">
+                Les <span class="text-brand">Parcours</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-lg font-light leading-relaxed">
+                Les tracés officiels de la 6ème édition sont en cours de préparation par l'équipe d'organisation.
+            </p>
+        </div>
+    </header>
+
+    <!-- Conteneur Annonce Parcours À Venir (aucunes info de parcours) -->
+    <section class="py-12 md:py-24 px-4 max-w-5xl mx-auto">
+        <div class="relative bg-gradient-to-br from-cardBg via-dark to-cardBg border border-white/10 rounded-3xl p-8 sm:p-14 md:p-20 overflow-hidden shadow-2xl text-center flex flex-col items-center justify-center">
+            <!-- Filigrane décoratif en fond -->
+            <div class="absolute -right-8 -bottom-10 opacity-5 pointer-events-none text-white select-none">
+                <i class="fa-solid fa-person-running text-[18rem]"></i>
+            </div>
+
+            <div class="relative z-10 max-w-3xl flex flex-col items-center">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/25 text-brand font-display uppercase tracking-widest text-xs font-semibold mb-6">
+                    <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+                    <span>Prochaine Édition • 16 Mai 2027</span>
+                </div>
+
+                <h2 class="font-display text-2xl sm:text-4xl md:text-5xl font-bold uppercase text-white leading-tight mb-6">
+                    Le Trail des Mines revient le 16/05/2027 : parcours à venir
+                </h2>
+
+                <p class="text-gray-300 text-sm sm:text-base md:text-lg font-light leading-relaxed mb-10 max-w-2xl">
+                    Nos équipes de traceurs reconnaissent et préparent activement les itinéraires. Les traces GPX, distances officielles, profils altimétriques et points de ravitaillement seront publiés ici dès leur validation.
+                </p>
+
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a href="/inscription" class="btn-registration-trigger inline-flex items-center gap-3 px-8 py-4 rounded-full bg-brand text-dark font-display font-bold uppercase tracking-widest text-xs hover:bg-white hover:scale-105 transition-all shadow-lg shadow-brand/20 cursor-pointer">
+                        <span>Prendre mon dossard</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                    <a href="/editions-precedentes" class="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/10 hover:bg-white/20 text-white font-display font-bold uppercase tracking-widest text-xs transition-all border border-white/15">
+                        <span>Voir les éditions précédentes</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</Layout>

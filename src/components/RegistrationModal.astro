@@ -1,0 +1,126 @@
+---
+// RegistrationModal.astro - Popup d'information sur l'ouverture prochaine des inscriptions sur plateforme externe
+---
+
+<div id="registration-modal" class="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-dark/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 select-none" role="dialog" aria-modal="true" aria-labelledby="reg-modal-title">
+  <!-- Backdrop cliquable pour fermer -->
+  <div class="modal-backdrop absolute inset-0 cursor-pointer" aria-hidden="true"></div>
+
+  <!-- Conteneur Modal avec Glassmorphism & Bordure Brand -->
+  <div class="modal-card relative w-full max-w-lg bg-gradient-to-b from-[#0f1d21] via-[#091316] to-[#060c0e] border border-brand/40 rounded-3xl p-6 sm:p-9 shadow-[0_25px_70px_rgba(0,0,0,0.85),0_0_50px_rgba(176,190,66,0.2)] transform scale-95 transition-all duration-300 text-center overflow-hidden z-10">
+    <!-- Texture Topographique subtile en arrière-plan -->
+    <div class="topo-texture pointer-events-none opacity-30" aria-hidden="true"></div>
+    
+    <!-- Bouton Fermeture Croix -->
+    <button type="button" class="modal-close-btn absolute top-4 right-4 sm:top-5 sm:right-5 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-gray-300 hover:text-white flex items-center justify-center transition-all cursor-pointer z-20 group" aria-label="Fermer la boîte de dialogue">
+      <i class="fa-solid fa-xmark text-lg group-hover:rotate-90 transition-transform duration-200"></i>
+    </button>
+
+    <div class="relative z-10 flex flex-col items-center">
+      <!-- Icône Stylisée avec halo pulsing -->
+      <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-brand/10 border-2 border-brand/40 text-brand flex items-center justify-center mb-5 text-2xl sm:text-3xl shadow-[0_0_30px_rgba(176,190,66,0.35)] relative">
+        <i class="fa-solid fa-ticket"></i>
+        <span class="absolute -top-1 -right-1 flex h-4 w-4">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-4 w-4 bg-brand"></span>
+        </span>
+      </div>
+
+      <!-- Badge statut -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-brand/10 border border-brand/30 text-brand text-[10px] sm:text-xs font-mono uppercase tracking-widest font-semibold mb-3">
+        <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+        <span>Édition 2027 • 16 Mai</span>
+      </div>
+
+      <!-- Titre principal -->
+      <h3 id="reg-modal-title" class="font-display text-2xl sm:text-3xl font-bold uppercase text-white mb-3 tracking-wide leading-tight">
+        Inscriptions Bientôt Ouvertes
+      </h3>
+
+      <!-- Message explicatif -->
+      <p class="text-gray-300 text-xs sm:text-sm font-light leading-relaxed mb-8 max-w-md">
+        Les inscriptions pour la 6<sup class="lowercase">ème</sup> édition du <strong>Trail des Mines</strong> seront lancées prochainement.
+      </p>
+
+      <!-- Boutons d'action -->
+      <div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+        <button type="button" class="modal-close-btn w-full sm:w-1/2 py-3.5 px-6 rounded-full bg-brand text-dark hover:bg-white font-display uppercase tracking-widest text-xs font-bold transition-all shadow-lg shadow-brand/20 cursor-pointer">
+          J'ai compris
+        </button>
+        <a href="/reglement" class="w-full sm:w-1/2 py-3.5 px-6 rounded-full bg-white/10 hover:bg-white/20 text-white font-display uppercase tracking-widest text-xs font-bold transition-all border border-white/10 text-center">
+          Lire le règlement
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const modal = document.getElementById('registration-modal');
+    if (!modal) return;
+
+    const modalBackdrop = modal.querySelector('.modal-backdrop');
+    const modalCloseBtns = modal.querySelectorAll('.modal-close-btn');
+    const modalCard = modal.querySelector('.modal-card');
+
+    function openModal() {
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.add('opacity-100', 'pointer-events-auto');
+      if (modalCard) {
+        modalCard.classList.remove('scale-95');
+        modalCard.classList.add('scale-100');
+      }
+      document.body.classList.add('overflow-hidden');
+      if (window.lenis && typeof window.lenis.stop === 'function') {
+        window.lenis.stop();
+      }
+    }
+
+    function closeModal() {
+      modal.classList.remove('opacity-100', 'pointer-events-auto');
+      modal.classList.add('opacity-0', 'pointer-events-none');
+      if (modalCard) {
+        modalCard.classList.remove('scale-100');
+        modalCard.classList.add('scale-95');
+      }
+      document.body.classList.remove('overflow-hidden');
+      if (window.lenis && typeof window.lenis.start === 'function') {
+        window.lenis.start();
+      }
+    }
+
+    // Export global pour ouverture manuelle si besoin
+    window.openRegistrationModal = openModal;
+    window.closeRegistrationModal = closeModal;
+
+    // Fermeture sur clic boutons et fond
+    modalCloseBtns.forEach(btn => btn.addEventListener('click', closeModal));
+    if (modalBackdrop) modalBackdrop.addEventListener('click', closeModal);
+
+    // Fermeture avec la touche Échap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('opacity-0')) {
+        closeModal();
+      }
+    });
+
+    // Interception globale de tous les clics vers l'inscription
+    document.addEventListener('click', (e) => {
+      // 1. Éléments avec classe ou attribut spécifique
+      const explicitTrigger = e.target.closest('.btn-registration-trigger, [data-open-registration-modal]');
+      if (explicitTrigger) {
+        e.preventDefault();
+        openModal();
+        return;
+      }
+
+      // 2. Liens vers /inscription (boutons d'action)
+      const link = e.target.closest('a[href="/inscription"]');
+      if (link && !link.classList.contains('modal-bypass-link')) {
+        e.preventDefault();
+        openModal();
+      }
+    });
+  })();
+</script>

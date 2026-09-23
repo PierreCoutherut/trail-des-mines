@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   TRAIL DES MINES 2027 - FEUILLE DE STYLE PRINCIPALE
+   Identité Visuelle Dark Mode & Système de Design Awwwards
+   ========================================================================== */
+
+:root {
+    --color-dark: #101D20;
+    --color-abyssal: #0a1214;
+    --color-card-bg: #213A40;
+    --color-card-bg-light: #2b4b53;
+    --color-brand: #B0BE42;
+    --color-brand-glow: rgba(176, 190, 66, 0.35);
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Oswald', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Texture topographique - Subtile en filigrane minéral de fond de composant */
+.topo-texture {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url('/medias/Texture.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    filter: invert(1);
+    mix-blend-mode: screen;
+    opacity: 0.10;
+}
+
+/* Variante pour fonds clairs ou vert brand */
+.topo-texture-dark {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url('/medias/Texture.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    mix-blend-mode: multiply;
+    opacity: 0.10;
+}
+
+/* Texture Grainy / Bruit très subtil */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Outline Text */
+.text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(176, 190, 66, 0.85);
+}
+
+.text-outline-white {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+}
+
+.text-outline-thick {
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(176, 190, 66, 0.9);
+}
+
+@media (max-width: 768px) {
+    .text-outline {
+        -webkit-text-stroke: 1px rgba(176, 190, 66, 1);
+    }
+}
+
+/* Dropdown Pilule (Desktop) - Zone tampon sécurisée contre perte de hover */
+.dropdown-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 100%;
+    padding-top: 1.25rem;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdown-menu {
+    transform: translateY(12px);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-item:hover .dropdown-wrapper,
+.nav-item:focus-within .dropdown-wrapper {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nav-item:hover .dropdown-menu,
+.nav-item:focus-within .dropdown-menu {
+    transform: translateY(0);
+}
+
+/* Animation cinétique des flèches (déplacement horizontal fluide) */
+.arrow-kinetic {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .arrow-kinetic,
+.group\/btn:hover .arrow-kinetic {
+    transform: translateX(5px);
+}
+
+/* Animations CSS des carrousels de sponsors multi-lignes */
+@keyframes scroll-sponsors-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-sponsors-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+.animate-scroll-left {
+    animation: scroll-sponsors-left 45s linear infinite;
+    will-change: transform;
+}
+
+.animate-scroll-right {
+    animation: scroll-sponsors-right 45s linear infinite;
+    will-change: transform;
+}
+
+.sponsor-track:hover .animate-scroll-left,
+.sponsor-track:hover .animate-scroll-right {
+    animation-play-state: paused;
+}
+
+/* Custom Scrollbar discrète Dark & Brand */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a1214;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #213A40;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #B0BE42;
+}
+
+/* Custom Popups & UI Leaflet Dark Mode */
+.leaflet-popup-content-wrapper {
+    background: rgba(33, 58, 64, 0.95) !important;
+    backdrop-filter: blur(12px);
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-popup-tip {
+    background: rgba(33, 58, 64, 0.95) !important;
+}
+
+.leaflet-popup-content {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 14px 18px !important;
+}
+
+.leaflet-container {
+    background: #0a1214 !important;
+    font-family: 'Inter', sans-serif !important;
+}
+
+/* Animation du coureur dynamique au survol du bouton S'inscrire */
+@keyframes runnerSprint {
+    0% {
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateX(2px) translateY(-2px) rotate(8deg) scale(1.05);
+    }
+    50% {
+        transform: translateX(4px) translateY(1px) rotate(-6deg) scale(1.1);
+    }
+    75% {
+        transform: translateX(3px) translateY(-2px) rotate(6deg) scale(1.05);
+    }
+    100% {
+        transform: translateX(5px) translateY(0) rotate(-3deg) scale(1.1);
+    }
+}
+
+.runner-anim {
+    display: inline-block;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .runner-anim,
+.runner-btn:hover .runner-anim {
+    animation: runnerSprint 0.45s ease-in-out infinite alternate;
+}
+

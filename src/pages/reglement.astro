@@ -1,0 +1,299 @@
+---
+export const prerender = false;
+Astro.response.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
+
+import Layout from '../layouts/Layout.astro';
+import { getReglementSync } from '../lib/reglement';
+
+const reglement = getReglementSync();
+
+const title = "Règlement Officiel - Trail des Mines 2027 | FFA, Sécurité & Éthique";
+const description = "Consultez le règlement officiel du Trail des Mines : téléchargement du document PDF officiel et consultation intégrale des chapitres et articles.";
+
+// Formatage de la taille du fichier
+function formatFileSize(bytes: number): string {
+  if (!bytes || bytes <= 0) return 'PDF Officiel';
+  if (bytes < 1024 * 1024) {
+    return `${Math.round(bytes / 1024)} Ko`;
+  }
+  return `${(bytes / (1024 * 1024)).toFixed(1)} Mo`;
+}
+
+// Formatage de la date
+const updateDateFormatted = reglement.lastUpdated
+  ? new Date(reglement.lastUpdated).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
+  : '16 Mai 2027';
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+    <!-- En-tête Hero -->
+    <header class="pt-36 md:pt-48 pb-14 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-[#0c1618]">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1.5 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">
+                Édition {reglement.edition || '2027'} • Fédération Française d'Athlétisme
+            </span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Règlement <span class="text-brand">Officiel</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                {reglement.description || "Le présent règlement a pour objet de définir les conditions d'organisation, de sécurité et de participation au Trail des Mines. L'inscription implique l'acceptation sans réserve de l'ensemble des articles ci-dessous."}
+            </p>
+        </div>
+    </header>
+
+    <!-- Zone Téléchargement PDF & Contrôles -->
+    <section class="px-4 max-w-4xl mx-auto -mt-4 mb-10 relative z-20">
+        <!-- Boîte de téléchargement du document PDF -->
+        <div class="bg-cardBg/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-brand/30 shadow-2xl shadow-brand/5 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-4 text-left w-full sm:w-auto">
+                <div class="w-14 h-14 rounded-2xl bg-brand/15 border border-brand/30 flex items-center justify-center text-brand text-2xl shrink-0 shadow-lg shadow-brand/10">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-display uppercase tracking-widest text-brand font-bold">Document Source</span>
+                        <span class="text-[10px] font-mono text-gray-400 bg-white/5 px-2 py-0.5 rounded">
+                            {formatFileSize(reglement.pdfSizeBytes)}
+                        </span>
+                    </div>
+                    <h2 class="text-white font-display text-lg sm:text-xl font-bold uppercase mt-0.5">
+                        {reglement.title || "Règlement Officiel du Trail des Mines"}
+                    </h2>
+                    <span class="text-xs text-gray-400 font-mono block">
+                        Dernière mise à jour : <strong class="text-gray-300">{updateDateFormatted}</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3 w-full sm:w-auto shrink-0">
+                <a 
+                  href={reglement.pdfUrl || '/medias/reglement.pdf'} 
+                  download="reglement-trail-des-mines-2027.pdf"
+                  class="flex-1 sm:flex-initial bg-brand hover:bg-white text-dark font-display font-bold uppercase tracking-wider text-xs px-6 py-3.5 rounded-xl transition shadow-lg shadow-brand/20 flex items-center justify-center gap-2 hover:scale-[1.02]"
+                >
+                    <i class="fa-solid fa-file-arrow-down text-sm"></i>
+                    <span>Télécharger le PDF</span>
+                </a>
+                <a 
+                  href={reglement.pdfUrl || '/medias/reglement.pdf'} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="bg-white/10 hover:bg-white/20 text-white p-3.5 rounded-xl transition border border-white/10 flex items-center justify-center text-sm"
+                  title="Consulter le PDF dans un nouvel onglet"
+                >
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Barre de Recherche & Actions Déplier / Replier -->
+        <div class="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="relative w-full sm:max-w-md">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-gray-500 text-xs"></i>
+                <input 
+                  type="text" 
+                  id="reglement-search" 
+                  placeholder="Rechercher un article ou un mot-clé (PPS, matériel, bâtons, dossards)..." 
+                  class="w-full bg-dark/80 border border-white/15 rounded-xl pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-brand transition"
+                />
+            </div>
+
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <span id="search-counter" class="text-xs font-mono text-gray-400 hidden mr-2"></span>
+                <button 
+                  id="expand-all-btn" 
+                  type="button" 
+                  class="bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white px-3 py-2 rounded-lg text-xs font-mono transition flex items-center gap-1.5"
+                >
+                    <i class="fa-solid fa-angles-down text-[10px]"></i>
+                    <span>Tout déplier</span>
+                </button>
+                <button 
+                  id="collapse-all-btn" 
+                  type="button" 
+                  class="bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white px-3 py-2 rounded-lg text-xs font-mono transition flex items-center gap-1.5"
+                >
+                    <i class="fa-solid fa-angles-up text-[10px]"></i>
+                    <span>Tout replier</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Accordéons / Collapsibles par Chapitre -->
+    <section class="pb-20 px-4 max-w-4xl mx-auto">
+        <div class="space-y-4" id="chapters-list">
+            {reglement.chapters.map((chapter, idx) => (
+                <article 
+                  class="chapter-item bg-cardBg rounded-2xl border border-white/10 hover:border-brand/30 transition-all duration-300 overflow-hidden shadow-lg"
+                  data-chapter-id={chapter.id}
+                  data-search={`${chapter.number} ${chapter.title} ${chapter.content}`.toLowerCase()}
+                >
+                    <!-- En-tête cliquable du chapitre (Collapsible Trigger) -->
+                    <button 
+                      type="button" 
+                      class="chapter-toggle-btn w-full p-5 md:p-6 text-left flex items-center justify-between gap-4 focus:outline-none select-none transition"
+                      aria-expanded={idx === 0 ? "true" : "false"}
+                    >
+                        <div class="flex items-center gap-3.5 flex-1 min-w-0">
+                            <span class="chapter-number shrink-0 bg-brand/15 text-brand font-display font-bold uppercase tracking-wider text-xs px-3 py-1.5 rounded-lg border border-brand/30">
+                                {chapter.number}
+                            </span>
+                            <h2 class="chapter-title font-display text-base md:text-lg font-bold uppercase text-white tracking-wide truncate">
+                                {chapter.title}
+                            </h2>
+                        </div>
+                        <div class="chevron-icon w-8 h-8 rounded-full bg-white/5 flex items-center justify-center text-gray-400 text-xs shrink-0 transition-transform duration-300">
+                            <i class={`fa-solid fa-chevron-down ${idx === 0 ? 'rotate-180 text-brand' : ''}`}></i>
+                        </div>
+                    </button>
+
+                    <!-- Contenu dépliable du chapitre (Grid transition fluide) -->
+                    <div class={`chapter-content-grid grid transition-all duration-300 ease-in-out ${idx === 0 ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}>
+                        <div class="overflow-hidden">
+                            <div class="px-5 md:px-6 pb-6 pt-2 text-gray-300 text-sm leading-relaxed border-t border-white/5 space-y-3 font-sans">
+                                {chapter.content.split('\n\n').map(paragraph => {
+                                    // Si c'est une liste à puces
+                                    if (paragraph.includes('\n-') || paragraph.startsWith('-')) {
+                                        const items = paragraph.split('\n').filter(l => l.trim().startsWith('-'));
+                                        return (
+                                            <ul class="list-disc list-inside space-y-1.5 text-xs text-gray-300 bg-dark/40 p-4 rounded-xl border border-white/5">
+                                                {items.map(item => (
+                                                    <li class="leading-relaxed" set:html={item.replace(/^-\s*/, '').replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')} />
+                                                ))}
+                                            </ul>
+                                        );
+                                    }
+                                    return (
+                                        <p class="text-xs md:text-sm text-gray-300 leading-relaxed" set:html={paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-semibold">$1</strong>')} />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            ))}
+        </div>
+
+        <div id="no-results-msg" class="hidden text-center py-16 bg-cardBg/60 rounded-3xl border border-white/5">
+            <i class="fa-solid fa-search text-3xl text-gray-500 mb-3 block"></i>
+            <p class="text-white font-display uppercase tracking-wider text-base mb-1">Aucun article trouvé</p>
+            <p class="text-gray-400 text-xs font-mono">Essayez avec un autre mot-clé ou réinitialisez la recherche.</p>
+        </div>
+    </section>
+
+</Layout>
+
+<script>
+    function initReglement() {
+        
+        // ==========================================
+        // 1. Accordéons / Collapsibles par Chapitre
+        // ==========================================
+        const toggleButtons = document.querySelectorAll('.chapter-toggle-btn');
+
+        function setAccordionState(article: Element, expand: boolean) {
+            const btn = article.querySelector('.chapter-toggle-btn');
+            const gridWrapper = article.querySelector('.chapter-content-grid');
+            const chevron = article.querySelector('.chevron-icon i');
+
+            if (!btn || !gridWrapper) return;
+
+            if (expand) {
+                btn.setAttribute('aria-expanded', 'true');
+                gridWrapper.classList.remove('grid-rows-[0fr]', 'opacity-0');
+                gridWrapper.classList.add('grid-rows-[1fr]', 'opacity-100');
+                if (chevron) chevron.classList.add('rotate-180', 'text-brand');
+            } else {
+                btn.setAttribute('aria-expanded', 'false');
+                gridWrapper.classList.remove('grid-rows-[1fr]', 'opacity-100');
+                gridWrapper.classList.add('grid-rows-[0fr]', 'opacity-0');
+                if (chevron) chevron.classList.remove('rotate-180', 'text-brand');
+            }
+        }
+
+        toggleButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const article = btn.closest('.chapter-item');
+                if (!article) return;
+                const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+                setAccordionState(article, !isExpanded);
+            });
+        });
+
+        // ==========================================
+        // 2. Boutons Tout Déplier / Tout Replier
+        // ==========================================
+        const expandAllBtn = document.getElementById('expand-all-btn');
+        const collapseAllBtn = document.getElementById('collapse-all-btn');
+
+        if (expandAllBtn) {
+            expandAllBtn.addEventListener('click', () => {
+                document.querySelectorAll('.chapter-item').forEach(article => {
+                    setAccordionState(article, true);
+                });
+            });
+        }
+
+        if (collapseAllBtn) {
+            collapseAllBtn.addEventListener('click', () => {
+                document.querySelectorAll('.chapter-item').forEach(article => {
+                    setAccordionState(article, false);
+                });
+            });
+        }
+
+        // ==========================================
+        // 3. Recherche Interactive par Mot-Clé
+        // ==========================================
+        const searchInput = document.getElementById('reglement-search') as HTMLInputElement | null;
+        const noResultsMsg = document.getElementById('no-results-msg');
+        const searchCounter = document.getElementById('search-counter');
+        const chapterItems = document.querySelectorAll('.chapter-item');
+
+        if (searchInput) {
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase().trim();
+                let visibleCount = 0;
+
+                chapterItems.forEach(item => {
+                    const searchData = item.getAttribute('data-search') || '';
+                    const matches = query === '' || searchData.includes(query);
+
+                    if (matches) {
+                        (item as HTMLElement).classList.remove('hidden');
+                        visibleCount++;
+
+                        // Si recherche active, déplier automatiquement les résultats trouvés
+                        if (query.length > 1) {
+                            setAccordionState(item, true);
+                        }
+                    } else {
+                        (item as HTMLElement).classList.add('hidden');
+                    }
+                });
+
+                if (noResultsMsg) {
+                    noResultsMsg.classList.toggle('hidden', visibleCount > 0);
+                }
+
+                if (searchCounter) {
+                    if (query.length > 0) {
+                        searchCounter.textContent = `${visibleCount} article(s) trouvé(s)`;
+                        searchCounter.classList.remove('hidden');
+                    } else {
+                        searchCounter.classList.add('hidden');
+                    }
+                }
+            });
+        }
+
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initReglement);
+    } else {
+        initReglement();
+    }
+</script>

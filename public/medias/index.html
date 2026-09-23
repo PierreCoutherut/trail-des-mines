@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadbook Média - Trail des Mines 2026</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tdmDark: '#213a40',
+                        tdmGreen: '#b0be42',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Leaflet CSS for Maps -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+
+    <!-- Chart.js for Elevation Profile -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-bg {
+            background-image: linear-gradient(rgba(33, 58, 64, 0.85), rgba(33, 58, 64, 0.95)), url('https://traildesmines.fr/wp-content/uploads/2023/01/Trail-des-Mines-affiche-finale341.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .map-container {
+            height: 350px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        /* Style adjustments for leaflet popups/controls to match theme */
+        .leaflet-bar a {
+            color: #213a40 !important;
+        }
+
+        /* Personnalisation des popups de la carte */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #b0be42;
+        }
+
+        .leaflet-popup-content {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: #213a40;
+            margin: 12px 16px;
+        }
+
+        /* Styles pour le plein écran */
+        #main-map:fullscreen {
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+
+        #main-map:-webkit-full-screen {
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+
+        #main-map:-ms-fullscreen {
+            height: 100vh !important;
+            width: 100vw !important;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <!-- Navbar -->
+    <nav class="bg-tdmDark text-white sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-camera-retro text-tdmGreen text-2xl"></i>
+                    <span class="font-bold text-xl tracking-wider">ROADBOOK <span
+                            class="text-tdmGreen">MÉDIA</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#intro"
+                            class="hover:text-tdmGreen px-3 py-2 rounded-md text-sm font-medium transition-colors">Accueil</a>
+                        <a href="#courses"
+                            class="hover:text-tdmGreen px-3 py-2 rounded-md text-sm font-medium transition-colors">Les
+                            Parcours</a>
+                        <a href="#missions"
+                            class="hover:text-tdmGreen px-3 py-2 rounded-md text-sm font-medium transition-colors">Vos
+                            Missions</a>
+                        <a href="#regles"
+                            class="hover:text-tdmGreen px-3 py-2 rounded-md text-sm font-medium transition-colors">Règles
+                            & Sécurité</a>
+                        <a href="#conseils"
+                            class="hover:text-tdmGreen px-3 py-2 rounded-md text-sm font-medium transition-colors">Conseils</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="intro"
+        class="hero-bg text-white py-24 md:py-32 px-4 relative overflow-hidden flex items-center justify-center">
+        <div class="text-center max-w-4xl mx-auto relative z-10">
+            <span
+                class="inline-block py-1 px-3 rounded-full bg-tdmGreen text-tdmDark font-bold text-sm mb-6 uppercase tracking-widest shadow-lg">Guide
+                du Photographe Bénévole</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 leading-tight">
+                Trail des <span class="text-tdmGreen">Mines</span>
+            </h1>
+            <p class="text-xl md:text-3xl font-light mb-8">5ème Édition — 17 Mai 2026</p>
+            <div class="w-24 h-1 bg-tdmGreen mx-auto mb-8 rounded-full"></div>
+            <p class="text-lg md:text-xl text-gray-200 leading-relaxed font-light">
+                Bienvenue dans l'équipe média du Trail des Mines ! Ce document est votre compagnon de route pour vous
+                aider à capturer l'essence de cet événement unique organisé par l'association Run in Champagney. Que
+                vous soyez débutant ou amateur éclairé, votre regard est essentiel pour faire vivre cette aventure.
+            </p>
+        </div>
+    </header>
+
+    <!-- 1. L'Événement -->
+    <section id="courses" class="py-20 px-4 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold text-tdmDark mb-4">1. L'Événement : Plus qu'une Course, une
+                Histoire</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                Le Trail des Mines entame sa 5ème édition. C'est un événement unique qui rassemble des passionnés de
+                trail dans un cadre exceptionnel.
+                Chaque année, nous proposons trois parcours : les Gueules Noires (52 km), les Terrils (28 km) et les
+                Galibots (13 km). Ces courses traversent les paysages emblématiques du massif vosgien, offrant des
+                panoramas à couper le souffle et des défis techniques pour tous les niveaux.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Gueules Noires -->
+            <div
+                class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col transform transition duration-300 hover:-translate-y-2 border-t-4 border-tdmDark">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-tdmDark">Les Gueules Noires</h3>
+                        <span class="bg-tdmDark text-white text-xs font-bold px-2 py-1 rounded">52 km</span>
+                    </div>
+                    <p class="text-tdmGreen font-semibold mb-4"><i class="fa-solid fa-arrow-trend-up mr-2"></i>2500m D+
+                    </p>
+                    <p class="text-gray-600">L'épreuve reine. Elle exige endurance et courage, menant les coureurs
+                        jusqu'au sommet de la Planche des Belles Filles.</p><br>
+                    <ul>
+                        <li>Départ : 7h00</li>
+                        <li>100 participants</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Terrils -->
+            <div
+                class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col transform transition duration-300 hover:-translate-y-2 border-t-4 border-tdmGreen">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-tdmDark">Les Terrils</h3>
+                        <span class="bg-tdmGreen text-tdmDark text-xs font-bold px-2 py-1 rounded">28 km</span>
+                    </div>
+                    <p class="text-tdmGreen font-semibold mb-4"><i class="fa-solid fa-arrow-trend-up mr-2"></i>1380m D+
+                    </p>
+                    <p class="text-gray-600">Un tracé équilibré mais technique à travers les sentiers et singles
+                        forestiers.</p><br>
+                    <ul>
+                        <li>Départ : 9h00</li>
+                        <li>200 participants</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Galibots -->
+            <div
+                class="bg-white rounded-2xl shadow-xl overflow-hidden flex flex-col transform transition duration-300 hover:-translate-y-2 border-t-4 border-blue-400">
+                <div class="p-6 flex-grow">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-2xl font-bold text-tdmDark">Les Galibots</h3>
+                        <span
+                            class="bg-blue-100 text-blue-800 border border-blue-200 text-xs font-bold px-2 py-1 rounded">13
+                            km</span>
+                    </div>
+                    <p class="text-tdmGreen font-semibold mb-4"><i class="fa-solid fa-arrow-trend-up mr-2"></i>550m D+
+                    </p>
+                    <p class="text-gray-600">Une course rapide et accessible, idéale pour capturer la densité des
+                        pelotons et les sourires.</p><br>
+                    <ul>
+                        <li>Départ : 9h30</li>
+                        <li>200 participants</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte Globale -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
+            <div
+                class="p-4 bg-gray-50 border-b border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
+                <h3 class="text-xl font-bold text-tdmDark">Carte Globale des Parcours</h3>
+                <div class="flex flex-wrap justify-center gap-4 text-sm font-semibold select-none">
+                    <label
+                        class="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded transition">
+                        <input type="checkbox" id="toggle-gueules" checked
+                            class="w-4 h-4 accent-[#213a40] cursor-pointer">
+                        <div class="w-3 h-3 rounded-full bg-tdmDark shadow"></div> Gueules Noires
+                    </label>
+                    <label
+                        class="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded transition">
+                        <input type="checkbox" id="toggle-terrils" checked
+                            class="w-4 h-4 accent-[#b0be42] cursor-pointer">
+                        <div class="w-3 h-3 rounded-full bg-tdmGreen shadow"></div> Terrils
+                    </label>
+                    <label
+                        class="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded transition">
+                        <input type="checkbox" id="toggle-galibots" checked
+                            class="w-4 h-4 accent-[#3b82f6] cursor-pointer">
+                        <div class="w-3 h-3 rounded-full bg-blue-500 shadow"></div> Galibots
+                    </label>
+                    <!-- Nouveau bouton pour les Annotations Photos -->
+                    <label
+                        class="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-2 py-1 rounded transition">
+                        <input type="checkbox" id="toggle-annotations" checked
+                            class="w-4 h-4 accent-[#f97316] cursor-pointer">
+                        <div class="w-3 h-3 rounded-full bg-orange-500 shadow"></div> Spots Photos
+                    </label>
+                </div>
+            </div>
+            <div id="main-map" class="w-full h-[500px] md:h-[600px] z-10 bg-gray-200"></div>
+
+            <!-- Profils de dénivelé -->
+            <div class="p-4 bg-white border-t border-gray-200">
+                <h4 class="text-lg font-bold text-tdmDark mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-mountain-sun text-tdmGreen"></i> Profils Altimétriques
+                </h4>
+                <div class="relative w-full h-[250px]">
+                    <canvas id="elevationChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Pourquoi vos images sont cruciales -->
+    <section id="missions" class="py-20 bg-tdmDark text-white px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-12 text-center text-tdmGreen">2. Pourquoi vos images sont
+                cruciales ?</h2>
+            <p class="text-center text-lg mb-12 font-light max-w-2xl mx-auto">En tant que photographe, vous remplissez
+                trois missions stratégiques tout au long de la journée :</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center">
+                <div class="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div
+                        class="w-20 h-20 mx-auto bg-tdmGreen rounded-full flex items-center justify-center mb-6 shadow-lg shadow-tdmGreen/20">
+                        <i class="fa-solid fa-person-running text-3xl text-tdmDark"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Pour les coureurs</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Pour beaucoup, le trail est un défi. Votre photo est la preuve tangible de leur effort, un
+                        souvenir qu'ils chériront et partageront avec fierté.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div
+                        class="w-20 h-20 mx-auto bg-tdmGreen rounded-full flex items-center justify-center mb-6 shadow-lg shadow-tdmGreen/20">
+                        <i class="fa-solid fa-bullhorn text-3xl text-tdmDark"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Pour la communication</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Vos clichés alimentent le site et nos réseaux. Ils sont notre meilleure vitrine pour attirer les
+                        participants et remercier nos partenaires locaux.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10">
+                    <div
+                        class="w-20 h-20 mx-auto bg-tdmGreen rounded-full flex items-center justify-center mb-6 shadow-lg shadow-tdmGreen/20">
+                        <i class="fa-solid fa-mug-hot text-3xl text-tdmDark"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Pour l'ambiance</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Au-delà de la course, montrez la vie du village !
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Règles d'Or -->
+    <section id="regles" class="py-20 px-4 bg-gray-100 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center gap-6 mb-12">
+                <div class="bg-red-500 text-white p-4 rounded-full flex-shrink-0">
+                    <i class="fa-solid fa-triangle-exclamation text-3xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-tdmDark">3. Les 3 Règles d'Or : Sécurité & Éthique
+                    </h2>
+                    <p class="text-gray-600 mt-2 text-lg">La montagne et la forêt sont des environnements vivants qui
+                        imposent le respect.</p>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div
+                    class="bg-white p-6 md:p-8 rounded-xl shadow-md border-l-4 border-red-500 flex flex-col md:flex-row gap-6 items-start">
+                    <div
+                        class="bg-red-100 text-red-600 font-bold w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                        1</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Priorité absolue aux coureurs</h3>
+                        <p class="text-gray-600">Ne vous installez <strong>jamais</strong> sur la trajectoire ou dans un
+                            virage serré en descente. Un coureur fatigué peut manquer de lucidité ou glisser.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white p-6 md:p-8 rounded-xl shadow-md border-l-4 border-green-500 flex flex-col md:flex-row gap-6 items-start">
+                    <div
+                        class="bg-green-100 text-green-600 font-bold w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                        2</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Respect de l'environnement</h3>
+                        <p class="text-gray-600">Nous traversons des zones Natura 2000. Restez impérativement sur les
+                            sentiers balisés. Ne piétinez pas la flore et ne laissez aucun déchet derrière vous.</p>
+                    </div>
+                </div>
+
+                <div
+                    class="bg-white p-6 md:p-8 rounded-xl shadow-md border-l-4 border-blue-500 flex flex-col md:flex-row gap-6 items-start">
+                    <div
+                        class="bg-blue-100 text-blue-600 font-bold w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 text-xl">
+                        3</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Dignité des athlètes</h3>
+                        <p class="text-gray-600">Ne photographiez pas de coureurs en situation de détresse médicale ou
+                            gravement blessés. Respectez la pudeur des participants dans l'effort extrême.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Conseils & 5. Logistique -->
+    <section id="conseils" class="py-20 px-4 bg-white">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
+
+            <!-- Conseils Techniques -->
+            <div>
+                <h2 class="text-3xl font-bold text-tdmDark mb-8">4. Conseils Techniques</h2>
+                <p class="text-gray-600 mb-8">Le trail en forêt offre des conditions de lumière difficiles. Voici
+                    quelques astuces pour réussir vos clichés :</p>
+
+                <ul class="space-y-6">
+                    <li class="flex items-start gap-4">
+                        <i class="fa-solid fa-sun text-yellow-500 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Cherchez la lumière</h4>
+                            <p class="text-sm text-gray-600">En forêt, privilégiez les "percées" de soleil à travers la
+                                canopée pour éclairer le visage des coureurs.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fa-solid fa-camera text-tdmGreen text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Variez les angles</h4>
+                            <ul class="list-disc ml-5 mt-2 text-sm text-gray-600 space-y-1">
+                                <li><strong>Contre-plongée (ras du sol) :</strong> Donne de la puissance au coureur et
+                                    accentue la pente en montée.</li>
+                                <li><strong>Plan large :</strong> Montre l'immensité du paysage vosgien par rapport au
+                                    coureur (idéal aux sommets).</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fa-solid fa-face-smile-beam text-orange-400 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Figez l'émotion</h4>
+                            <p class="text-sm text-gray-600">Plutôt que d'attendre un passage parfait, guettez les
+                                regards, les grimaces d'effort ou les signes d'encouragement entre coureurs.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start gap-4">
+                        <i class="fa-solid fa-face-smile-beam text-orange-400 text-xl mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Le paysage comme décor</h4>
+                            <p class="text-sm text-gray-600">Genêts, cascades, montagnes : le paysage vosgien offre un
+                                cadre exceptionnel pour capturer les moments les plus époustouflants.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Logistique -->
+            <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200 shadow-sm relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-tdmGreen opacity-10 rounded-bl-full -z-0"></div>
+                <h2 class="text-3xl font-bold text-tdmDark mb-8 relative z-10">5. Logistique & Livraison</h2>
+                <p class="text-gray-600 mb-8 relative z-10">Pour que l'événement rayonne, la rapidité de diffusion est
+                    primordiale.</p>
+
+                <div class="space-y-6 relative z-10">
+                    <div class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
+                        <div class="bg-tdmDark text-white w-10 h-10 rounded flex items-center justify-center font-bold">
+                            2</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Le tri</h4>
+                            <p class="text-sm text-gray-600">Catégorisez vos photos par thème ou moments forts en les mettant dans des dossiers dédiés.</p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
+                        <div class="bg-tdmDark text-white w-10 h-10 rounded flex items-center justify-center font-bold">
+                            2</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">L'Upload</h4>
+                            <p class="text-sm text-gray-600">Déposez vos fichiers (format JPEG HD) via le lien
+                                disponible ci-dessous (a venir). <strong>Attention, les fichiers vont être compressés avant la diffusion. (2000px)</strong> </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm">
+                        <div class="bg-tdmDark text-white w-10 h-10 rounded flex items-center justify-center font-bold">
+                            3</div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">La Diffusion</h4>
+                            <p class="text-sm text-gray-600">Vos photos seront publiées sur <a
+                                    href="https://traildesmines.fr" target="_blank"
+                                    class="text-tdmGreen hover:underline">le site officiel</a> et partagées sur <a
+                                    href="https://www.facebook.com/traildesmines" target="_blank"
+                                    class="text-tdmGreen hover:underline">Facebook</a>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="mt-8 p-4 bg-tdmGreen/20 text-tdmDark rounded-lg border border-tdmGreen/50 text-sm font-semibold relative z-10 flex items-start gap-3">
+                    <i class="fa-solid fa-circle-info mt-1"></i>
+                    <p>Note : N'oubliez pas d'inclure votre nom ou pseudo dans le nom de votre dossier d'envoi pour que
+                        nous puissions vous créditer !</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-tdmDark text-center py-10 text-gray-400 border-t-4 border-tdmGreen">
+        <p class="text-xl font-bold text-white mb-2">Merci pour votre engagement bénévole !</p>
+        <p class="mb-6">Association Run in Champagney - Trail des Mines 2026</p>
+        <div class="flex justify-center space-x-4">
+            <a href="https://traildesmines.fr" target="_blank"
+                class="text-tdmGreen hover:text-white transition-colors text-2xl"><i class="fa-solid fa-globe"></i></a>
+            <a href="#" class="text-tdmGreen hover:text-white transition-colors text-2xl"><i
+                    class="fa-brands fa-facebook"></i></a>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS & Leaflet-GPX Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+    <!-- Leaflet Omnivore pour le support KML -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-omnivore/0.3.1/leaflet-omnivore.min.js"></script>
+
+    <!-- Script de chargement des cartes et profils -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Jeton Mapbox fourni
+            var mapboxToken = 'pk.eyJ1IjoicGNvdXRoZXJ1dCIsImEiOiJjbThmbWZmdXkwOTV1Mm1zZWV2djNvZjRyIn0.L_LODxZaeDUiRIfJiMd4Fw';
+
+            // Définition de la couche Mapbox Outdoor
+            var outdoorsLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/outdoors-v12/tiles/{z}/{x}/{y}?access_token=' + mapboxToken, {
+                maxZoom: 18,
+                attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                tileSize: 512,
+                zoomOffset: -1
+            });
+
+            // Définition de la couche Mapbox Satellite (avec routes/chemins)
+            var satelliteLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v12/tiles/{z}/{x}/{y}?access_token=' + mapboxToken, {
+                maxZoom: 18,
+                attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a>',
+                tileSize: 512,
+                zoomOffset: -1
+            });
+
+            // Initialisation de la carte globale unique avec la couche Outdoor par défaut
+            var map = L.map('main-map', {
+                center: [47.63, 6.68],
+                zoom: 11,
+                layers: [outdoorsLayer]
+            });
+
+            // Ajout du contrôleur de couches en haut à droite
+            var baseMaps = {
+                "Outdoor (Relief)": outdoorsLayer,
+                "Satellite": satelliteLayer
+            };
+            L.control.layers(baseMaps).addTo(map);
+
+            // Bouton Plein Écran Personnalisé
+            L.Control.Fullscreen = L.Control.extend({
+                options: { position: 'topright' },
+                onAdd: function (map) {
+                    var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+                    var button = L.DomUtil.create('a', '', container);
+                    button.innerHTML = '<i class="fa-solid fa-expand"></i>';
+                    button.href = '#';
+                    button.title = 'Voir en plein écran';
+                    button.style.display = 'flex';
+                    button.style.alignItems = 'center';
+                    button.style.justifyContent = 'center';
+                    button.style.fontSize = '14px';
+
+                    L.DomEvent.on(button, 'click', function (e) {
+                        L.DomEvent.preventDefault(e);
+                        var mapContainer = document.getElementById('main-map');
+
+                        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                            if (mapContainer.requestFullscreen) {
+                                mapContainer.requestFullscreen();
+                            } else if (mapContainer.webkitRequestFullscreen) { /* Safari */
+                                mapContainer.webkitRequestFullscreen();
+                            } else if (mapContainer.msRequestFullscreen) { /* IE11 */
+                                mapContainer.msRequestFullscreen();
+                            }
+                        } else {
+                            if (document.exitFullscreen) {
+                                document.exitFullscreen();
+                            } else if (document.webkitExitFullscreen) { /* Safari */
+                                document.webkitExitFullscreen();
+                            } else if (document.msExitFullscreen) { /* IE11 */
+                                document.msExitFullscreen();
+                            }
+                        }
+                    });
+
+                    function updateIcon() {
+                        if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                            button.innerHTML = '<i class="fa-solid fa-expand"></i>';
+                            button.title = 'Voir en plein écran';
+                        } else {
+                            button.innerHTML = '<i class="fa-solid fa-compress"></i>';
+                            button.title = 'Quitter le plein écran';
+                        }
+                        // Forcer la carte à recalculer sa taille après la transition
+                        setTimeout(function () {
+                            map.invalidateSize();
+                        }, 200);
+                    }
+
+                    document.addEventListener('fullscreenchange', updateIcon);
+                    document.addEventListener('webkitfullscreenchange', updateIcon);
+                    document.addEventListener('msfullscreenchange', updateIcon);
+
+                    return container;
+                }
+            });
+            map.addControl(new L.Control.Fullscreen());
+
+            // CORRECTION DES ICONES ET WAYPOINTS : On ajoute "wptIconUrls" pour les balises <wpt> (Ravitaillements)
+            var customIconOptions = {
+                startIconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                endIconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                wptIconUrls: {
+                    '': 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png'
+                },
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            };
+
+            var globalBounds = L.latLngBounds();
+            var loadedCount = 0;
+            // On s'attend à charger 4 fichiers maintenant
+            var totalTracksToLoad = 4;
+            var tracks = {}; // Stockage des calques
+            var elevationDataMap = {}; // Stockage des données d'élévation
+            var chartInstance = null;
+
+            // Fonction pour mettre à jour le graphique Chart.js
+            function updateElevationChart() {
+                var datasets = [];
+
+                if (document.getElementById('toggle-gueules').checked && elevationDataMap['gueules']) {
+                    datasets.push({
+                        label: 'Gueules Noires',
+                        data: elevationDataMap['gueules'],
+                        borderColor: '#213a40',
+                        backgroundColor: 'rgba(33, 58, 64, 0.1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    });
+                }
+                if (document.getElementById('toggle-terrils').checked && elevationDataMap['terrils']) {
+                    datasets.push({
+                        label: 'Terrils',
+                        data: elevationDataMap['terrils'],
+                        borderColor: '#b0be42',
+                        backgroundColor: 'rgba(176, 190, 66, 0.1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    });
+                }
+                if (document.getElementById('toggle-galibots').checked && elevationDataMap['galibots']) {
+                    datasets.push({
+                        label: 'Galibots',
+                        data: elevationDataMap['galibots'],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    });
+                }
+                // Ajout pour le nouveau fichier
+                if (document.getElementById('toggle-annotations') && document.getElementById('toggle-annotations').checked && elevationDataMap['annotations']) {
+                    datasets.push({
+                        label: 'Spots Photos',
+                        data: elevationDataMap['annotations'],
+                        borderColor: '#f97316',
+                        backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                        fill: true,
+                        tension: 0.1,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    });
+                }
+
+                if (chartInstance) {
+                    chartInstance.data.datasets = datasets;
+                    chartInstance.update();
+                } else {
+                    var ctx = document.getElementById('elevationChart').getContext('2d');
+                    chartInstance = new Chart(ctx, {
+                        type: 'line',
+                        data: { datasets: datasets },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            interaction: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                            scales: {
+                                x: {
+                                    type: 'linear',
+                                    title: { display: true, text: 'Distance (km)' },
+                                    min: 0
+                                },
+                                y: {
+                                    title: { display: true, text: 'Altitude (m)' }
+                                }
+                            },
+                            plugins: {
+                                tooltip: {
+                                    callbacks: {
+                                        title: function (context) {
+                                            return 'Distance: ' + context[0].parsed.x.toFixed(2) + ' km';
+                                        },
+                                        label: function (context) {
+                                            return context.dataset.label + ': ' + context.parsed.y.toFixed(0) + ' m';
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+
+            // Fonction pour charger une trace et l'ajouter à la carte
+            function loadGpxTrack(url, trackColor, trackId) {
+                var gpxLayer = new L.GPX(url, {
+                    async: true,
+                    marker_options: customIconOptions,
+                    polyline_options: {
+                        color: trackColor,
+                        opacity: 0.85,
+                        weight: 5,
+                        lineCap: 'round'
+                    }
+                }).on('loaded', function (e) {
+                    // Étendre les limites de la carte pour inclure cette trace
+                    globalBounds.extend(e.target.getBounds());
+                    loadedCount++;
+
+                    // Extraire les données d'élévation
+                    var elevData = e.target.get_elevation_data();
+                    if (elevData && elevData.length > 0) {
+                        // Reformater pour Chart.js [{x: distance, y: altitude}, ...]
+                        elevationDataMap[trackId] = elevData.map(function (pt) {
+                            return { x: pt[0], y: pt[1] };
+                        });
+                        updateElevationChart();
+                    }
+
+                    // Une fois toutes les traces chargées, on centre la carte sur l'ensemble
+                    if (loadedCount === totalTracksToLoad) {
+                        map.fitBounds(globalBounds, { padding: [30, 30] });
+                    }
+                }).on('error', function (e) {
+                    console.error("Erreur de chargement du GPX : ", url, e);
+                    // Si on n'arrive pas à charger ce GPX, on ajuste quand même la vue pour ceux qui ont marché
+                    loadedCount++;
+                    if (loadedCount === totalTracksToLoad && globalBounds.isValid()) {
+                        map.fitBounds(globalBounds, { padding: [30, 30] });
+                    }
+                });
+
+                // On l'ajoute par défaut à la carte
+                gpxLayer.addTo(map);
+                tracks[trackId] = gpxLayer;
+
+                // On lie la checkbox correspondante
+                var checkbox = document.getElementById('toggle-' + trackId);
+                if (checkbox) {
+                    checkbox.addEventListener('change', function () {
+                        if (this.checked) {
+                            map.addLayer(gpxLayer);
+                        } else {
+                            map.removeLayer(gpxLayer);
+                        }
+                        updateElevationChart(); // Mise à jour du graphique en même temps
+                    });
+                }
+            }
+
+            // Fonction pour charger un fichier KML et l'ajouter à la carte
+            function loadKmlTrack(url, trackColor, trackId) {
+                var customLayer = L.geoJson(null, {
+                    // Personnalisation des marqueurs du KML en orange
+                    pointToLayer: function (feature, latlng) {
+                        return L.marker(latlng, {
+                            icon: L.icon({
+                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            })
+                        }).bindPopup(feature.properties.name || "Spot Photo");
+                    },
+                    style: function (feature) {
+                        return { color: trackColor, weight: 5, opacity: 0.85 };
+                    }
+                });
+
+                var kmlLayer = omnivore.kml(url, null, customLayer)
+                    .on('ready', function () {
+                        globalBounds.extend(kmlLayer.getBounds());
+                        loadedCount++;
+                        if (loadedCount === totalTracksToLoad) {
+                            map.fitBounds(globalBounds, { padding: [30, 30] });
+                        }
+                    })
+                    .on('error', function (e) {
+                        console.error("Erreur de chargement du KML : ", url, e);
+                        loadedCount++;
+                        if (loadedCount === totalTracksToLoad && globalBounds.isValid()) {
+                            map.fitBounds(globalBounds, { padding: [30, 30] });
+                        }
+                    })
+                    .addTo(map);
+
+                tracks[trackId] = kmlLayer;
+
+                var checkbox = document.getElementById('toggle-' + trackId);
+                if (checkbox) {
+                    checkbox.addEventListener('change', function () {
+                        if (this.checked) {
+                            map.addLayer(kmlLayer);
+                        } else {
+                            map.removeLayer(kmlLayer);
+                        }
+                    });
+                }
+            }
+
+            // Chargement des courses sur la même carte avec leurs identifiants
+            loadGpxTrack('Les-Gueules-Noires_HMsXo.gpx', '#213a40', 'gueules'); // Gueules Noires (Foncé)
+            loadGpxTrack('Les-Terrils_Gg0RW.gpx', '#b0be42', 'terrils'); // Terrils (Vert)
+            loadGpxTrack('Les-Galibots_CJANq.gpx', '#3b82f6', 'galibots'); // Galibots (Bleu)
+
+            // Nouveau KML: Annotations Photos
+            // REMPLACER ICI PAR LE VRAI LIEN ABSOLU DU FICHIER KML
+            loadKmlTrack('annotations_photos.kml', '#f97316', 'annotations'); // Annotations Photos (Orange)
+        });
+    </script>
+</body>
+
+</html>

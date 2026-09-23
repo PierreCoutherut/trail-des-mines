@@ -1,0 +1,74 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const title = "Partenaires & Sponsors - Trail des Mines 2027 | Soutenez le Sport Local";
+const description = "Découvrez les partenaires institutionnels et sponsors officiels du Trail des Mines 2027 à Champagney. Dossier mécénat et opportunités de visibilité territoriale.";
+---
+
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+
+<!-- En-tête -->
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Soutiens & Mécènes</span>
+            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
+                Partenaires & <span class="text-brand">Sponsors</span>
+            </h1>
+            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
+                Le Trail des Mines est rendu possible grâce à la confiance et à l'engagement de nos partenaires publics, institutionnels et des entreprises du tissu économique régional.
+            </p>
+        </div>
+    </header>
+
+    <!-- Partenaires Institutionnels -->
+    <section class="py-12 px-4 max-w-6xl mx-auto">
+        <h2 class="font-display text-2xl font-bold uppercase text-white mb-8 text-center flex items-center justify-center gap-3">
+            <span class="w-2 h-6 bg-brand rounded-full"></span> Partenaires Institutionnels & Publics
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
+                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">Ville de Champagney</span>
+                <span class="text-xs text-gray-400 mt-1">Collectivité Hôte</span>
+            </div>
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
+                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">Département 70</span>
+                <span class="text-xs text-gray-400 mt-1">Haute-Saône</span>
+            </div>
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
+                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">Région BFC</span>
+                <span class="text-xs text-gray-400 mt-1">Bourgogne-Franche-Comté</span>
+            </div>
+            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
+                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">ONF Vosges</span>
+                <span class="text-xs text-gray-400 mt-1">Gestion Forestière</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Devenir Partenaire -->
+    <section class="py-12 px-4 max-w-4xl mx-auto">
+        <div class="bg-cardBg rounded-3xl p-8 md:p-12 border border-brand/30 shadow-2xl text-center relative">
+
+            <div class="relative z-10">
+                <span class="text-xs uppercase tracking-widest text-brand font-bold font-display block mb-2">Visibilité & Valeurs RSE</span>
+                <h2 class="font-display text-3xl md:text-4xl font-bold uppercase text-white mb-4">
+                    Associez votre entreprise au Trail des Mines
+                </h2>
+            <p class="text-gray-300 text-sm leading-relaxed max-w-2xl mx-auto mb-8">
+                Valorisez votre marque auprès de plus de 800 trailers passionnés et 2 000 spectateurs. Bénéficiez d'une visibilité sur nos dossards, arches de départ, site web et réseaux sociaux, ainsi que d'avantages fiscaux au titre du mécénat sportif.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/contact" class="bg-brand text-dark hover:bg-white px-8 py-3.5 rounded-full font-display uppercase tracking-widest font-bold text-xs transition-all shadow-lg">
+                    Contacter le pôle Partenariats
+                </a>
+                <a href="medias/dossier-partenariat.pdf" download class="bg-white/10 hover:bg-white/20 text-white px-8 py-3.5 rounded-full font-display uppercase tracking-widest font-bold text-xs transition-all border border-white/10">
+                    Télécharger la Grille Mécénat (PDF)
+                </a>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Mega Footer -->
+
+</Layout>
