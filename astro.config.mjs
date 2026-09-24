@@ -1,10 +1,13 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import node from '@astrojs/node';
 
-// https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind()],
-  adapter: node({ mode: 'standalone' }),
+  output: 'server',
+  server: {
+    host: '0.0.0.0', // Permet au reverse proxy d'accéder au serveur
+    port: 3000,
+  },
+  adapter: node({
+    mode: 'standalone',
+  }),
 });
-
