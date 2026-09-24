@@ -7,18 +7,25 @@ const { currentPath = Astro.url.pathname } = Astro.props;
 
 // Helpers pour détecter si une section ou un lien est actif
 const isParcoursActive = currentPath.startsWith('/parcours') || currentPath.startsWith('/galibots') || currentPath.startsWith('/terrils') || currentPath.startsWith('/gueules-noires') || currentPath.startsWith('/autres');
-const isInfosActive = currentPath.startsWith('/infos-pratiques') || currentPath.startsWith('/reglement') || currentPath.startsWith('/resultats-medias') || currentPath.startsWith('/preparer-mon-trail') || currentPath.startsWith('/editions-precedentes');
+const isInfosActive = currentPath.startsWith('/infos-pratiques') || currentPath.startsWith('/reglement') || currentPath.startsWith('/resultats-medias') || currentPath.startsWith('/editions-precedentes');
 const isAproposActive = currentPath.startsWith('/a-propos') || currentPath.startsWith('/association') || currentPath.startsWith('/benevoles') || currentPath.startsWith('/eco-engagement') || currentPath.startsWith('/partenaires') || currentPath.startsWith('/dossard-solidaire');
 const isContactActive = currentPath.startsWith('/contact');
 ---
 
 <!-- Menu Mobile (Overlay plein écran avec accordéons et dvh) -->
-<div id="mobile-menu" class="fixed top-0 left-0 w-full h-[100dvh] bg-[#0a1214]/95 backdrop-blur-2xl z-[45] pointer-events-none opacity-0 overflow-y-auto" role="dialog" aria-modal="true">
+<div 
+  id="mobile-menu" 
+  class="fixed top-0 left-0 w-full h-[100dvh] bg-[#0a1214]/95 backdrop-blur-2xl z-[45] pointer-events-none opacity-0 overflow-y-auto" 
+  role="dialog" 
+  aria-modal="true"
+  aria-hidden="true"
+  aria-label="Menu de navigation mobile"
+>
   <div class="min-h-full flex flex-col justify-between items-center py-16 px-6">
     <div class="w-full flex flex-col items-center justify-center flex-1 mt-6 mb-10">
       
       <!-- Titre & Logo Mobile -->
-      <a href="/" class="flex flex-col items-center mb-8 group focus:outline-none text-center">
+      <a href="/" class="flex flex-col items-center mb-8 group focus:outline-none text-center" aria-label="Retour à l'accueil">
         <img src="/medias/Logo.png" alt="Logo Trail des Mines" class="h-16 w-auto object-contain mb-3 drop-shadow-lg transition-transform duration-300 group-hover:scale-105" />
         <span class="font-display font-bold text-2xl md:text-3xl uppercase tracking-widest text-white">
           Trail des <span class="text-brand">Mines</span>
@@ -26,7 +33,7 @@ const isContactActive = currentPath.startsWith('/contact');
         <span class="text-[10px] uppercase tracking-[0.3em] text-gray-400 mt-1">Champagney • 16 Mai 2027</span>
       </a>
 
-      <nav class="flex flex-col items-center space-y-5 text-center font-display uppercase tracking-widest w-full max-w-sm">
+      <nav class="flex flex-col items-center space-y-5 text-center font-display uppercase tracking-widest w-full max-w-sm" aria-label="Menu principal mobile">
         
         <!-- Parcours : À venir -->
         <div class="mobile-link w-full">
@@ -38,9 +45,14 @@ const isContactActive = currentPath.startsWith('/contact');
 
         <!-- Accordéon : Infos Pratiques -->
         <div class="mobile-link w-full">
-          <button class={`accordion-btn flex items-center justify-center gap-3 w-full text-2xl hover:text-brand transition-colors py-2 ${isInfosActive ? 'text-brand' : ''}`}>
+          <button 
+            type="button"
+            class={`accordion-btn flex items-center justify-center gap-3 w-full text-2xl hover:text-brand transition-colors py-2 focus-visible:outline-none focus-visible:text-brand ${isInfosActive ? 'text-brand' : ''}`}
+            aria-expanded={isInfosActive ? "true" : "false"}
+            aria-label="Sous-menu Infos Pratiques"
+          >
             <span>Infos Pratiques</span>
-            <i class={`fa-solid fa-chevron-down text-sm chevron transition-transform duration-300 ${isInfosActive ? 'rotate-180 text-brand' : ''}`}></i>
+            <i class={`fa-solid fa-chevron-down text-sm chevron transition-transform duration-300 ${isInfosActive ? 'rotate-180 text-brand' : ''}`} aria-hidden="true"></i>
           </button>
           <div class={`accordion-content overflow-hidden flex flex-col items-center transition-all duration-500 ${isInfosActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
             <div class="flex flex-col gap-3.5 mt-3 pb-4 border-b border-white/10 w-3/4">
@@ -48,16 +60,20 @@ const isContactActive = currentPath.startsWith('/contact');
               <a href="/reglement" class={`text-base py-1 transition-colors ${currentPath === '/reglement' ? 'text-brand font-bold' : 'text-gray-400 hover:text-brand'}`}>Règlement</a>
               <a href="/resultats-medias" class={`text-base py-1 transition-colors ${currentPath === '/resultats-medias' ? 'text-brand font-bold' : 'text-gray-400 hover:text-brand'}`}>Résultats & Médias</a>
               <a href="/editions-precedentes" class={`text-base py-1 transition-colors ${currentPath.startsWith('/editions-precedentes') ? 'text-brand font-bold' : 'text-gray-400 hover:text-brand'}`}>Éditions Précédentes</a>
-              <a href="/preparer-mon-trail" class={`text-base py-1 transition-colors ${currentPath === '/preparer-mon-trail' ? 'text-brand font-bold' : 'text-gray-400 hover:text-brand'}`}>Préparer mon trail</a>
             </div>
           </div>
         </div>
 
         <!-- Accordéon : L'Association -->
         <div class="mobile-link w-full">
-          <button class={`accordion-btn flex items-center justify-center gap-3 w-full text-2xl hover:text-brand transition-colors py-2 ${isAproposActive ? 'text-brand' : ''}`}>
+          <button 
+            type="button"
+            class={`accordion-btn flex items-center justify-center gap-3 w-full text-2xl hover:text-brand transition-colors py-2 focus-visible:outline-none focus-visible:text-brand ${isAproposActive ? 'text-brand' : ''}`}
+            aria-expanded={isAproposActive ? "true" : "false"}
+            aria-label="Sous-menu L'Association"
+          >
             <span>L'Association</span>
-            <i class={`fa-solid fa-chevron-down text-sm chevron transition-transform duration-300 ${isAproposActive ? 'rotate-180 text-brand' : ''}`}></i>
+            <i class={`fa-solid fa-chevron-down text-sm chevron transition-transform duration-300 ${isAproposActive ? 'rotate-180 text-brand' : ''}`} aria-hidden="true"></i>
           </button>
           <div class={`accordion-content overflow-hidden flex flex-col items-center transition-all duration-500 ${isAproposActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
             <div class="flex flex-col gap-3.5 mt-3 pb-4 border-b border-white/10 w-3/4">
@@ -88,10 +104,14 @@ const isContactActive = currentPath.startsWith('/contact');
 
 <!-- Navigation Pilule principale (Desktop) -->
 <div class="fixed w-full top-4 md:top-6 z-50 px-4 flex justify-center nav-container pointer-events-none">
-  <nav class="bg-[#101D20]/85 backdrop-blur-xl rounded-full border border-white/15 shadow-2xl flex items-center px-4 md:px-6 py-2 md:py-2.5 max-w-6xl w-full justify-between transition-transform duration-500 pointer-events-auto" id="main-nav">
+  <nav 
+    class="bg-[#101D20]/85 backdrop-blur-xl rounded-full border border-white/15 shadow-2xl flex items-center px-4 md:px-6 py-2 md:py-2.5 max-w-6xl w-full justify-between transition-transform duration-500 pointer-events-auto" 
+    id="main-nav"
+    aria-label="Navigation principale"
+  >
     
     <!-- Logo Officiel (Image Logo.png + Titre) -->
-    <a href="/" class="flex items-center gap-3 group z-50 focus:outline-none py-1" aria-label="Retour à l'accueil du Trail des Mines">
+    <a href="/" class="flex items-center gap-3 group z-50 focus:outline-none py-1 focus-visible:ring-2 focus-visible:ring-brand focus-visible:rounded-full" aria-label="Trail des Mines - Retour à l'accueil">
       <img src="/medias/Logo.png" alt="Logo Officiel Trail des Mines" class="h-9 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-md" />
       <div class="flex flex-col justify-center leading-none">
         <span class="font-display font-bold text-sm md:text-base uppercase tracking-wider text-white group-hover:text-brand transition-colors">
@@ -106,7 +126,7 @@ const isContactActive = currentPath.startsWith('/contact');
       
       <!-- Parcours (À venir) -->
       <div class="nav-item relative">
-        <div class="py-4 flex items-center gap-2 cursor-pointer text-gray-300 hover:text-brand transition-colors">
+        <div class="py-4 flex items-center gap-2 cursor-pointer text-gray-300 hover:text-brand transition-colors" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false" aria-label="Parcours 2027 à venir">
           <span>Parcours</span>
           <span class="px-2 py-0.5 text-[9px] font-mono lowercase tracking-normal bg-brand/10 text-brand border border-brand/30 rounded-full">à venir</span>
         </div>
@@ -120,21 +140,32 @@ const isContactActive = currentPath.startsWith('/contact');
 
       <!-- Dropdown Infos Pratiques -->
       <div class="nav-item relative">
-        <a href="/infos-pratiques" class={`py-4 transition-colors duration-300 block ${isInfosActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}>Infos pratiques</a>
+        <a 
+          href="/infos-pratiques" 
+          class={`py-4 transition-colors duration-300 block focus-visible:outline-none focus-visible:text-brand ${isInfosActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}
+          aria-haspopup="true"
+        >
+          Infos pratiques
+        </a>
         <div class="dropdown-wrapper w-64">
           <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
             <a href="/infos-pratiques" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath === '/infos-pratiques' ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Guide Général</a>
             <a href="/reglement" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath === '/reglement' ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Règlement</a>
             <a href="/resultats-medias" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath === '/resultats-medias' ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Résultats & Médias</a>
             <a href="/editions-precedentes" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath.startsWith('/editions-precedentes') ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Éditions précédentes</a>
-            <a href="/preparer-mon-trail" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath === '/preparer-mon-trail' ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Préparer mon trail</a>
           </div>
         </div>
       </div>
 
       <!-- Dropdown L'Association -->
       <div class="nav-item relative">
-        <a href="/a-propos" class={`py-4 transition-colors duration-300 block ${isAproposActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}>À propos</a>
+        <a 
+          href="/a-propos" 
+          class={`py-4 transition-colors duration-300 block focus-visible:outline-none focus-visible:text-brand ${isAproposActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}
+          aria-haspopup="true"
+        >
+          À propos
+        </a>
         <div class="dropdown-wrapper w-64">
           <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
             <a href="/a-propos" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath === '/a-propos' ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>À propos</a>
@@ -148,16 +179,23 @@ const isContactActive = currentPath.startsWith('/contact');
       </div>
 
       <!-- Lien Contact -->
-      <a href="/contact" class={`py-4 transition-colors duration-300 ${isContactActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}>Contact</a>
+      <a href="/contact" class={`py-4 transition-colors duration-300 focus-visible:outline-none focus-visible:text-brand ${isContactActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}>Contact</a>
     </div>
 
     <!-- Actions Droite : Bouton Inscription (Sans icône) -->
     <div class="flex items-center gap-2">
-      <a href="/inscription" class="btn-registration-trigger bg-brand text-dark font-display uppercase tracking-widest text-[11px] md:text-xs px-5 md:px-6 py-2.5 rounded-full transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-bold z-50 inline-flex items-center justify-center shadow-lg shadow-brand/20 cursor-pointer">
+      <a href="/inscription" class="btn-registration-trigger bg-brand text-dark font-display uppercase tracking-widest text-[11px] md:text-xs px-5 md:px-6 py-2.5 rounded-full transition-all duration-300 hover:bg-white hover:scale-105 active:scale-95 font-bold z-50 inline-flex items-center justify-center shadow-lg shadow-brand/20 cursor-pointer focus-visible:ring-2 focus-visible:ring-white">
         S'inscrire
       </a>
-      <button id="hamburger-btn" aria-label="Ouvrir le menu" class="lg:hidden text-white p-2 z-50 relative focus:outline-none">
-        <div class="w-6 h-4 relative flex flex-col justify-between">
+      <button 
+        type="button"
+        id="hamburger-btn" 
+        aria-label="Ouvrir le menu de navigation" 
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        class="lg:hidden text-white p-2 z-50 relative focus:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-lg"
+      >
+        <div class="w-6 h-4 relative flex flex-col justify-between" aria-hidden="true">
           <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-1"></span>
           <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300" id="line-2"></span>
           <span class="w-full h-[2px] bg-white rounded-full transition-all duration-300 origin-left" id="line-3"></span>

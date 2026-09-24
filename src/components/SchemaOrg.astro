@@ -1,0 +1,125 @@
+---
+interface Props {
+  type?: 'event' | 'website' | 'organization';
+  customSchema?: Record<string, any> | Array<Record<string, any>>;
+  title?: string;
+  description?: string;
+  url?: string;
+}
+
+const {
+  customSchema,
+  title = "Trail des Mines 2027 - Champagney | Course Nature & Terrils",
+  description = "Participez à la 6ème édition du Trail des Mines le 16 mai 2027 à Champagney. Courses nature authentiques au cœur des terrils et du massif vosgien.",
+  url = "https://traildesmines.fr"
+} = Astro.props;
+
+// 1. Organisation organisatrice : Run in Champagney
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "SportsOrganization",
+  "@id": "https://traildesmines.fr/#organization",
+  "name": "Run in Champagney",
+  "alternateName": "Trail des Mines",
+  "url": "https://traildesmines.fr",
+  "logo": {
+    "@type": "ImageObject",
+    "url": "https://traildesmines.fr/medias/Logo.png",
+    "caption": "Logo Officiel Trail des Mines"
+  },
+  "description": "Association sportive organisatrice du Trail des Mines à Champagney en Haute-Saône, valorisant le patrimoine minier et la course nature.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Mairie de Champagney, Rue du Général de Gaulle",
+    "addressLocality": "Champagney",
+    "postalCode": "70290",
+    "addressRegion": "Haute-Saône, Bourgogne-Franche-Comté",
+    "addressCountry": "FR"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Organisateur",
+    "email": "contact@traildesmines.fr",
+    "availableLanguage": ["French"]
+  },
+  "sameAs": [
+    "https://www.facebook.com/traildesmines"
+  ]
+};
+
+// 2. Événement sportif : Trail des Mines 2027 (6ème édition)
+const sportsEventSchema = {
+  "@context": "https://schema.org",
+  "@type": "SportsEvent",
+  "@id": "https://traildesmines.fr/#event-2027",
+  "name": "Trail des Mines 2027 - 6ème Édition",
+  "alternateName": "Trail des Mines Champagney",
+  "description": "6ème édition du Trail des Mines le 16 mai 2027 à Champagney (70). 3 épreuves au cœur des terrils et de la forêt des Vosges du Sud : 52km, 28km et 13km.",
+  "url": "https://traildesmines.fr",
+  "startDate": "2027-05-16T07:00:00+02:00",
+  "endDate": "2027-05-16T18:00:00+02:00",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "image": [
+    "https://traildesmines.fr/medias/Index/Pierre-Coutherut_TDM-2024-2.jpg",
+    "https://traildesmines.fr/medias/Logo.png",
+    "https://traildesmines.fr/medias/Index/Elodie-Bermond_bg.webp"
+  ],
+  "location": {
+    "@type": "Place",
+    "name": "Bassin Minier et Salle des Fêtes de Champagney",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Rue du Général de Gaulle",
+      "addressLocality": "Champagney",
+      "postalCode": "70290",
+      "addressRegion": "Haute-Saône, Bourgogne-Franche-Comté",
+      "addressCountry": "FR"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 47.7058,
+      "longitude": 6.6833
+    }
+  },
+  "organizer": {
+    "@type": "SportsOrganization",
+    "@id": "https://traildesmines.fr/#organization",
+    "name": "Run in Champagney",
+    "url": "https://traildesmines.fr/association"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://traildesmines.fr/inscription",
+    "availability": "https://schema.org/PreOrder",
+    "priceCurrency": "EUR",
+    "validFrom": "2026-10-01T00:00:00+02:00"
+  },
+  "sport": "Trail running"
+};
+
+// 3. WebSite Schema
+const webSiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://traildesmines.fr/#website",
+  "url": "https://traildesmines.fr",
+  "name": "Trail des Mines Champagney",
+  "description": "Site officiel du Trail des Mines à Champagney (Haute-Saône). Inscriptions, parcours, actualités, photos et archives historiques.",
+  "inLanguage": "fr-FR",
+  "publisher": {
+    "@id": "https://traildesmines.fr/#organization"
+  }
+};
+
+const schemas = [
+  organizationSchema,
+  sportsEventSchema,
+  webSiteSchema,
+  ...(Array.isArray(customSchema) ? customSchema : customSchema ? [customSchema] : [])
+];
+---
+
+{schemas.map(schema => (
+  <script type="application/ld+json" set:html={JSON.stringify(schema, null, 2)} />
+))}

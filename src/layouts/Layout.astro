@@ -5,6 +5,7 @@ import SponsorMarquee from '../components/SponsorMarquee.astro';
 import CtaSection from '../components/CtaSection.astro';
 import NoiseOverlay from '../components/NoiseOverlay.astro';
 import RegistrationModal from '../components/RegistrationModal.astro';
+import SchemaOrg from '../components/SchemaOrg.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
   loadChart?: boolean;
   showCta?: boolean;
   showSponsors?: boolean;
+  customSchema?: Record<string, any> | Array<Record<string, any>>;
 }
 
 const {
@@ -24,7 +26,8 @@ const {
   loadLeaflet = false,
   loadChart = false,
   showCta = true,
-  showSponsors = true
+  showSponsors = true,
+  customSchema
 } = Astro.props;
 
 const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://traildesmines.fr').href;
@@ -39,28 +42,38 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://traildesm
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <!-- Favicon & Identité Visuelle -->
+  <link rel="icon" type="image/png" href="/medias/Logo.png" />
+  <link rel="apple-touch-icon" href="/medias/Logo.png" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Trail des Mines" />
+  <meta property="og:locale" content="fr_FR" />
   <meta property="og:url" content={canonicalURL} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  <meta property="og:image" content="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ" />
+  <meta property="og:image" content="https://traildesmines.fr/medias/Index/Pierre-Coutherut_TDM-2024-2.jpg" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content={canonicalURL} />
   <meta property="twitter:title" content={title} />
   <meta property="twitter:description" content={description} />
-  <meta property="twitter:image" content="https://encrypted-tbn1.gstatic.com/licensed-image?q=tbn:ANd9GcQMqEVg4g7bAcX8oy1Jbc8tN-HZNCXzmHhjzSal-zdGWzzI1kAHNO11EcJgvpfd1nW5krWW9CjE-bPG9BQ" />
+  <meta property="twitter:image" content="https://traildesmines.fr/medias/Index/Pierre-Coutherut_TDM-2024-2.jpg" />
 
-  <!-- Google Fonts : Oswald & Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Préchargement prioritaire des polices locales (Zéro latence réseau externe, 100% RGPD) -->
+  <link rel="preload" href="/fonts/oswald-700-normal-50.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-400-normal-14.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-600-normal-28.woff2" as="font" type="font/woff2" crossorigin />
   
   <!-- FontAwesome 6.4.0 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Données structurées JSON-LD (SEO Rich Results : SportsEvent, Organization, WebSite) -->
+  <SchemaOrg customSchema={customSchema} title={title} description={description} url={canonicalURL} />
 
   <!-- Lenis (Smooth Scroll) & GSAP CDN -->
   <script is:inline src="https://unpkg.com/@studio-freight/lenis@1.0.32/dist/lenis.min.js"></script>
@@ -83,11 +96,22 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://traildesm
 
 <body class="bg-dark text-white font-sans antialiased overflow-x-hidden selection:bg-brand selection:text-dark relative">
   
+  <!-- Lien d'évitement pour l'accessibilité au clavier (WCAG AA/AAA) -->
+  <a 
+    href="#main-content" 
+    class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-5 focus:py-3 focus:bg-brand focus:text-dark focus:font-display focus:font-bold focus:uppercase focus:tracking-wider focus:rounded-xl focus:shadow-2xl focus:ring-4 focus:ring-dark focus:outline-none"
+  >
+    Passer au contenu principal
+  </a>
+
   <NoiseOverlay />
   
   <Navbar currentPath={Astro.url.pathname} />
 
-  <slot />
+  <!-- Point de repère sémantique HTML5 principal -->
+  <main id="main-content" tabindex="-1" class="focus:outline-none min-h-[60vh]">
+    <slot />
+  </main>
 
   {showCta && <CtaSection />}
 

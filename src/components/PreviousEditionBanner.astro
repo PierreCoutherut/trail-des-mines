@@ -1,0 +1,120 @@
+---
+// PreviousEditionBanner.astro - Composant vitrine valorisant l'édition précédente (2026) au-dessus de la vidéo
+interface Props {
+  className?: string;
+}
+
+const { className = "" } = Astro.props;
+---
+
+<div class={`w-full max-w-6xl mx-auto px-4 ${className}`}>
+  <div class="relative rounded-3xl md:rounded-[2.5rem] bg-gradient-to-br from-[#101D20]/95 via-[#182C31]/90 to-[#0d1719]/95 border border-white/10 hover:border-brand/40 transition-all duration-500 p-6 sm:p-8 md:p-12 shadow-2xl overflow-hidden group">
+    
+    <!-- Texture Topographique subtile en arrière-plan -->
+    <div class="topo-texture pointer-events-none opacity-15" aria-hidden="true"></div>
+    
+    <!-- Halo lumineux ambiant vert brand -->
+    <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand/10 rounded-full blur-3xl pointer-events-none group-hover:bg-brand/15 transition-all duration-700" aria-hidden="true"></div>
+
+    <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+      
+      <!-- Colonne Visuel : Affiche Officielle 2026 -->
+      <div class="lg:col-span-5 flex justify-center">
+        <a 
+          href="/editions-precedentes/2026" 
+          class="relative block rounded-2xl overflow-hidden shadow-[0_20px_45px_rgba(0,0,0,0.6)] border-2 border-white/10 group-hover:border-brand/60 transition-all duration-500 max-w-[280px] sm:max-w-[320px] w-full transform group-hover:-translate-y-1"
+          aria-label="Découvrir l'édition 2026 du Trail des Mines et son affiche officielle"
+        >
+          <img 
+            src="/medias/affiches/affiche-2026-thumb.webp" 
+            alt="Affiche officielle de la 5ème édition du Trail des Mines 2026" 
+            class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
+            loading="lazy"
+            width="320"
+            height="450"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-4">
+            <span class="bg-brand text-dark px-4 py-1.5 rounded-full font-display font-bold uppercase tracking-wider text-[11px] shadow-lg flex items-center gap-2">
+              <i class="fa-solid fa-expand text-xs" aria-hidden="true"></i>
+              <span>Voir l'affiche HD</span>
+            </span>
+          </div>
+          <!-- Badge flottant millésime -->
+          <div class="absolute top-3 left-3 bg-dark/85 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-white font-mono text-[11px] font-bold flex items-center gap-1.5 shadow-md">
+            <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
+            <span>Édition 2026</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Colonne Contenu & Actions -->
+      <div class="lg:col-span-7 flex flex-col justify-center text-left">
+        
+        <!-- Kicker d'archive -->
+        <div class="flex flex-wrap items-center gap-2.5 mb-3">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand/10 border border-brand/30 text-brand font-display uppercase tracking-widest text-[11px] font-bold">
+            <i class="fa-solid fa-clock-rotate-left text-xs" aria-hidden="true"></i>
+            Édition Précédente
+          </span>
+          <span class="text-white/60 font-mono text-xs">17 mai 2026 • 5<sup class="lowercase">ème</sup> édition</span>
+        </div>
+
+        <!-- Titre principal -->
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold uppercase text-white tracking-tight mb-4 leading-tight">
+          Revivez l'épopée de <span class="text-brand">l'Édition 2026</span>
+        </h2>
+
+        <!-- Description -->
+        <p class="text-gray-300 text-sm sm:text-base font-light leading-relaxed mb-6">
+          Avant de relever le défi du 16 mai 2027, replongez dans les temps forts de l'an passé : 
+          explorez les <strong class="text-white font-medium">classements officiels</strong>, téléchargez vos <strong class="text-white font-medium">photos souvenirs HD</strong> immortalisées par nos photographes bénévoles et revivez l'ambiance unique des terrils.
+        </p>
+
+        <!-- Puces statistiques & repères clés -->
+        <div class="grid grid-cols-3 gap-3 mb-8">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-3 sm:p-4 text-center">
+            <span class="font-display text-2xl sm:text-3xl font-bold text-brand block">450</span>
+            <span class="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400 font-sans block mt-0.5">Finischers</span>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-3 sm:p-4 text-center">
+            <span class="font-display text-2xl sm:text-3xl font-bold text-white block">3</span>
+            <span class="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400 font-sans block mt-0.5">Courses disputées</span>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-3 sm:p-4 text-center">
+            <span class="font-display text-2xl sm:text-3xl font-bold text-brand block">HD</span>
+            <span class="text-[10px] sm:text-xs uppercase tracking-wider text-gray-400 font-sans block mt-0.5">Galeries photos</span>
+          </div>
+        </div>
+
+        <!-- Liens d'action -->
+        <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+          <a 
+            href="/editions-precedentes/2026" 
+            class="inline-flex items-center justify-center gap-3 px-6 sm:px-8 py-3.5 rounded-full bg-brand text-dark font-display font-bold uppercase tracking-wider text-xs sm:text-sm hover:bg-white hover:scale-105 active:scale-95 transition-all shadow-lg shadow-brand/20 group/btn"
+          >
+            <span>Explorer l'Édition 2026</span>
+            <i class="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover/btn:translate-x-1" aria-hidden="true"></i>
+          </a>
+
+          <a 
+            href="/editions-precedentes" 
+            class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-display uppercase tracking-wider text-xs transition-all border border-white/10 hover:border-brand/40"
+          >
+            <i class="fa-solid fa-folder-open text-brand text-xs" aria-hidden="true"></i>
+            <span>Toutes les archives</span>
+          </a>
+        </div>
+
+        <!-- Appel subtil vers l'aftermovie vidéo juste en-dessous -->
+        <div class="mt-6 pt-5 border-t border-white/10 flex items-center gap-2 text-xs text-gray-400">
+          <i class="fa-solid fa-circle-play text-brand text-sm" aria-hidden="true"></i>
+          <span>Découvrez également l'aftermovie officiel en vidéo ci-dessous</span>
+          <i class="fa-solid fa-arrow-down text-[10px] text-brand ml-1 animate-bounce" aria-hidden="true"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
