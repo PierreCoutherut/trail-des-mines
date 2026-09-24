@@ -29,7 +29,7 @@ const updateDateFormatted = reglement.lastUpdated
 
     <!-- En-tête Hero -->
     <header class="pt-36 md:pt-48 pb-14 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-[#0c1618]">
-        <div class="max-w-5xl mx-auto text-center relative z-10 gsap-fade-up">
+        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto text-center relative z-10 gsap-fade-up">
             <span class="inline-block py-1.5 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">
                 Édition {reglement.edition || '2027'} • Fédération Française d'Athlétisme
             </span>
@@ -43,7 +43,7 @@ const updateDateFormatted = reglement.lastUpdated
     </header>
 
     <!-- Zone Téléchargement PDF & Contrôles -->
-    <section class="px-4 max-w-4xl mx-auto -mt-4 mb-10 relative z-20">
+    <section class="px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto -mt-4 mb-10 relative z-20">
         <!-- Boîte de téléchargement du document PDF -->
         <div class="bg-cardBg/95 backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-brand/30 shadow-2xl shadow-brand/5 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="flex items-center gap-4 text-left w-full sm:w-auto">
@@ -122,7 +122,7 @@ const updateDateFormatted = reglement.lastUpdated
     </section>
 
     <!-- Accordéons / Collapsibles par Chapitre -->
-    <section class="pb-20 px-4 max-w-4xl mx-auto">
+    <section class="pb-20 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
         <div class="space-y-4" id="chapters-list">
             {reglement.chapters.map((chapter, idx) => (
                 <article 

@@ -25,7 +25,7 @@ const resultLinks = edition.resultLinks || [];
 <Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
 
     <!-- Fil d'Ariane & Navigation Rapide -->
-    <div class="pt-28 md:pt-36 pb-4 px-4 max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
+    <div class="pt-28 md:pt-36 pb-4 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto flex flex-wrap items-center justify-between gap-4 text-xs font-mono">
         <nav class="flex items-center gap-2 text-gray-400" aria-label="Fil d'Ariane">
             <a href="/" class="hover:text-brand transition">Accueil</a>
             <span>/</span>
@@ -50,7 +50,7 @@ const resultLinks = edition.resultLinks || [];
 
     <!-- En-tête Héroïque de l'Édition -->
     <header class="py-10 px-4 relative overflow-hidden bg-gradient-to-b from-dark via-[#102024] to-dark">
-        <div class="max-w-6xl mx-auto">
+        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
             <div class="flex flex-wrap items-center gap-3 mb-4">
                 <span class="bg-brand text-dark font-display font-bold uppercase tracking-widest text-xs px-3.5 py-1 rounded-full">
                     {edition.subtitle}
@@ -76,7 +76,7 @@ const resultLinks = edition.resultLinks || [];
     <!-- =========================================================================
          SECTION 1 : L'AFFICHE OFFICIELLE DE L'ANNÉE
          ========================================================================= -->
-    <section id="affiche" class="py-16 px-4 max-w-6xl mx-auto scroll-mt-36">
+    <section id="affiche" class="py-16 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto scroll-mt-36">
         <div class="bg-cardBg/70 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 
@@ -159,7 +159,7 @@ const resultLinks = edition.resultLinks || [];
     <!-- =========================================================================
          SECTION 2 : RÉSULTATS (LIENS EXTERNES)
          ========================================================================= -->
-    <section id="resultats" class="py-16 px-4 max-w-6xl mx-auto scroll-mt-36">
+    <section id="resultats" class="py-16 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto scroll-mt-36">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
                 <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-1">Classements & Chronométrage</span>
@@ -211,7 +211,7 @@ const resultLinks = edition.resultLinks || [];
     <!-- =========================================================================
          SECTION 3 : GALERIES D'IMAGES DE L'ÉDITION
          ========================================================================= -->
-    <section id="galeries" class="py-16 px-4 max-w-6xl mx-auto scroll-mt-36">
+    <section id="galeries" class="py-16 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto scroll-mt-36">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
                 <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-1">Souvenirs Visuels</span>

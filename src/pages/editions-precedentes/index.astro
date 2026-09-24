@@ -16,7 +16,7 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
 
     <!-- En-tête Hero -->
     <header class="pt-36 md:pt-44 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-[#0f1b1e]">
-        <div class="max-w-5xl mx-auto text-center relative z-10">
+        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto text-center relative z-10">
             <span class="inline-block py-1.5 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">
                 Mémoire & Épopée Minérale
             </span>
@@ -31,7 +31,7 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
     </header>
 
     <!-- Repères Historiques -->
-    <section class="py-8 px-4 max-w-5xl mx-auto -mt-6 relative z-20">
+    <section class="py-8 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto -mt-6 relative z-20">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 text-center">
             <div class="bg-cardBg/90 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-xl hover:border-brand/30 transition">
                 <span class="text-xs uppercase tracking-widest text-gray-400 block mb-1">Éditions Réalisées</span>
@@ -52,7 +52,7 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
     </section>
 
     <!-- Liste Chronologique des Éditions -->
-    <section class="py-12 px-4 max-w-6xl mx-auto">
+    <section class="py-12 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
         <div class="space-y-12">
             {editions.map((edition, idx) => {
                 const totalPhotosInEdition = edition.galleries.reduce(

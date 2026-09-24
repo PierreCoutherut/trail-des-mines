@@ -42,6 +42,29 @@ html.lenis, html.lenis body {
     pointer-events: none;
 }
 
+/* Sécurité de rendu : les cartes Bento sont toujours visibles par défaut */
+.bento-item {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Calibrage de la largeur de contenu : 70% de la largeur de page sur Desktop
+   ========================================================================== */
+.content-70 {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 1024px) {
+    .content-70 {
+        width: 70% !important;
+        max-width: 70% !important;
+    }
+}
+
 /* Texture topographique - Subtile en filigrane minéral de fond de composant */
 .topo-texture {
     position: absolute;

@@ -112,9 +112,9 @@ const galleryImages = [
         </div>
     </div>
 
-    <!-- Bandeau Sponsors sur Fond Blanc (9 logos : 5 en haut, 4 en bas) -->
+    <!-- Bandeau Sponsors sur Fond Blanc (9 logos : 5 en haut, 4 en bas - 70% sur desktop) -->
     <section class="bg-white text-dark py-10 md:py-16 border-b border-gray-200 relative z-10" aria-label="Partenaires et Sponsors officiels">
-        <div class="max-w-[1600px] mx-auto px-4 sm:px-6">
+        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4 sm:px-6">
             <div class="flex flex-col gap-[45px] items-center justify-center">
                 <!-- Ligne 1 : 5 logos avec exactement 45px d'écart -->
                 <div class="flex flex-wrap justify-center items-center gap-[45px] w-full">
@@ -150,7 +150,7 @@ const galleryImages = [
     <!-- Intro Présentation -->
     <section class="py-16 md:py-32 px-4 flex justify-center items-center min-h-[40vh] md:min-h-[50vh] text-center relative overflow-hidden" aria-label="Présentation générale">
         <div class="topo-texture pointer-events-none" aria-hidden="true"></div>
-        <div class="max-w-4xl gsap-fade-up relative z-10">
+        <div class="content-70 w-full lg:w-[70%] lg:max-w-none gsap-fade-up relative z-10">
             <h2 class="font-display text-2xl sm:text-3xl md:text-5xl font-bold uppercase leading-snug">
                 Le Trail des Mines est une course nature organisée par l’association <a href="/association" class="text-brand italic font-medium hover:underline focus-visible:ring-2 focus-visible:ring-brand">Run in Champagney.</a>
                 <span class="text-white/90 font-medium block mt-3">La 6<sup class="text-base lowercase">ème</sup> édition se déroulera le <span class="text-brand font-bold">16 mai 2027</span></span>
@@ -158,10 +158,10 @@ const galleryImages = [
         </div>
     </section>
 
-    <!-- Les Courses (Parcours à venir) -->
+    <!-- Les Courses (Parcours à venir - 70% sur desktop) -->
     <section class="py-16 md:py-24 px-4 bg-cardBg relative border-y border-white/5 rounded-t-[2rem] md:rounded-t-[3rem] overflow-hidden" aria-labelledby="courses-heading">
         <div class="topo-texture pointer-events-none" aria-hidden="true"></div>
-        <div class="max-w-7xl mx-auto relative z-10">
+        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-14 gsap-fade-up gap-4">
                 <div>
                     <p class="font-display text-[10px] md:text-xs text-brand tracking-[0.4em] uppercase mb-2">01 // Les Courses</p>
@@ -179,7 +179,7 @@ const galleryImages = [
                         <i class="fa-solid fa-person-running text-[16rem]"></i>
                     </div>
 
-                    <div class="relative z-10 max-w-3xl flex flex-col items-center">
+                    <div class="relative z-10 w-full max-w-4xl flex flex-col items-center">
                         <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand/10 border border-brand/25 text-brand font-display uppercase tracking-widest text-[10px] md:text-xs font-semibold mb-6">
                             <span class="w-2 h-2 rounded-full bg-brand animate-pulse" aria-hidden="true"></span>
                             <span>Prochaine Édition</span>
@@ -212,7 +212,7 @@ const galleryImages = [
     <!-- Vidéo Section avec composant Édition Précédente (2026) au-dessus de la vidéo -->
     <section id="video-section" class="py-16 md:py-28 bg-dark relative overflow-hidden flex flex-col items-center" aria-labelledby="video-section-heading">
 
-        <!-- Composant vitrine vers l'Édition Précédente 2026 -->
+        <!-- Composant vitrine vers l'Édition Précédente 2026 (70% sur desktop) -->
         <PreviousEditionBanner className="mb-14 md:mb-20 gsap-fade-up" />
 
         <div class="text-center mb-8 md:mb-12 relative z-10 w-full px-4 gsap-fade-up">
@@ -227,63 +227,65 @@ const galleryImages = [
             </p>
         </div>
 
-        <div class="video-container w-[95%] md:w-[75vw] aspect-video relative z-20 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-[0_15px_40px_rgba(176,190,66,0.1)] gsap-fade-up border border-white/10">
-            <iframe 
-                class="w-full h-full object-cover" 
-                src="https://www.youtube.com/embed/O5vLogBuP20?rel=0&modestbranding=1" 
-                title="Trail des mines 2026 - after movie officiel" 
-                loading="lazy"
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen
-            ></iframe>
+        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4">
+            <div class="video-container w-full aspect-video relative z-20 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-[0_15px_40px_rgba(176,190,66,0.1)] gsap-fade-up border border-white/10">
+                <iframe 
+                    class="w-full h-full object-cover" 
+                    src="https://www.youtube.com/embed/O5vLogBuP20?rel=0&modestbranding=1" 
+                    title="Trail des mines 2026 - after movie officiel" 
+                    loading="lazy" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen
+                ></iframe>
+            </div>
         </div>
     </section>
 
-    <!-- Tuiles Bento Box (Sans "Préparer mon trail") -->
-    <section class="py-16 md:py-24 px-4 max-w-7xl mx-auto" aria-labelledby="bento-heading">
+    <!-- Tuiles Bento Box (Sans "Préparer mon trail" - 70% sur desktop) -->
+    <section class="py-16 md:py-24 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto" aria-labelledby="bento-heading">
         <div class="mb-10 md:mb-14 gsap-fade-up">
             <p class="font-display text-[10px] md:text-xs text-brand tracking-[0.4em] uppercase mb-2">02 // Explorer</p>
             <h2 id="bento-heading" class="text-2xl md:text-4xl font-display uppercase font-bold text-white">Engagements & Informations</h2>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 bento-container">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 bento-container">
 
-            <!-- Règlement : col-span-2 -->
-            <a href="/reglement" class="group relative rounded-2xl md:rounded-[2.5rem] overflow-hidden bg-cardBg border border-white/10 hover:border-brand/40 flex items-end p-6 md:p-12 md:col-span-2 bento-item min-h-[300px] md:min-h-[360px] transition-all shadow-xl focus-visible:ring-2 focus-visible:ring-brand">
+            <!-- Règlement -->
+            <a href="/reglement" class="group relative rounded-2xl md:rounded-[2rem] overflow-hidden bg-cardBg border border-white/10 hover:border-brand/40 flex items-end p-6 md:p-10 bento-item min-h-[320px] md:min-h-[380px] transition-all duration-300 shadow-xl focus-visible:ring-2 focus-visible:ring-brand">
                 <div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:scale-105 group-hover:opacity-55 transition-all duration-1000 ease-out" style="background-image: url('/medias/Index/Pierre-Coutherut_TDM-2024-220.jpg');"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/60 to-transparent"></div>
                 <div class="relative z-10">
                     <span class="text-brand text-xs uppercase tracking-widest font-semibold block mb-2 font-display">Sécurité & Éthique</span>
-                    <h3 class="font-display text-3xl md:text-5xl font-bold uppercase group-hover:text-brand transition-colors duration-500">Règlement</h3>
-                    <p class="text-gray-300 text-xs sm:text-sm mt-2 max-w-md hidden sm:block font-light">Matériel obligatoire, barrières horaires et esprit sportif : toutes les règles indispensables.</p>
+                    <h3 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-white group-hover:text-brand transition-colors duration-300">Règlement</h3>
+                    <p class="text-gray-300 text-xs sm:text-sm mt-2 max-w-sm hidden sm:block font-light">Matériel obligatoire, barrières horaires et esprit sportif : toutes les règles indispensables.</p>
                 </div>
-                <div class="absolute top-6 right-6 md:top-8 md:right-8 w-11 h-11 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:bg-brand group-hover:border-brand group-hover:text-dark transition-all duration-300 shadow-md z-10">
-                    <i class="fa-solid fa-arrow-right text-xs arrow-kinetic" aria-hidden="true"></i>
+                <div class="absolute top-6 right-6 md:top-8 md:right-8 w-11 h-11 md:w-13 md:h-13 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white group-hover:bg-brand group-hover:border-brand group-hover:text-dark transition-all duration-300 shadow-md z-10" aria-hidden="true">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"></path></svg>
                 </div>
             </a>
 
-            <!-- Dossard Solidaire : col-span-1 -->
-            <a href="/dossard-solidaire" class="group relative rounded-2xl md:rounded-[2.5rem] overflow-hidden bg-brand flex items-end p-6 md:p-12 md:col-span-1 bento-item shadow-lg md:shadow-[0_10px_40px_rgba(176,190,66,0.2)] min-h-[300px] md:min-h-[360px] transition-all focus-visible:ring-2 focus-visible:ring-white">
+            <!-- Dossard Solidaire -->
+            <a href="/dossard-solidaire" class="group relative rounded-2xl md:rounded-[2rem] overflow-hidden bg-brand flex items-end p-6 md:p-10 bento-item shadow-lg md:shadow-[0_10px_40px_rgba(176,190,66,0.2)] min-h-[320px] md:min-h-[380px] transition-all duration-300 focus-visible:ring-2 focus-visible:ring-white">
                 <div class="absolute inset-0 bg-cover bg-center opacity-25 group-hover:scale-105 transition-all duration-1000 ease-out" style="background-image: url('/medias/Index/Pierre-Coutherut_TDM-2024-48.jpg');"></div>
                 <div class="absolute inset-0 bg-brand/90 mix-blend-multiply"></div>
                 <div class="relative z-10">
                     <span class="text-dark/80 text-xs uppercase tracking-widest font-bold block mb-2 font-display">Courir Utile</span>
-                    <h3 class="font-display text-3xl md:text-4xl font-bold uppercase text-dark leading-tight">Dossard<br>Solidaire</h3>
-                    <p class="text-dark/80 text-xs mt-2 hidden sm:block font-medium">Chaque foulée contribue directement au soutien d'associations locales partenaires.</p>
+                    <h3 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-dark leading-tight">Dossard<br>Solidaire</h3>
+                    <p class="text-dark/80 text-xs sm:text-sm mt-2 max-w-sm hidden sm:block font-medium">Chaque foulée contribue directement au soutien d'associations locales partenaires.</p>
                 </div>
-                <div class="absolute top-6 right-6 md:top-8 md:right-8 w-11 h-11 rounded-full bg-dark/20 backdrop-blur-md border border-dark/20 text-dark flex items-center justify-center group-hover:bg-dark group-hover:border-dark group-hover:text-brand transition-all duration-300 shadow-md z-10">
-                    <i class="fa-solid fa-arrow-right text-xs arrow-kinetic" aria-hidden="true"></i>
+                <div class="absolute top-6 right-6 md:top-8 md:right-8 w-11 h-11 md:w-13 md:h-13 rounded-full bg-dark/20 backdrop-blur-md border border-dark/20 text-dark flex items-center justify-center group-hover:bg-dark group-hover:border-dark group-hover:text-brand transition-all duration-300 shadow-md z-10" aria-hidden="true">
+                    <svg class="w-4 h-4 md:w-5 md:h-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M17 7H7M17 7v10"></path></svg>
                 </div>
             </a>
 
         </div>
     </section>
 
-    <!-- Galerie Animée au Scroll (Noir pur pour valoriser les photos) -->
+    <!-- Galerie Animée au Scroll (Noir pur pour valoriser les photos - Entête 70% sur desktop) -->
     <section class="py-16 md:py-24 overflow-hidden bg-[#0a1214] galerie-section border-t border-white/5 relative" aria-labelledby="galerie-title">
         <h2 id="galerie-title" class="sr-only">Galerie photographique officielle du Trail des Mines</h2>
-        <div class="flex flex-wrap items-center justify-between gap-4 px-4 max-w-7xl mx-auto mb-6 md:mb-8 gsap-fade-up relative z-10">
+        <div class="flex flex-wrap items-center justify-between gap-4 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto mb-6 md:mb-8 gsap-fade-up relative z-10">
             <div>
                 <span class="text-[10px] md:text-xs text-brand font-display tracking-[0.4em] uppercase block">Immersion</span>
                 <span class="font-display text-xl md:text-2xl uppercase font-bold text-white">L'Esprit des Terrils en Images</span>

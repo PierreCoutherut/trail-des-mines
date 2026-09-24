@@ -130,20 +130,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Apparition en cascade des tuiles Bento
+        // Apparition en cascade des tuiles Bento (sécurisée fromTo avec nettoyage des propriétés)
         if (document.querySelector('.bento-item')) {
-            gsap.from(".bento-item", {
-                scrollTrigger: {
-                    trigger: ".bento-container",
-                    start: "top 85%"
-                },
-                scale: 0.98,
-                y: 30,
-                opacity: 0,
-                duration: 1,
-                stagger: 0.12,
-                ease: "power3.out"
-            });
+            gsap.fromTo(".bento-item", 
+                { opacity: 0, y: 25, scale: 0.98 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    stagger: 0.12,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: ".bento-container",
+                        start: "top 95%",
+                        once: true
+                    },
+                    clearProps: "all"
+                }
+            );
         }
     }
 
@@ -306,6 +311,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (href && href === currentPath) {
             link.classList.add('text-brand');
             link.classList.remove('text-gray-300', 'text-gray-400');
+        }
+    });
+
+    // ==========================================
+    // 7. Rafraîchissement des repères ScrollTrigger après chargement complet
+    // ==========================================
+    window.addEventListener('load', () => {
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh();
         }
     });
 
