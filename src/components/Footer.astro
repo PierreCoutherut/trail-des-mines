@@ -1,83 +1,61 @@
 ---
-// Footer.astro - Mega sitemap footer with Logo.png & oversized background typography
+const groups = [
+  { title: 'Le rendez-vous', links: [['Accueil', '/'], ['Parcours · à venir', '/#parcours-a-venir'], ['Règlement', '/reglement']] },
+  { title: 'Les souvenirs', links: [['Résultats & médias', '/resultats-medias'], ['Éditions précédentes', '/editions-precedentes']] },
+  { title: 'Le collectif', links: [['À propos', '/a-propos'], ['Partenaires', '/partenaires'], ['Contact', '/contact']] },
+  { title: 'Informations', links: [['Mentions légales', '/mentions-legales'], ['Confidentialité', '/politique-confidentialite'], ['Accessibilité', '/declaration-accessibilite']] },
+];
 ---
 <footer class="bg-[#0a1214] pt-16 md:pt-24 flex flex-col relative z-20 overflow-hidden" role="contentinfo">
-
-
-  <!-- Logo & Introduction Footer -->
-  <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4 mb-12 flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10 relative z-10">
-    <a href="/" class="flex items-center gap-3 group focus:outline-none" aria-label="Accueil Trail des Mines">
-      <img src="/medias/Logo.png" alt="Logo Trail des Mines" class="h-12 md:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-md" />
+  <div class="content-70 mx-auto px-4 mb-12 flex flex-col sm:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10 relative z-10">
+    <a href="/" class="flex items-center gap-3 group" aria-label="Accueil Trail des Mines">
+      <img src="/medias/Logo.png" alt="" class="h-12 md:h-14 w-auto object-contain" loading="lazy" />
       <div>
-        <span class="font-display font-bold text-lg md:text-xl uppercase tracking-widest text-white block">
-          Trail des <span class="text-brand">Mines</span>
-        </span>
-        <span class="text-[10px] uppercase tracking-widest text-gray-400">6ème Édition • 16 Mai 2027 • Champagney</span>
+        <span class="font-display font-bold text-lg md:text-xl uppercase tracking-widest text-white block">Trail des <span class="text-brand">Mines</span></span>
+        <span class="text-[10px] uppercase tracking-widest text-gray-400">16 mai 2027 · Champagney</span>
       </div>
     </a>
-    <div class="flex items-center gap-4">
-      <span class="text-xs uppercase tracking-widest text-gray-400 font-medium">Une organisation</span>
-      <span class="px-3.5 py-1.5 bg-brand/10 border border-brand/20 rounded-full text-brand text-xs font-bold uppercase tracking-wider">Run in Champagney</span>
-    </div>
+    <span class="text-xs uppercase tracking-widest text-gray-300">Une organisation <span class="text-brand block sm:inline mt-1">Run in Champagney</span></span>
   </div>
-
-  <!-- Sitemap Grid -->
-  <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4 mb-16 md:mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-10">
-    
-    <!-- Colonne 1 : Les Courses -->
-    <div class="flex flex-col gap-3">
-      <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Les Courses</h4>
-      <a href="/parcours" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Tous les Parcours</a>
-      <a href="/galibots" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Galibots (13 km)</a>
-      <a href="/terrils" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Terrils (28 km)</a>
-      <a href="/gueules-noires" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Gueules Noires (52 km)</a>
-      <a href="/autres" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Autres formats</a>
-    </div>
-
-    <!-- Colonne 2 : Infos Pratiques -->
-    <div class="flex flex-col gap-3">
-      <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Infos Pratiques</h4>
-      <a href="/infos-pratiques" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Guide Général</a>
-      <a href="/reglement" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Règlement</a>
-      <a href="/resultats-medias" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Résultats & Médias</a>
-      <a href="/editions-precedentes" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éditions Précédentes</a>
-    </div>
-
-    <!-- Colonne 3 : L'Association -->
-    <div class="flex flex-col gap-3">
-      <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">L'Association</h4>
-      <a href="/a-propos" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">À propos</a>
-      <a href="/association" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Run in Champagney</a>
-      <a href="/benevoles" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Bénévoles</a>
-      <a href="/eco-engagement" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Éco-engagement & Territoire</a>
-      <a href="/partenaires" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Partenaires & Sponsors</a>
-      <a href="/dossard-solidaire" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Dossard Solidaire</a>
-    </div>
-
-    <!-- Colonne 4 : Raccourcis & Légal -->
-    <div class="flex flex-col gap-3">
-      <h4 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">Raccourcis</h4>
-      <a href="/inscription" class="btn-registration-trigger text-brand hover:text-white text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors mb-2 font-bold cursor-pointer">S'inscrire</a>
-      <a href="/" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Page d'accueil</a>
-      <a href="/contact" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Contact</a>
-      <a href="/presse" class="text-gray-500 hover:text-brand text-[10px] md:text-xs uppercase tracking-widest font-sans transition-colors">Presse</a>
-      <div class="mt-4 flex flex-col gap-2">
-        <a href="/mentions-legales" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Mentions légales</a>
-        <a href="/politique-confidentialite" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Politique de confidentialité</a>
-        <a href="/declaration-accessibilite" class="text-gray-600 hover:text-white text-[9px] uppercase tracking-wider font-sans transition-colors">Déclaration d'accessibilité</a>
+  <div class="content-70 mx-auto px-4 mb-16 md:mb-24 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 relative z-10">
+    {groups.map(group => (
+      <div class="flex flex-col gap-3">
+        <h2 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">{group.title}</h2>
+        {group.links.map(([label, href]) => <a href={href} class="text-gray-400 hover:text-brand text-xs uppercase tracking-wider transition-colors">{label}</a>)}
+        {group.title === 'Informations' && <button type="button" data-open-privacy-settings class="text-gray-400 hover:text-brand text-xs uppercase tracking-wider text-left transition-colors">Préférences de confidentialité</button>}
+        {group.title === 'Le rendez-vous' && <button type="button" data-open-registration-modal class="text-brand hover:text-white text-xs uppercase tracking-wider text-left font-bold transition-colors">S’inscrire</button>}
       </div>
-    </div>
+    ))}
   </div>
-
-  <!-- Copyright -->
-  <div class="w-full text-center z-10 px-4 mb-4">
-    <p class="text-gray-700 text-[9px] uppercase tracking-widest font-sans">© 2027 Association Run in Champagney - Tous droits réservés</p>
+  <div class="w-full text-center z-10 px-4 mb-4 flex flex-col items-center gap-2">
+    <p class="text-gray-400 text-[10px] uppercase tracking-widest">© 2027 Run in Champagney · Tous droits réservés</p>
+    <a href="https://redstone-media.fr/" target="_blank" rel="noopener noreferrer" class="inline-flex min-h-11 items-center text-sm text-gray-300 hover:text-brand underline underline-offset-4 decoration-white/30 hover:decoration-brand transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">Créé par Redstone Media</a>
   </div>
-
-  <!-- Filigrane Décoratif Géant -->
-  <div aria-hidden="true" class="w-full relative translate-y-[28%] md:translate-y-[22%] pointer-events-none select-none text-center overflow-hidden">
-    <div class="font-display text-[22vw] md:text-[18vw] font-bold uppercase leading-none text-white/[0.03] tracking-tighter whitespace-nowrap">
-      TRAIL DES MINES
-    </div>
+  <div data-footer-wordmark-stage aria-hidden="true" class="w-full relative translate-y-[28%] md:translate-y-[22%] pointer-events-none select-none text-center overflow-hidden">
+    <div data-footer-wordmark class="font-display text-[22vw] md:text-[18vw] font-bold uppercase leading-none text-white/[0.03] tracking-tighter whitespace-nowrap origin-bottom">TRAIL DES MINES</div>
   </div>
 </footer>
+<script>
+  const stage = document.querySelector<HTMLElement>('[data-footer-wordmark-stage]');
+  const wordmark = document.querySelector<HTMLElement>('[data-footer-wordmark]');
+  const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (stage && wordmark) {
+    let scheduled = false;
+    const update = () => {
+      scheduled = false;
+      if (preference.matches) { wordmark.style.transform = ''; return; }
+      const rect = stage.getBoundingClientRect();
+      const visible = window.innerHeight - rect.top;
+      const distanceToEnd = Math.max(0, document.documentElement.scrollHeight - window.innerHeight - window.scrollY);
+      const progress = Math.max(0, Math.min(1, visible / Math.max(1, visible + distanceToEnd)));
+      const eased = progress * progress * (3 - 2 * progress);
+      wordmark.style.transform = `scale(${0.55 + eased * 0.45})`;
+    };
+    const schedule = () => { if (!scheduled) { scheduled = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    preference.addEventListener('change', schedule);
+    document.fonts.ready.then(schedule);
+    update();
+  }
+</script>

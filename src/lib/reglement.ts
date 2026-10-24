@@ -9,6 +9,7 @@ export interface ReglementChapter {
 }
 
 export interface ReglementData {
+  published?: boolean;
   pdfUrl: string;
   pdfFilename: string;
   pdfSizeBytes: number;
@@ -30,6 +31,7 @@ function ensureDataDir() {
 
 export function getDefaultReglement(): ReglementData {
   return {
+    published: false,
     pdfUrl: '/medias/reglement.pdf',
     pdfFilename: 'reglement-trail-des-mines-2027.pdf',
     pdfSizeBytes: 245000,

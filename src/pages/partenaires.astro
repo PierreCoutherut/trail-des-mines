@@ -1,74 +1,131 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeroBackdrop from '../components/PageHeroBackdrop.astro';
+import responsiveImages from '../data/responsive-images.json';
 
-const title = "Partenaires & Sponsors - Trail des Mines 2027 | Soutenez le Sport Local";
-const description = "Découvrez les partenaires institutionnels et sponsors officiels du Trail des Mines 2027 à Champagney. Dossier mécénat et opportunités de visibilité territoriale.";
+const hero = responsiveImages.heroes.partners;
+const logoAssets = responsiveImages.logos as Record<string, { src: string; srcset: string; width: number; height: number; shape: string }>;
+
+const institutions = [
+  { file: 'Sponsor (6).jpg', name: 'Ville de Champagney' },
+  { file: 'Sponsor (4).jpg', name: 'Département de la Haute-Saône' },
+  { file: 'Sponsor (8).jpg', name: 'Communauté de communes Rahin et Chérimont' },
+];
+const companies = [
+  { file: 'Sponsor.png', name: 'Crédit Mutuel' },
+  { file: 'Sponsor (10).jpg', name: 'Intermarché Champagney' },
+  { file: 'Sponsor (3).jpg', name: 'idverde' },
+  { file: 'Sponsor (1).jpg', name: 'Entreprise COTTA' },
+  { file: 'Sponsor (5).jpg', name: 'Cryosculpt' },
+  { file: 'Sponsor (9).jpg', name: 'Transports BASS' },
+  { file: 'Sponsor (2).jpg', name: 'Le Franc Brasseur' },
+  { file: 'Sponsor (7).jpg', name: 'Le Resto de Marine' },
+];
+const groups = [
+  { id: 'collectivites', title: 'Un territoire à nos côtés', description: 'Les collectivités qui accompagnent le Trail des Mines et le font vivre à Champagney.', partners: institutions },
+  { id: 'entreprises', title: 'Ils font partie de l’aventure', description: 'Entreprises, commerçants et acteurs locaux : merci à tous ceux qui soutiennent notre rendez-vous sur les sentiers.', partners: companies },
+];
 ---
 
-<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+<Layout title="Nos partenaires | Trail des Mines — Champagney" description="Découvrez les partenaires du Trail des Mines à Champagney et rejoignez les entreprises et collectivités qui soutiennent l’événement." loadLeaflet={false} loadChart={false} showSponsors={false} showCta={false}>
+  <header class="partners-hero relative overflow-hidden flex items-end">
+    <PageHeroBackdrop src={hero.src} srcset={hero.srcset} width={hero.width} height={hero.height} position="50% 42%" mobilePosition="58% 32%" />
+    <div class="partner-container relative z-10">
+      <h1 class="font-display font-bold uppercase text-white">Nos partenaires</h1>
+      <div class="hero-bottom">
+        <p>Sur les sentiers comme en coulisses, l’aventure se construit ensemble. Merci à celles et ceux qui rendent le Trail des Mines possible.</p>
+        <a href="#devenir-partenaire" class="partner-button partner-button-brand">Devenir partenaire <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+      </div>
+    </div>
+  </header>
 
-<!-- En-tête -->
-    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
-        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto text-center relative z-10 gsap-fade-up">
-            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Soutiens & Mécènes</span>
-            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
-                Partenaires & <span class="text-brand">Sponsors</span>
-            </h1>
-            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
-                Le Trail des Mines est rendu possible grâce à la confiance et à l'engagement de nos partenaires publics, institutionnels et des entreprises du tissu économique régional.
-            </p>
-        </div>
-    </header>
+  <div class="partners-wall bg-white text-dark">
+    <div class="partner-container">
+      {groups.map(group => (
+        <section class="partner-group" aria-labelledby={group.id}>
+          <div class="group-intro">
+            <h2 id={group.id} class="font-display font-bold uppercase">{group.title}</h2>
+            <p>{group.description}</p>
+          </div>
+          <ul class:list={['partner-logos', { 'institution-logos': group.id === 'collectivites' }]} role="list">
+            {group.partners.map(partner => (
+              <li>
+                <figure class={`logo-${logoAssets[partner.file].shape}`}>
+                  <div class="logo-space">
+                    <img src={logoAssets[partner.file].src} srcset={logoAssets[partner.file].srcset} sizes={group.id === 'collectivites' ? '(max-width: 599px) 96px, (max-width: 1023px) 26vw, 300px' : '(max-width: 599px) 40vw, (max-width: 1023px) 25vw, 240px'} alt={`Logo ${partner.name}`} width={logoAssets[partner.file].width} height={logoAssets[partner.file].height} loading="lazy" decoding="async" />
+                  </div>
+                  <figcaption>{partner.name}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </div>
 
-    <!-- Partenaires Institutionnels -->
-    <section class="py-12 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
-        <h2 class="font-display text-2xl font-bold uppercase text-white mb-8 text-center flex items-center justify-center gap-3">
-            <span class="w-2 h-6 bg-brand rounded-full"></span> Partenaires Institutionnels & Publics
-        </h2>
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
-                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">Ville de Champagney</span>
-                <span class="text-xs text-gray-400 mt-1">Collectivité Hôte</span>
-            </div>
-            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
-                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">Département 70</span>
-                <span class="text-xs text-gray-400 mt-1">Haute-Saône</span>
-            </div>
-            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
-                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">Région BFC</span>
-                <span class="text-xs text-gray-400 mt-1">Bourgogne-Franche-Comté</span>
-            </div>
-            <div class="bg-cardBg rounded-2xl p-6 border border-white/5 flex flex-col items-center justify-center text-center group hover:border-brand/40 transition">
-                <span class="font-display text-lg font-bold text-white uppercase group-hover:text-brand transition-colors">ONF Vosges</span>
-                <span class="text-xs text-gray-400 mt-1">Gestion Forestière</span>
-            </div>
-        </div>
-    </section>
-
-    <!-- Devenir Partenaire -->
-    <section class="py-12 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
-        <div class="bg-cardBg rounded-3xl p-8 md:p-12 border border-brand/30 shadow-2xl text-center relative">
-
-            <div class="relative z-10">
-                <span class="text-xs uppercase tracking-widest text-brand font-bold font-display block mb-2">Visibilité & Valeurs RSE</span>
-                <h2 class="font-display text-3xl md:text-4xl font-bold uppercase text-white mb-4">
-                    Associez votre entreprise au Trail des Mines
-                </h2>
-            <p class="text-gray-300 text-sm leading-relaxed max-w-2xl mx-auto mb-8">
-                Valorisez votre marque auprès de plus de 800 trailers passionnés et 2 000 spectateurs. Bénéficiez d'une visibilité sur nos dossards, arches de départ, site web et réseaux sociaux, ainsi que d'avantages fiscaux au titre du mécénat sportif.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="/contact" class="bg-brand text-dark hover:bg-white px-8 py-3.5 rounded-full font-display uppercase tracking-widest font-bold text-xs transition-all shadow-lg">
-                    Contacter le pôle Partenariats
-                </a>
-                <a href="medias/dossier-partenariat.pdf" download class="bg-white/10 hover:bg-white/20 text-white px-8 py-3.5 rounded-full font-display uppercase tracking-widest font-bold text-xs transition-all border border-white/10">
-                    Télécharger la Grille Mécénat (PDF)
-                </a>
-            </div>
-        </div>
-        </div>
-    </section>
-
-    <!-- Mega Footer -->
-
+  <section id="devenir-partenaire" class="partner-invite bg-brand text-dark scroll-mt-28" aria-labelledby="invite-heading">
+    <div class="partner-container invite-layout">
+      <h2 id="invite-heading" class="font-display font-bold uppercase">Et si l’aventure<br />continuait avec vous ?</h2>
+      <div>
+        <p>Votre entreprise ou votre association souhaite soutenir le Trail des Mines ? Aide matérielle, services ou soutien financier : parlons de la façon dont vous pourriez prendre part à l’événement.</p>
+        <a href="/contact?subject=partenariat#contact-form-title" class="partner-button partner-button-dark">Devenir partenaire <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10" stroke-linecap="round" stroke-linejoin="round" /></svg></a>
+        <p class="invite-note">L’équipe de Run in Champagney est à votre écoute.</p>
+      </div>
+    </div>
+  </section>
 </Layout>
+
+<style>
+  .partner-container { width: min(calc(100% - clamp(2rem, 7vw, 8rem)), 75rem); margin-inline: auto; }
+  .partners-hero { min-height: clamp(32rem, 46vw, 42rem); padding: 11rem 0 clamp(3rem, 5vw, 5rem); isolation: isolate; }
+  h1 { font-size: clamp(2.75rem, 7vw, 6rem); line-height: 1.05; letter-spacing: -.025em; margin-bottom: 1.75rem; text-wrap: balance; }
+  .hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 2.5rem; }
+  .hero-bottom p { max-width: 38rem; font-size: clamp(1rem, 1.3vw, 1.125rem); line-height: 1.65; text-wrap: pretty; }
+  .partner-button { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.75rem; min-height: 3.5rem; padding: 1rem 1.5rem; border-radius: 999px; font-size: 1rem; font-weight: 600; flex-shrink: 0; transition: background-color .2s, color .2s; }
+  .partner-button svg { width: 1.25rem; height: 1.25rem; flex-shrink: 0; }
+  .partner-button:focus-visible { outline: 3px solid currentColor; outline-offset: 5px; }
+  .partner-button-brand { background: var(--color-brand); color: var(--color-dark); }
+  .partner-button-brand:hover { background: white; }
+  .partner-button-dark { background: var(--color-dark); color: white; margin-top: 2rem; }
+  .partner-button-dark:hover { background: white; color: var(--color-dark); }
+  .partners-wall { padding: clamp(3rem, 6vw, 6rem) 0; }
+  .partner-group + .partner-group { margin-top: clamp(3.5rem, 6vw, 6rem); }
+  .group-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; margin-bottom: 2rem; }
+  .group-intro h2 { font-size: clamp(1.75rem, 2.8vw, 2.75rem); line-height: 1.2; max-width: 30rem; text-wrap: balance; }
+  .group-intro p { max-width: 32rem; font-size: 1rem; line-height: 1.65; text-wrap: pretty; }
+  .partner-logos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.5rem; list-style: none; padding: 0; margin: 0; }
+  .institution-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  figure { margin: 0; text-align: center; }
+  .partner-logos li { min-width: 0; }
+  .logo-space { height: clamp(8rem, 12vw, 10.5rem); display: flex; align-items: center; justify-content: center; padding: 1.25rem; background: #f5f6f3; }
+  .logo-space img { width: auto; height: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
+  .logo-square img { max-height: 90%; }
+  .logo-portrait img { max-height: 95%; }
+  figcaption { font-size: .875rem; line-height: 1.5; margin-top: .875rem; text-wrap: balance; }
+  .partner-invite { padding: clamp(3rem, 6vw, 6rem) 0; }
+  .invite-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .invite-layout h2 { font-size: clamp(2rem, 3.3vw, 3.5rem); line-height: 1.15; letter-spacing: -.02em; text-wrap: balance; }
+  .invite-layout p { font-size: 1.0625rem; line-height: 1.7; }
+  .invite-layout .invite-note { margin-top: 1.25rem; font-size: .875rem; }
+  @media (max-width: 1023px) {
+    .hero-bottom { align-items: flex-start; flex-direction: column; }
+    .partner-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .invite-layout { grid-template-columns: 1fr; gap: 2rem; }
+  }
+  @media (max-width: 599px) {
+    .partners-hero { min-height: 32rem; min-height: min(36rem, 85svh); padding: 10rem 0 2.5rem; }
+    .hero-bottom p { font-size: 1rem; }
+    .group-intro { grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+    .partner-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem 1rem; }
+    .institution-logos { grid-template-columns: 1fr; gap: 1rem; }
+    .institution-logos figure { display: grid; grid-template-columns: 7rem 1fr; align-items: center; gap: 1.25rem; text-align: left; }
+    .institution-logos figcaption { margin: 0; font-size: 1rem; text-wrap: pretty; }
+    .logo-space { height: 7rem; padding: 1rem; }
+    figcaption { font-size: .875rem; margin-top: .625rem; }
+    .invite-layout h2 { font-size: clamp(1.75rem, 6.7vw, 2.5rem); }
+    .partner-button { width: 100%; max-width: 24rem; }
+    .hero-bottom { gap: 1.5rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .partner-button { transition: none; } }
+</style>

@@ -16,9 +16,10 @@ function getAuthenticatedUser(request: Request) {
   return check.valid ? check.user : null;
 }
 
-export const GET: APIRoute = async () => {
+export const GET: APIRoute = async ({ request }) => {
   const reglement = getReglementSync();
-  return new Response(JSON.stringify({ reglement }), {
+  const visibleReglement = reglement.published || getAuthenticatedUser(request) ? reglement : { published: false, chapters: [] };
+  return new Response(JSON.stringify({ reglement: visibleReglement }), {
     status: 200,
     headers: { 'Content-Type': 'application/json' }
   });
@@ -75,6 +76,7 @@ export const POST: APIRoute = async ({ request }) => {
       }
 
       const updated = saveReglement({
+        published: true,
         pdfUrl: '/medias/reglement.pdf',
         pdfFilename: file.name || 'reglement.pdf',
         pdfSizeBytes: file.size,

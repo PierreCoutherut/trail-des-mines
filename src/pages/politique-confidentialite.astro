@@ -1,163 +1,87 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const title = "Politique de Confidentialité & Données Personnelles | Trail des Mines";
-const description = "Politique de confidentialité et protection des données (RGPD) du Trail des Mines et de l";
+import LegalHeroImage from '../components/LegalHeroImage.astro';
 ---
 
-<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+<Layout title="Politique de confidentialité | Trail des Mines" description="Comment Run in Champagney utilise vos messages, vos préférences et les données de navigation du site." showCta={false} showSponsors={false} loadLeaflet={false} loadChart={false}>
+    <div class="legal-page">
+        <header class="legal-header">
+            <LegalHeroImage src="/medias/Index/Elodie-Bermond_IMG_6698-original.webp" position="50% 48%" />
+            <h1>Confidentialité</h1>
+            <p>Vos messages servent à vous répondre. Voici les données utilisées sur ce site, leurs durées de conservation et les choix qui vous appartiennent.</p>
+            <p class="legal-updated">Mise à jour le <time datetime="2026-10-22">22 octobre 2026</time>.</p>
+        </header>
 
-<!-- Header / Hero Confidentialité -->
-    <header class="pt-32 pb-16 md:pt-44 md:pb-20 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-dark text-center">
-        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto relative z-10">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-brand text-xs uppercase tracking-widest font-semibold mb-6 hero-anim">
-                <i class="fa-solid fa-user-shield"></i> Protection des Données • RGPD (UE 2016/679)
-            </div>
-            <h1 class="font-display text-4xl sm:text-6xl font-bold uppercase tracking-tight text-white mb-6 hero-anim">
-                Politique de <span class="text-brand">Confidentialité</span>
-            </h1>
-            <p class="text-gray-400 text-xs sm:text-sm max-w-2xl mx-auto font-light leading-relaxed hero-anim">
-                La protection de votre vie privée et de vos données personnelles est une priorité absolue pour l'Association Run in Champagney. Découvrez comment nous collectons, traitons et protégeons vos informations.
-            </p>
+        <div class="legal-copy">
+            <section aria-labelledby="responsable">
+                <h2 id="responsable">Qui traite vos données ?</h2>
+                <p>L'association <strong>Run in Champagney</strong> est responsable des traitements réalisés pour le site du Trail des Mines. Pour toute question ou demande concernant vos données : <a href="mailto:runinchampagney70@gmail.com">runinchampagney70@gmail.com</a>.</p>
+            </section>
+
+            <section aria-labelledby="messages">
+                <h2 id="messages">Lorsque vous nous contactez</h2>
+                <p>Le formulaire recueille votre <strong>prénom, votre nom, votre adresse e-mail, le sujet et le contenu de votre message</strong>, ainsi que votre numéro de téléphone si vous le renseignez. Votre accord, la date d'envoi et l'état de traitement de la demande sont également enregistrés pour en assurer le suivi. Les champs signalés comme obligatoires sont nécessaires pour transmettre la demande et y répondre.</p>
+                <p>Ces informations sont enregistrées dans l'espace d'administration privé du site et accessibles aux personnes de l'association habilitées à répondre aux demandes. L'hébergement est assuré par Infomaniak. Si vous nous écrivez directement par e-mail, votre message est également traité dans la messagerie Gmail de l'association, fournie par Google.</p>
+                <p>La finalité est de <strong>recevoir, traiter et suivre votre demande</strong>. Pour le formulaire, ce traitement repose sur le consentement que vous donnez en cochant la case prévue. Vous pouvez le retirer en nous écrivant à l'adresse ci-dessus. Les messages ne servent pas à vous inscrire à une newsletter.</p>
+                <p>Les échanges sont conservés <strong>24 mois après le dernier échange</strong>, puis supprimés. Évitez d'inclure des informations de santé ou d'autres données sensibles dans votre message.</p>
+            </section>
+
+            <section aria-labelledby="archives">
+                <h2 id="archives">Résultats et archives de l'événement</h2>
+                <p>Les pages des éditions précédentes présentent des résultats, des photographies et des vidéos pour conserver la mémoire de l'événement. Ces archives peuvent contenir votre nom, votre classement ou votre image.</p>
+                <p>Pour demander une correction, un retrait ou des précisions sur une publication vous concernant, contactez-nous en indiquant l'année et le lien de la page ou de la photographie.</p>
+            </section>
+
+            <section aria-labelledby="necessaires">
+                <h2 id="necessaires">Les préférences et la connexion</h2>
+                <ul>
+                    <li><strong>Choix de confidentialité :</strong> votre acceptation ou votre refus de la mesure d'audience est mémorisé dans votre navigateur pendant six mois. Ce stockage sert à respecter votre choix.</li>
+                    <li><strong>Session d'administration :</strong> un cookie de connexion réservé aux administrateurs permet d'accéder à l'espace privé. Sa durée maximale est de sept jours ; la déconnexion le supprime.</li>
+                </ul>
+                <p>Ces éléments servent à mémoriser vos préférences et à sécuriser l'accès à l'administration. Vous pouvez aussi les supprimer dans les réglages de votre navigateur.</p>
+            </section>
+
+            <section aria-labelledby="clarity">
+                <h2 id="clarity">La mesure d'audience, avec votre accord</h2>
+                <p><strong>Microsoft Clarity est facultatif.</strong> Il est chargé uniquement après votre acceptation. Il aide à comprendre l'utilisation du site à partir des pages consultées, clics, défilements et informations techniques sur le navigateur et l'appareil. Il peut utiliser des identifiants et des cookies pour rapprocher ces interactions et produire des cartes de chaleur ou des relectures de navigation.</p>
+                <p>Ce traitement repose sur votre consentement. Vous pouvez refuser, puis changer d'avis à tout moment avec le bouton <strong>« Préférences de confidentialité »</strong> en bas de page.</p>
+                <p>Microsoft indique conserver les relectures pendant 30 jours et les données de clics, cartes de chaleur ou sessions marquées pendant neuf mois. Consultez les <a href="https://learn.microsoft.com/fr-fr/clarity/setup-and-installation/data-retention" target="_blank" rel="noopener noreferrer">durées publiées par Microsoft</a> et sa <a href="https://www.microsoft.com/fr-fr/privacy/privacystatement" target="_blank" rel="noopener noreferrer">déclaration de confidentialité</a> pour les données, les usages et les transferts internationaux liés à ce service.</p>
+            </section>
+
+            <section aria-labelledby="videos">
+                <h2 id="videos">Les vidéos et liens externes</h2>
+                <p>Les lecteurs YouTube sont chargés lorsque vous choisissez de lancer une vidéo. Cette action établit une connexion avec YouTube, service de Google, qui peut recevoir des informations de connexion et de navigation et utiliser ses propres cookies.</p>
+                <p>Consultez la <a href="https://policies.google.com/privacy?hl=fr" target="_blank" rel="noopener noreferrer">politique de confidentialité de Google</a> avant d'activer le lecteur si vous souhaitez connaître ses traitements. Les liens vers des plateformes de résultats ou de photos vous conduisent également sur des sites qui appliquent leurs propres politiques.</p>
+            </section>
+
+            <section aria-labelledby="droits">
+                <h2 id="droits">Exercer vos droits</h2>
+                <p>Selon le traitement et les conditions prévues par la réglementation, vous pouvez demander l'accès à vos données, leur rectification ou leur effacement, la limitation du traitement, vous y opposer et, lorsqu'elle s'applique, demander leur portabilité. Vous pouvez retirer votre consentement à la mesure d'audience à tout moment.</p>
+                <p>Écrivez à <a href="mailto:runinchampagney70@gmail.com">runinchampagney70@gmail.com</a> en précisant votre demande et les informations permettant de retrouver l'échange ou le contenu concerné. Une preuve d'identité peut être demandée en cas de doute raisonnable sur votre identité.</p>
+                <p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez <a href="https://www.cnil.fr/fr/adresser-une-plainte" target="_blank" rel="noopener noreferrer">adresser une réclamation à la CNIL</a>. Son <a href="https://www.cnil.fr/fr/passer-laction/les-droits-des-personnes-sur-leurs-donnees" target="_blank" rel="noopener noreferrer">guide des droits sur les données personnelles</a> détaille les conditions d'exercice de ces droits.</p>
+            </section>
         </div>
-    </header>
-
-    <!-- Contenu Textuel Structuré RGPD -->
-    <main class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4 pb-24 space-y-10">
-
-        <!-- 1. Responsable de Traitement -->
-        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
-                    <i class="fa-solid fa-id-card-clip"></i>
-                </div>
-                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">1. Responsable du Traitement</h2>
-            </div>
-            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
-                <p>
-                    Le responsable du traitement des données personnelles collectées sur le site <strong class="text-white">traildesmines.fr</strong> est l'<strong class="text-white">Association Run in Champagney</strong>, domiciliée en Mairie de Champagney (70290), représentée par son Président en exercice.
-                </p>
-                <p>
-                    Pour toute question relative à vos données ou pour contacter notre délégué à la protection des données (DPO bénévole) :
-                    <br><strong class="text-white">Courriel dédié :</strong> <a href="mailto:rgpd@traildesmines.fr" class="text-brand hover:underline">rgpd@traildesmines.fr</a>
-                </p>
-            </div>
-        </section>
-
-        <!-- 2. Données Collectées & Origine -->
-        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
-                    <i class="fa-solid fa-database"></i>
-                </div>
-                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">2. Données Personnelles Collectées</h2>
-            </div>
-            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
-                <p>Dans le cadre de l'organisation du Trail des Mines, nous sommes amenés à collecter les catégories suivantes :</p>
-                <ul class="list-disc pl-5 space-y-2">
-                    <li><strong class="text-white">Identité & État civil :</strong> Nom, prénom, date de naissance, sexe, nationalité (requis pour l'attribution des catégories d'âge officielles FFA).</li>
-                    <li><strong class="text-white">Coordonnées :</strong> Adresse postale, adresse électronique, numéro de téléphone portable (pour l'envoi des confirmations et alertes météo d'urgence).</li>
-                    <li><strong class="text-white">Données sportives & Santé :</strong> Numéro de licence FFA, attestation du Parcours Prévention Santé (PPS), contact d'urgence (nom et téléphone d'un proche).</li>
-                    <li><strong class="text-white">Données de course & Chronométrage :</strong> Temps de passage aux balises intermédiaires, temps scratch, classement officiel par catégorie.</li>
-                    <li><strong class="text-white">Médias & Image :</strong> Photographies et vidéos prises lors de la manifestation dans le cadre de la couverture de l'événement.</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- 3. Finalités & Bases Légales -->
-        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
-                    <i class="fa-solid fa-bullseye"></i>
-                </div>
-                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">3. Finalités du Traitement</h2>
-            </div>
-            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
-                <p><strong class="text-white">Gestion des inscriptions (Exécution contractuelle) :</strong> Attribution des numéros de dossard, suivi financier des règlements et communication pré-course.</p>
-                <p><strong class="text-white">Sécurité médicale & Secours (Sauvegarde de la vie) :</strong> Transmission immédiate aux médecins urgentistes et équipes du SDIS en cas d'accident sur le parcours.</p>
-                <p><strong class="text-white">Publication des classements sportifs (Intérêt légitime / Réglementation FFA) :</strong> Affichage des résultats sur notre site, la plateforme du chronométreur officiel et transmission à la FFA pour le calcul des bilans officiels et index ITRA/UTMB.</p>
-                <p><strong class="text-white">Information sur les éditions futures (Consentement) :</strong> Envoi de la newsletter annuelle si vous avez coché la case correspondante lors de votre inscription.</p>
-            </div>
-        </section>
-
-        <!-- 4. Destinataires des Données -->
-        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
-                    <i class="fa-solid fa-share-nodes"></i>
-                </div>
-                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">4. Destinataires & Absence de Revente</h2>
-            </div>
-            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
-                <p>
-                    Vos données personnelles sont strictement confidentielles. Elles ne sont <strong class="text-brand">jamais vendues, louées ou cédées</strong> à des partenaires commerciaux à des fins de prospection publicitaire.
-                </p>
-                <p>Les seuls sous-traitants et partenaires habilités à recevoir certaines données sont :</p>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li>La société de chronométrage officiel agréée (gestion des puces RFID et classements).</li>
-                    <li>Le service de secours médical (Croix-Rouge, pompiers, médecin coordinateur).</li>
-                    <li>La Fédération Française d'Athlétisme (FFA) et l'International Trail Running Association (ITRA).</li>
-                    <li>La compagnie d'assurance de l'association (en cas de déclaration de sinistre).</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- 5. Durée de Conservation -->
-        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                </div>
-                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">5. Durées de Conservation</h2>
-            </div>
-            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
-                <p><strong class="text-white">Dossiers administratifs & facturation :</strong> 3 ans à compter de la date de la course, conformément aux obligations comptables.</p>
-                <p><strong class="text-white">Attestations médicales / PPS :</strong> Détruites ou anonymisées dans un délai maximum de 6 mois après l'événement.</p>
-                <p><strong class="text-white">Classements sportifs historiques :</strong> Conservés indéfiniment pour mémoire du palmarès de l'épreuve sportive, sauf demande expresse d'anonymisation de votre part.</p>
-            </div>
-        </section>
-
-        <!-- 6. Exercice de Vos Droits -->
-        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
-                    <i class="fa-solid fa-hand-holding-hand"></i>
-                </div>
-                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">6. Vos Droits & Réclamations</h2>
-            </div>
-            <div class="space-y-4 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
-                <p>
-                    Conformément aux articles 15 à 22 du Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation du traitement, de portabilité de vos données et d'opposition.
-                </p>
-                <p>
-                    Pour exercer l'un de ces droits, il vous suffit de nous adresser une demande accompagnée d'un justificatif d'identité à l'adresse électronique : <a href="mailto:rgpd@traildesmines.fr" class="text-brand hover:underline">rgpd@traildesmines.fr</a>. Nous vous répondrons dans un délai maximum de 30 jours.
-                </p>
-                <p>
-                    Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous disposez du droit d'introduire une réclamation auprès de l'autorité de contrôle compétente : la <strong class="text-white">CNIL (Commission Nationale de l'Informatique et des Libertés - cnil.fr)</strong>.
-                </p>
-            </div>
-        </section>
-
-        <!-- 7. Cookies & Traceurs -->
-        <section class="bg-cardBg/60 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-xl gsap-fade-up">
-            <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                <div class="w-10 h-10 rounded-xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand text-lg">
-                    <i class="fa-solid fa-cookie-bite"></i>
-                </div>
-                <h2 class="font-display text-xl sm:text-2xl font-bold uppercase text-white">7. Gestion des Cookies</h2>
-            </div>
-            <div class="space-y-3 text-xs sm:text-sm text-gray-300 font-light leading-relaxed">
-                <p>
-                    Notre site internet <strong class="text-white">traildesmines.fr</strong> utilise exclusivement des cookies techniques nécessaires au bon fonctionnement de la navigation (notamment pour mémoriser l'affichage responsive et la fluidité du défilement Lenis).
-                </p>
-                <p>
-                    Nous n'employons aucun cookie tiers publicitaire intrusif. La consultation du site ne donne lieu à aucun profilage commercial de votre activité sur le web.
-                </p>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Mega Footer -->
-
+    </div>
 </Layout>
+
+<style>
+    .legal-page { width: min(100% - 2rem, 68rem); margin-inline: auto; padding-block: clamp(8.5rem, 14vw, 11rem) 6rem; }
+    .legal-header { max-width: 48rem; margin-bottom: 3rem; }
+    .legal-header h1 { margin: 0 0 1.25rem; font-family: 'Oswald', sans-serif; font-size: clamp(2.75rem, 6vw, 4.75rem); font-weight: 600; line-height: 1.08; text-transform: uppercase; color: #fff; }
+    .legal-header > p { max-width: 62ch; font-size: 1.125rem; line-height: 1.65; color: #e0e5e4; }
+    .legal-copy { max-width: 75ch; color: #e0e5e4; font-size: 1rem; line-height: 1.75; }
+    .legal-copy section + section { margin-top: 2.75rem; }
+    .legal-copy h2 { margin: 0 0 1rem; font-family: 'Oswald', sans-serif; font-size: 1.75rem; font-weight: 500; line-height: 1.25; color: #fff; }
+    .legal-copy p + p, .legal-copy ul + p, .legal-copy p + ul { margin-top: 1rem; }
+    .legal-copy strong, .legal-copy dt { font-weight: 600; color: #fff; }
+    .legal-copy dl { display: grid; gap: 1rem; }
+    .legal-copy dd { margin-top: .15rem; }
+    .legal-copy ul { padding-left: 1.4rem; list-style: disc; }
+    .legal-copy li + li { margin-top: .55rem; }
+    .legal-page a { color: #B0BE42; text-decoration: underline; text-underline-offset: .2em; overflow-wrap: anywhere; }
+    .legal-page a:hover { color: #fff; }
+    .legal-page a:focus-visible { outline: 2px solid #B0BE42; outline-offset: 4px; }
+    .legal-copy .legal-draft { background: #213A40; padding: 1.25rem 1.5rem; margin-bottom: 2.75rem; color: #edf6e6; }
+    .legal-updated { margin-top: 1.25rem; font-size: .875rem; color: #bac5c0; }
+    @media (min-width: 768px) { .legal-page { width: min(100% - 4rem, 68rem); } }
+</style>

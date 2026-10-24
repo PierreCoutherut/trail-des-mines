@@ -1,47 +1,108 @@
 {
-  "pdfUrl": "/medias/reglement.pdf",
-  "pdfFilename": "reglement-trail-des-mines-2027.pdf",
-  "pdfSizeBytes": 2094,
-  "lastUpdated": "2026-09-21T19:22:00.000Z",
-  "edition": "2027",
-  "title": "Règlement Officiel - Trail des Mines 2027",
-  "description": "Le présent règlement a pour objet de définir les conditions d'organisation, de sécurité et de participation au Trail des Mines. L'inscription implique l'acceptation sans réserve de l'ensemble des articles ci-dessous.",
+  "published": true,
+  "pdfUrl": "/medias/reglement-trail-des-mines-2026.pdf",
+  "pdfFilename": "reglement-trail-des-mines-2026.pdf",
+  "pdfSizeBytes": 76524,
+  "lastUpdated": "2026-10-24T12:00:00.000Z",
+  "edition": "2026",
+  "title": "Règlement officiel du Trail des Mines 2026",
+  "description": "Règlement de l’édition 2026 du Trail des Mines. Les informations relatives aux parcours et aux distances sont à venir.",
   "chapters": [
     {
       "id": "article-1",
       "number": "Article 1",
-      "title": "Organisation & Cadre de Course",
-      "content": "Le Trail des Mines est organise par l’association loi 1901 Run in Champagney sous l’egide de la FFA.\nL’epreuve se deroule le 16 mai 2027 au depart de Champagney sur les sentiers du bassin minier."
+      "title": "Organisateurs",
+      "content": "Le Trail des Mines est organisé par l’association Run’In Champagney (association loi 1901).\n\nVous pouvez contacter l’organisateur :\n- Quentin COUVREUR\n- runinchampagney70@gmail.com\n- 07 76 69 79 82"
     },
     {
       "id": "article-2",
       "number": "Article 2",
-      "title": "Conditions d’Admission & Parcours Prevention Sante - PPS",
-      "content": "Toute participation requiert une attestation PPS valide de moins de 3 mois ou une licence FFA active.\nAges minimums : 18 ans pour 52km et 28km, 16 ans pour 13km avec accord parental."
+      "title": "Date, horaires et circuits",
+      "content": "Le Trail des Mines aura lieu le dimanche 17 mai 2026 à Champagney, au gymnase Félix Éboué, Impasse du Champ Dia, 70290 Champagney.\n\n**Parcours, distances et dénivelés : À venir.**\n\n**Horaires de départ : À venir.**"
     },
     {
       "id": "article-3",
       "number": "Article 3",
-      "title": "Dossards & Cession",
-      "content": "Les dossards doivent etre portes de maniere visible. Toute cession sans accord est interdite."
+      "title": "Ravitaillements",
+      "content": "**Nombre et emplacement des ravitaillements selon les parcours : À venir.**\n\nCes courses sont en semi-autosuffisance. Il appartient donc aux concurrents d’emporter avec eux les ravitaillements solides et liquides qu’ils estiment nécessaires.\n\nChaque point de ravitaillement sera équipé d’une trousse de secours."
     },
     {
       "id": "article-4",
       "number": "Article 4",
-      "title": "Equipements Obligatoires & Controles",
-      "content": "Gobelet personnel, reserve d’eau obligatoire selon la distance, couverture de survie et sifflet.\n52km : frontale obligatoire, bande de strapping et veste 10k schmerber."
+      "title": "Barrières horaires",
+      "content": "**Barrières horaires, temps maximal de course et possibilités de changement de parcours : À venir.**\n\nEn cas de mauvaises conditions météorologiques et pour des raisons de sécurité, l’organisation se réserve le droit d’arrêter l’épreuve en cours ou de modifier les barrières horaires. Le respect des barrières horaires est obligatoire. Le non-franchissement dans le délai imparti entraînera l’arrêt de la course. Un véhicule sera disponible pour le rapatriement.\n\nToute personne manquant de respect aux bénévoles chargés de cette fonction sera interdite de course de manière définitive sur toutes les épreuves du Trail des Mines."
     },
     {
       "id": "article-5",
       "number": "Article 5",
-      "title": "Eco-responsabilite & Sanctions",
-      "content": "Tout jet de dechet hors zone de ravitaillement entrainera la disqualification immediate."
+      "title": "Conditions d’inscription",
+      "content": "**5-1 — Catégories d’âge**\nConditions d’âge selon les parcours : À venir.\n\n**5-2 — Mineurs**\nLes mineurs ne peuvent pas s’inscrire au Trail des Mines.\n\n**5-3 — Licences et PPS**\nToute participation à une compétition est soumise à la présentation obligatoire à l’organisateur d’une licence FFA ou d’un PPS en cours de validité. Les certificats médicaux ne sont plus acceptés. En l’absence de licence FFA ou de PPS, le coureur ne sera pas autorisé à prendre le départ.\n\n**5-4 — Concurrents handisports**\nLes concurrents en fauteuil sont acceptés, sauf ceux de type « Handbike », considérés comme cyclistes par la Fédération Handisport. Le port du casque et des gants est obligatoire. Le fauteuil doit être doté d’un dispositif de freinage. Les coureurs ou accompagnateurs sont au nombre de six maximum. Le concurrent en fauteuil n’aura pas besoin de licence pour participer à l’épreuve.\n\n**5-5 — Chiens**\nLes chiens ne sont pas autorisés sur les épreuves."
     },
     {
       "id": "article-6",
       "number": "Article 6",
-      "title": "Barrieres Horaires & Securite",
-      "content": "Les barrieres horaires garantissent la securite. Tout concurrent hors delai est rapatrie.\n-- 1 of 1 --"
+      "title": "Inscriptions",
+      "content": "Les inscriptions se font uniquement en ligne sur even-outdoor.com et seront clôturées le jeudi 14 mai 2026 à 23 h 59. Une journée d’inscription aura lieu, dans la limite des places disponibles, le samedi 16 mai 2026 au magasin Pro du Sport à Belfort.\n\n**6-1 — Tarifs et majorations**\nTarifs et majorations selon les parcours : À venir.\n\n**6-2 — Cession de dossard**\nAucun transfert d’inscription n’est autorisé sans avoir contacté l’organisation. Toute personne rétrocédant son dossard sera reconnue responsable en cas d’accident survenu ou provoqué par le tiers durant l’épreuve. Un dossard acquis en infraction avec le présent règlement peut entraîner la disqualification. L’organisation décline toute responsabilité dans ce cas.\n\nL’organisation peut accepter un changement de coureur après communication des nom, prénom, date de naissance et certificat médical du remplaçant. Aucun remboursement ne sera effectué.\n\n**6-3 — Retrait des dossards**\nLe retrait se fera au magasin Pro du Sport à Belfort le samedi 16 mai, aux horaires communiqués ultérieurement, et sur place jusqu’à 30 minutes avant le départ. Une pièce d’identité valide et l’un des documents cités au paragraphe 5-3 devront être présentés. Le dossard doit être porté sur le devant et rester visible pendant toute la course.\n\n**6-4 — Matériel**\nMatériel obligatoire et recommandé selon les parcours : À venir.\n\nLes bâtons sont autorisés sur tous les parcours.\n\nDes contrôles seront effectués sur le parcours. L’absence du matériel obligatoire ou le non-respect des bénévoles entraînera la disqualification immédiate. Aucun gobelet ne sera fourni aux ravitaillements. Un gobelet aux couleurs du Trail des Mines pourra être acheté sur place au prix de 2 €."
+    },
+    {
+      "id": "article-7",
+      "number": "Article 7",
+      "title": "Assurance",
+      "content": "Les organisateurs sont couverts par une police d’assurance responsabilité civile souscrite auprès du Crédit Mutuel pour la durée de l’épreuve. Les licenciés bénéficient des garanties liées à leur licence sportive. Il incombe aux autres participants de s’assurer personnellement.\n\nL’organisateur ne peut être tenu responsable en cas d’accident ou de défaillance des participants, notamment lorsque ceux-ci résultent d’un mauvais état de santé ou d’une préparation insuffisante. La participation se fait sous l’entière responsabilité des concurrents, avec renonciation à tout recours contre les organisateurs en cas de dommages ou de séquelles ultérieurs à la course.\n\nLes organisateurs déclinent toute responsabilité en cas de vol ou de dégradation de matériel."
+    },
+    {
+      "id": "article-8",
+      "number": "Article 8",
+      "title": "Sécurité",
+      "content": "La sécurité et l’assistance médicale des participants relèvent de l’organisateur, qui mettra en place un Dispositif Prévisionnel de Secours (DPS). La sécurité sera assurée par des signaleurs sur les voies routières et une équipe de deux secouristes disposant des moyens logistiques nécessaires, dont un véhicule de premiers secours et un 4×4.\n\nLes services de secours (SDIS) et de gendarmerie seront avertis de l’événement. Des portions du parcours empruntent la voie publique : les participants devront respecter le code de la route et seront seuls responsables en cas de manquement.\n\nLes numéros de téléphone des secours et de l’organisateur figureront sur le dossard de chaque participant."
+    },
+    {
+      "id": "article-9",
+      "number": "Article 9",
+      "title": "Balisage",
+      "content": "Le balisage se fera à l’aide de rubalises roses et jaunes « Trail des Mines » et de piquets."
+    },
+    {
+      "id": "article-10",
+      "number": "Article 10",
+      "title": "Chronométrage",
+      "content": "Le chronométrage est assuré par la société Even Outdoor à l’aide de puces placées au dos des dossards. Le port d’une puce ne correspondant pas à l’identité du porteur entraînera la disqualification du concurrent."
+    },
+    {
+      "id": "article-11",
+      "number": "Article 11",
+      "title": "Classements et récompenses",
+      "content": "Les trois épreuves récompenseront respectivement :\n- Les trois premiers hommes.\n- Les trois premières femmes.\n- Le plus jeune homme et la plus jeune femme.\n- Le plus ancien homme et la plus ancienne femme.\n\nLes résultats seront affichés sur écran en temps réel et mis en ligne sur le site Even Outdoor."
+    },
+    {
+      "id": "article-12",
+      "number": "Article 12",
+      "title": "Assistance et respect de l’environnement",
+      "content": "Tout concurrent est tenu de porter assistance en cas d’accident d’un autre concurrent, jusqu’à l’arrivée des secours. Tout abandon de matériel ou jet de déchet hors des lieux prévus à cet effet entraînera la mise hors course du concurrent fautif.\n\nItinéraires, zones traversées et restrictions d’accès associées : À venir.\n\nParce que nous aimons la nature, respectons-la : ne jetez aucun déchet le long du parcours, respectez les animaux qui pâturent, la faune et la flore, et ne sortez pas des sentiers balisés."
+    },
+    {
+      "id": "article-13",
+      "number": "Article 13",
+      "title": "Droit à l’image",
+      "content": "Du fait de son engagement, chaque coureur autorise expressément les organisateurs à utiliser les images fixes ou audiovisuelles sur lesquelles il pourrait apparaître, prises à l’occasion de sa participation aux épreuves, sur tous supports, y compris les documents promotionnels ou publicitaires."
+    },
+    {
+      "id": "article-14",
+      "number": "Article 14",
+      "title": "Annulation et intempéries",
+      "content": "En cas de force majeure, notamment d’intempéries, et pour des raisons de sécurité, l’organisation se réserve le droit de modifier le parcours, de reporter ou d’annuler l’épreuve. En cas d’annulation, l’organisation procédera au remboursement des inscriptions."
+    },
+    {
+      "id": "article-15",
+      "number": "Article 15",
+      "title": "Mesures COVID-19",
+      "content": "L’organisateur, les bénévoles et l’ensemble des participants s’engagent à respecter les mesures sanitaires qui seront en vigueur à la date de l’événement."
+    },
+    {
+      "id": "article-16",
+      "number": "Article 16",
+      "title": "Acceptation du règlement de l’épreuve",
+      "content": "En s’inscrivant, chaque concurrent confirme avoir parfaite connaissance du règlement de la course et l’accepter sans réserve."
     }
   ]
 }

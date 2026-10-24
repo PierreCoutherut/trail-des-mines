@@ -13,6 +13,9 @@ dist/
 
 # Sensitive data / Production accounts
 src/data/admins.json
+.local-data/
+.playwright-mcp/
+.taste-skill/
 
 # Logs
 npm-debug.log*

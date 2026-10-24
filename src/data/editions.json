@@ -8605,5 +8605,287 @@
     "resultLinks": [],
     "races": [],
     "galleries": []
+  },
+  {
+    "id": "2024",
+    "year": 2024,
+    "title": "Trail des Mines",
+    "subtitle": "Archives 2024",
+    "date": "2024",
+    "description": "Les archives de cette édition seront complétées prochainement.",
+    "posterUrl": "/medias/affiches/affiche-2024.webp",
+    "stats": {
+      "finishers": 0,
+      "volunteers": 0
+    },
+    "highlights": [],
+    "resultLinks": [],
+    "races": [],
+    "galleries": [
+      {
+        "id": "pierre-coutherut-2024",
+        "photographerName": "Pierre Coutherut",
+        "photographerSlug": "pierre-coutherut",
+        "subGalleries": [
+          {
+            "id": "archives-2024-pierre-coutherut",
+            "name": "Photos de l’édition 2024",
+            "race": "",
+            "moment": "",
+            "photos": [
+              {
+                "id": "archive-2024-pierre-coutherut-pc_1",
+                "filename": "pc_1-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_1-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_1-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 446262,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_2",
+                "filename": "pc_2-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_2-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_2-thumb.webp",
+                "width": 1920,
+                "height": 1079,
+                "sizeBytes": 777268,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_3",
+                "filename": "pc_3-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_3-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_3-thumb.webp",
+                "width": 1920,
+                "height": 1079,
+                "sizeBytes": 995698,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_4",
+                "filename": "pc_4-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_4-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_4-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 344556,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_5",
+                "filename": "pc_5-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_5-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_5-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 296726,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_6",
+                "filename": "pc_6-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_6-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_6-thumb.webp",
+                "width": 1333,
+                "height": 2000,
+                "sizeBytes": 509894,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_7",
+                "filename": "pc_7-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_7-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_7-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 354562,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_8",
+                "filename": "pc_8-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_8-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_8-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 991214,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_9",
+                "filename": "pc_9-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_9-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_9-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 242310,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_10",
+                "filename": "pc_10-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_10-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_10-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 342048,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_11",
+                "filename": "pc_11-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_11-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_11-thumb.webp",
+                "width": 1920,
+                "height": 1080,
+                "sizeBytes": 233498,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_12",
+                "filename": "pc_12-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_12-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_12-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 282188,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-pierre-coutherut-pc_13",
+                "filename": "pc_13-hd.webp",
+                "urlHd": "/medias/galeries/2024/pierre-coutherut/pc_13-hd.webp",
+                "urlThumb": "/medias/galeries/2024/pierre-coutherut/pc_13-thumb.webp",
+                "width": 1920,
+                "height": 1280,
+                "sizeBytes": 357904,
+                "uploadedAt": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "elodie-bermond-2024",
+        "photographerName": "Élodie Bermond",
+        "photographerSlug": "elodie-bermond",
+        "subGalleries": [
+          {
+            "id": "archives-2024-elodie-bermond",
+            "name": "Photos de l’édition 2024",
+            "race": "",
+            "moment": "",
+            "photos": [
+              {
+                "id": "archive-2024-elodie-bermond-eb_1",
+                "filename": "eb_1-hd.webp",
+                "urlHd": "/medias/galeries/2024/elodie-bermond/eb_1-hd.webp",
+                "urlThumb": "/medias/galeries/2024/elodie-bermond/eb_1-thumb.webp",
+                "width": 1920,
+                "height": 1340,
+                "sizeBytes": 300972,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-elodie-bermond-eb_2",
+                "filename": "eb_2-hd.webp",
+                "urlHd": "/medias/galeries/2024/elodie-bermond/eb_2-hd.webp",
+                "urlThumb": "/medias/galeries/2024/elodie-bermond/eb_2-thumb.webp",
+                "width": 1278,
+                "height": 2000,
+                "sizeBytes": 225458,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-elodie-bermond-eb_3",
+                "filename": "eb_3-hd.webp",
+                "urlHd": "/medias/galeries/2024/elodie-bermond/eb_3-hd.webp",
+                "urlThumb": "/medias/galeries/2024/elodie-bermond/eb_3-thumb.webp",
+                "width": 1225,
+                "height": 2000,
+                "sizeBytes": 369862,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-elodie-bermond-eb_4",
+                "filename": "eb_4-hd.webp",
+                "urlHd": "/medias/galeries/2024/elodie-bermond/eb_4-hd.webp",
+                "urlThumb": "/medias/galeries/2024/elodie-bermond/eb_4-thumb.webp",
+                "width": 1920,
+                "height": 1283,
+                "sizeBytes": 398908,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-elodie-bermond-eb_5",
+                "filename": "eb_5-hd.webp",
+                "urlHd": "/medias/galeries/2024/elodie-bermond/eb_5-hd.webp",
+                "urlThumb": "/medias/galeries/2024/elodie-bermond/eb_5-thumb.webp",
+                "width": 1195,
+                "height": 2000,
+                "sizeBytes": 251198,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-elodie-bermond-eb_6",
+                "filename": "eb_6-hd.webp",
+                "urlHd": "/medias/galeries/2024/elodie-bermond/eb_6-hd.webp",
+                "urlThumb": "/medias/galeries/2024/elodie-bermond/eb_6-thumb.webp",
+                "width": 1920,
+                "height": 1167,
+                "sizeBytes": 373412,
+                "uploadedAt": ""
+              },
+              {
+                "id": "archive-2024-elodie-bermond-eb_7",
+                "filename": "eb_7-hd.webp",
+                "urlHd": "/medias/galeries/2024/elodie-bermond/eb_7-hd.webp",
+                "urlThumb": "/medias/galeries/2024/elodie-bermond/eb_7-thumb.webp",
+                "width": 1333,
+                "height": 2000,
+                "sizeBytes": 333830,
+                "uploadedAt": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "2023",
+    "year": 2023,
+    "title": "Trail des Mines",
+    "subtitle": "Archives 2023",
+    "date": "2023",
+    "description": "Les archives de cette édition seront complétées prochainement.",
+    "posterUrl": "/medias/affiches/affiche-2023.webp",
+    "stats": {
+      "finishers": 0,
+      "volunteers": 0
+    },
+    "highlights": [],
+    "resultLinks": [],
+    "races": [],
+    "galleries": []
+  },
+  {
+    "id": "2022",
+    "year": 2022,
+    "title": "Trail des Mines",
+    "subtitle": "Archives 2022",
+    "date": "2022",
+    "description": "Les archives de cette édition seront complétées prochainement.",
+    "posterUrl": "/medias/affiches/affiche-2022.webp",
+    "stats": {
+      "finishers": 0,
+      "volunteers": 0
+    },
+    "highlights": [],
+    "resultLinks": [],
+    "races": [],
+    "galleries": []
   }
 ]

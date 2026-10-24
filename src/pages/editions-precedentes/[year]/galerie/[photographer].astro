@@ -39,6 +39,12 @@ const momentsList = Array.from(new Set(allPhotos.map(p => p.moment).filter(Boole
 
 const title = `Galerie Photos ${gallery.photographerName} - Trail des Mines ${edition.year}`;
 const description = `Photos officielles prises par ${gallery.photographerName} lors du Trail des Mines ${edition.year}. Téléchargement gratuit en HD.`;
+
+const photographerIg = gallery.instagramUrl || '@pierre_coutherut_photo';
+const igUrl = gallery.instagramUrl
+  ? (gallery.instagramUrl.startsWith('http') ? gallery.instagramUrl : `https://instagram.com/${gallery.instagramUrl.replace('@', '')}`)
+  : 'https://www.instagram.com/pierre_coutherut_photo';
+const googleReviewUrl = 'https://share.google/9OuHgYzyNRzTgdO7r';
 ---
 
 <Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
@@ -68,14 +74,7 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
     <header class="py-10 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
         <div class="bg-cardBg/80 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             
-            <div class="flex items-center gap-5">
-                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-dark/80 border-2 border-brand/40 overflow-hidden shadow-xl shrink-0 flex items-center justify-center">
-                    {gallery.avatarUrl ? (
-                        <img src={gallery.avatarUrl} alt={gallery.photographerName} class="w-full h-full object-cover" />
-                    ) : (
-                        <i class="fa-solid fa-camera text-3xl text-brand"></i>
-                    )}
-                </div>
+            <div class="min-w-0">
                 <div>
                     <span class="text-xs font-display uppercase tracking-widest text-brand font-bold block mb-1">
                         Photographe Officiel • Trail des Mines {edition.year}
@@ -99,7 +98,7 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
                 </div>
                 {gallery.instagramUrl && (
                     <a 
-                      href={gallery.instagramUrl.startsWith('http') ? gallery.instagramUrl : `https://instagram.com/${gallery.instagramUrl.replace('@', '')}`}
+                      href={igUrl}
                       target="_blank" 
                       rel="noopener noreferrer"
                       class="bg-white/5 hover:bg-white/10 text-white px-4 py-3 rounded-xl border border-white/10 transition text-xs font-semibold inline-flex items-center gap-2"
@@ -124,7 +123,7 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
                 </span>
                 <button 
                   data-filter-race="all" 
-                  class="filter-race-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-brand text-dark shadow"
+                  class="filter-race-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-brand text-dark shadow cursor-pointer"
                 >
                     Toutes ({allPhotos.length})
                 </button>
@@ -133,7 +132,7 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
                     return (
                         <button 
                           data-filter-race={race} 
-                          class="filter-race-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-white/5 text-gray-300 hover:text-white hover:bg-white/10"
+                          class="filter-race-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 cursor-pointer"
                         >
                             {race} ({count})
                         </button>
@@ -148,14 +147,14 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
                 </span>
                 <button 
                   data-filter-moment="all" 
-                  class="filter-moment-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-brand text-dark shadow"
+                  class="filter-moment-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-brand text-dark shadow cursor-pointer"
                 >
                     Tous
                 </button>
                 {momentsList.map(moment => (
                     <button 
                       data-filter-moment={moment} 
-                      class="filter-moment-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-white/5 text-gray-300 hover:text-white hover:bg-white/10"
+                      class="filter-moment-btn px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase transition whitespace-nowrap bg-white/5 text-gray-300 hover:text-white hover:bg-white/10 cursor-pointer"
                     >
                         {moment}
                     </button>
@@ -166,7 +165,7 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
     </section>
 
     <!-- Grille de Photos -->
-    <section class="py-8 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
+    <section class="py-8 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto pb-28">
         {allPhotos.length === 0 ? (
             <div class="bg-cardBg rounded-3xl p-16 text-center border border-white/10">
                 <i class="fa-solid fa-images text-5xl text-gray-500 mb-4 block"></i>
@@ -183,27 +182,75 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
                       data-moment={photo.moment}
                       data-hd={photo.urlHd}
                       data-caption={photo.caption || ''}
+                      data-filename={photo.filename || `Photo-${photo.id}.jpg`}
                     >
+                        <!-- Bouton Sélection Multi-Photos -->
+                        <button 
+                          type="button" 
+                          class="photo-select-btn absolute top-3 left-3 z-20 w-8 h-8 rounded-full bg-dark/80 hover:bg-dark border border-white/20 hover:border-brand flex items-center justify-center text-xs text-white transition-all shadow-lg backdrop-blur-md cursor-pointer"
+                          title="Sélectionner pour télécharger"
+                          data-select-index={index}
+                        >
+                          <i class="fa-solid fa-check opacity-0 transition-opacity text-[11px]"></i>
+                        </button>
+
                         <img 
                           src={photo.urlThumb} 
                           alt={photo.caption || `Photo Trail des Mines ${edition.year}`} 
-                          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          class="w-full h-full object-cover"
                           loading="lazy"
                         />
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark/95 via-dark/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-between">
-                            <span class="self-end bg-dark/80 backdrop-blur-md px-2 py-1 rounded text-[10px] text-brand font-mono">
-                                <i class="fa-solid fa-expand mr-1"></i> HD
-                            </span>
-                            <div>
-                                <span class="text-[10px] text-brand font-mono block truncate">{photo.race}</span>
-                                <span class="text-white text-xs font-semibold block truncate">{photo.moment}</span>
-                            </div>
-                        </div>
+
+                        <button
+                          type="button"
+                          class="photo-quick-download-btn absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-brand text-dark hover:bg-white border border-dark/10 flex items-center justify-center text-xs transition shadow-lg cursor-pointer"
+                          title="Télécharger cette photo en JPG"
+                          aria-label="Télécharger cette photo en JPG"
+                          data-quick-index={index}
+                        >
+                            <i class="fa-solid fa-download"></i>
+                        </button>
                     </div>
                 ))}
             </div>
         )}
     </section>
+
+    <!-- Barre Flottante de Sélection Multi-Photos -->
+    <aside 
+      id="selection-bar" 
+      class="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[94%] max-w-xl bg-dark/95 backdrop-blur-2xl border border-brand/50 rounded-2xl p-3.5 sm:p-4 shadow-[0_15px_50px_rgba(0,0,0,0.85)] transition-all duration-300 transform translate-y-36 opacity-0 pointer-events-none flex items-center justify-between gap-3"
+      aria-live="polite"
+    >
+        <div class="flex items-center gap-3">
+            <span id="selection-count-badge" class="bg-brand text-dark font-display font-black text-xs px-2.5 py-1 rounded-lg shadow-sm">
+                0
+            </span>
+            <div class="leading-tight">
+                <span id="selection-label" class="text-xs sm:text-sm font-display font-bold uppercase text-white block">
+                    0 photo sélectionnée
+                </span>
+                <div class="flex items-center gap-2 mt-0.5">
+                    <button id="btn-select-all-visible" type="button" class="text-[11px] text-brand hover:underline font-mono cursor-pointer">
+                        Tout sélectionner
+                    </button>
+                    <span class="text-gray-600 text-xs">•</span>
+                    <button id="btn-clear-selection" type="button" class="text-[11px] text-gray-400 hover:text-white underline cursor-pointer">
+                        Effacer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <button 
+          id="btn-download-selection" 
+          type="button" 
+          class="bg-brand text-dark hover:bg-white text-xs sm:text-sm font-display font-bold uppercase tracking-wider px-4 sm:px-5 py-2.5 rounded-xl transition flex items-center gap-2 shadow-lg shrink-0 cursor-pointer"
+        >
+            <i class="fa-solid fa-download"></i>
+            <span>Télécharger (.JPG)</span>
+        </button>
+    </aside>
 
     <!-- Lightbox Plein Écran Interactive -->
     <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl hidden opacity-0 transition-opacity duration-300 flex flex-col justify-between p-4 sm:p-6" role="dialog" aria-modal="true">
@@ -219,17 +266,25 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
                 </span>
             </div>
 
-            <div class="flex items-center gap-3">
-                <a 
+            <div class="flex items-center gap-2 sm:gap-3">
+                <button 
+                  id="lb-select-toggle" 
+                  type="button" 
+                  class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-xs font-display font-bold uppercase tracking-wider transition inline-flex items-center gap-1.5 border border-white/10 cursor-pointer"
+                  title="Ajouter ou retirer de la sélection"
+                >
+                    <i class="fa-solid fa-check text-[11px]"></i>
+                    <span class="hidden sm:inline" id="lb-select-text">Sélectionner</span>
+                </button>
+                <button 
                   id="lb-download" 
-                  href="#" 
-                  download 
-                  class="bg-brand text-dark px-3.5 py-1.5 rounded-lg text-xs font-display font-bold uppercase tracking-wider hover:bg-white transition inline-flex items-center gap-1.5"
+                  type="button"
+                  class="bg-brand text-dark px-3.5 py-1.5 rounded-lg text-xs font-display font-bold uppercase tracking-wider hover:bg-white transition inline-flex items-center gap-1.5 shadow-md cursor-pointer"
                 >
                     <i class="fa-solid fa-download"></i>
-                    <span class="hidden sm:inline">Télécharger HD</span>
-                </a>
-                <button id="lb-close" class="text-gray-300 hover:text-white text-2xl p-1 focus:outline-none" aria-label="Fermer">
+                    <span class="hidden sm:inline">Télécharger JPG</span>
+                </button>
+                <button id="lb-close" class="text-gray-300 hover:text-white text-2xl p-1 focus:outline-none cursor-pointer" aria-label="Fermer">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -237,13 +292,13 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
 
         <!-- Centre Image avec Flèches Suivant / Précédent -->
         <div class="relative flex-1 flex items-center justify-center my-4 overflow-hidden">
-            <button id="lb-prev" class="absolute left-2 sm:left-6 z-50 text-white hover:text-brand bg-dark/60 hover:bg-dark/90 p-3 sm:p-4 rounded-full text-xl transition shadow-xl" aria-label="Précédent">
+            <button id="lb-prev" class="absolute left-2 sm:left-6 z-50 text-white hover:text-brand bg-dark/60 hover:bg-dark/90 p-3 sm:p-4 rounded-full text-xl transition shadow-xl cursor-pointer" aria-label="Précédent">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             
             <img id="lb-img" src="" alt="" class="max-h-[80vh] max-w-[92vw] w-auto h-auto object-contain rounded-xl shadow-2xl transition-transform duration-300" />
 
-            <button id="lb-next" class="absolute right-2 sm:right-6 z-50 text-white hover:text-brand bg-dark/60 hover:bg-dark/90 p-3 sm:p-4 rounded-full text-xl transition shadow-xl" aria-label="Suivant">
+            <button id="lb-next" class="absolute right-2 sm:right-6 z-50 text-white hover:text-brand bg-dark/60 hover:bg-dark/90 p-3 sm:p-4 rounded-full text-xl transition shadow-xl cursor-pointer" aria-label="Suivant">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
         </div>
@@ -260,6 +315,138 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
 
     </div>
 
+    <!-- Popup / Modal de Téléchargement -->
+    <div 
+      id="download-modal" 
+      class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-xl hidden opacity-0 transition-opacity duration-300 flex items-center justify-center p-4 overflow-y-auto"
+      role="dialog" 
+      aria-modal="true"
+      aria-labelledby="modal-download-title"
+    >
+        <div class="bg-[#0e1619] border border-white/15 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-[0_25px_60px_rgba(0,0,0,0.9)] relative my-auto">
+            
+            <!-- Bouton Fermer -->
+            <button 
+              id="close-download-modal" 
+              type="button" 
+              class="absolute top-5 right-5 text-gray-400 hover:text-white text-xl p-2 transition focus:outline-none cursor-pointer" 
+              aria-label="Fermer"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Statut Téléchargement -->
+            <div class="text-center pt-2">
+                <div id="modal-status-icon-container" class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand/15 border border-brand/30 text-brand mb-3 shadow-inner">
+                    <i id="modal-status-icon" class="fa-solid fa-circle-notch fa-spin text-2xl"></i>
+                </div>
+                <h3 id="modal-download-title" class="font-display text-xl sm:text-2xl font-bold uppercase text-white tracking-wide leading-tight">
+                    Votre image est en cours de téléchargement...
+                </h3>
+                <p id="modal-download-subtitle" class="text-xs sm:text-sm text-gray-300 mt-1.5 font-light">
+                    Conversion & format Haute Définition (.JPG)
+                </p>
+
+                <!-- Barre de progression -->
+                <div id="modal-progress-container" class="w-full bg-white/10 rounded-full h-1.5 mt-4 overflow-hidden hidden">
+                    <div id="modal-progress-bar" class="bg-brand h-full rounded-full transition-all duration-300 w-0"></div>
+                </div>
+            </div>
+
+            <!-- ENCART 1 : Réseaux Sociaux & Mention -->
+            <div class="mt-6 bg-white/[0.03] border border-white/10 rounded-2xl p-4 sm:p-5 relative overflow-hidden group hover:border-brand/30 transition-colors">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-pink-500/10 text-pink-400 border border-pink-500/20 flex items-center justify-center shrink-0 text-lg">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-display text-sm font-bold uppercase text-white">
+                            Mentionnez-moi & suivez mon travail
+                        </h4>
+                        <p class="text-xs text-gray-300 mt-1 leading-relaxed font-light">
+                            Si vous partagez vos clichés sur Instagram, Facebook ou vos réseaux, n'hésitez pas à mentionner le photographe et la course ! C'est le meilleur moyen de soutenir notre engagement bénévole.
+                        </p>
+
+                        <div class="mt-3 flex flex-wrap items-center gap-2">
+                            <a 
+                              href={igUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              class="bg-pink-500/15 hover:bg-pink-500 text-pink-300 hover:text-white border border-pink-500/30 px-3 py-1.5 rounded-lg text-xs font-semibold inline-flex items-center gap-1.5 transition-all shadow-sm"
+                            >
+                                <i class="fa-brands fa-instagram"></i>
+                                <span>{photographerIg}</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[9px] ml-0.5"></i>
+                            </a>
+                            <button 
+                              type="button" 
+                              id="btn-copy-ig" 
+                              data-copy={photographerIg}
+                              class="bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white border border-white/10 px-2.5 py-1.5 rounded-lg text-xs font-mono inline-flex items-center gap-1.5 transition cursor-pointer"
+                              title="Copier le tag pour Instagram"
+                            >
+                                <i class="fa-regular fa-copy text-[11px]"></i>
+                                <span id="copy-ig-text">Copier le tag</span>
+                            </button>
+                        </div>
+
+                        <span class="block mt-2.5 text-[11px] font-mono text-gray-400">
+                            Hashtags conseillés : <strong class="text-brand">#TrailDesMines #TDM{edition.year}</strong>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ENCART 2 : Demande d'Avis Google -->
+            <div class="mt-4 bg-gradient-to-br from-brand/10 via-brand/5 to-transparent border border-brand/35 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-lg">
+                <div class="flex items-start gap-3.5">
+                    <div class="w-10 h-10 rounded-xl bg-brand/20 text-brand border border-brand/40 flex items-center justify-center shrink-0 text-lg">
+                        <i class="fa-solid fa-star text-yellow-400"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center justify-between gap-2">
+                            <h4 class="font-display text-sm font-bold uppercase text-white">
+                                Mon travail vous plaît ?
+                            </h4>
+                            <div class="flex text-yellow-400 text-xs gap-0.5 shrink-0" aria-label="5 étoiles">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-300 mt-1 leading-relaxed font-light">
+                            Un petit mot ou 5 étoiles sur Google donne une visibilité précieuse et encourage à continuer de capturer ces moments uniques !
+                        </p>
+
+                        <div class="mt-3">
+                            <a 
+                              href={googleReviewUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              class="w-full bg-brand text-dark hover:bg-white transition-all font-display font-bold uppercase tracking-wider text-xs py-2.5 px-4 rounded-xl inline-flex items-center justify-center gap-2 shadow-lg group cursor-pointer"
+                            >
+                                <span>Laisser un avis sur Google</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] transition-transform group-hover:translate-x-0.5"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bouton de Fermeture -->
+            <button 
+              id="btn-close-modal-footer" 
+              type="button" 
+              class="w-full mt-5 bg-white/10 hover:bg-white/20 text-white font-display uppercase tracking-wider font-bold text-xs py-2.5 rounded-xl transition cursor-pointer"
+            >
+                Fermer
+            </button>
+
+        </div>
+    </div>
+
 </Layout>
 
 <script define:vars={{ photosData: allPhotos }}>
@@ -268,11 +455,15 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
         let currentMomentFilter = 'all';
         let visiblePhotos = [...photosData];
         let currentIndex = 0;
+        const selectedIndices = new Set();
+        let isDownloading = false;
 
+        // Éléments du DOM
         const photoCards = document.querySelectorAll('.photo-card');
         const raceButtons = document.querySelectorAll('.filter-race-btn');
         const momentButtons = document.querySelectorAll('.filter-moment-btn');
 
+        // Lightbox
         const lightbox = document.getElementById('lightbox');
         const lbImg = document.getElementById('lb-img');
         const lbCounter = document.getElementById('lb-counter');
@@ -280,10 +471,33 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
         const lbRace = document.getElementById('lb-race');
         const lbMoment = document.getElementById('lb-moment');
         const lbDownload = document.getElementById('lb-download');
+        const lbSelectToggle = document.getElementById('lb-select-toggle');
+        const lbSelectText = document.getElementById('lb-select-text');
         const lbClose = document.getElementById('lb-close');
         const lbPrev = document.getElementById('lb-prev');
         const lbNext = document.getElementById('lb-next');
 
+        // Barre flottante
+        const selectionBar = document.getElementById('selection-bar');
+        const selectionCountBadge = document.getElementById('selection-count-badge');
+        const selectionLabel = document.getElementById('selection-label');
+        const btnSelectAllVisible = document.getElementById('btn-select-all-visible');
+        const btnClearSelection = document.getElementById('btn-clear-selection');
+        const btnDownloadSelection = document.getElementById('btn-download-selection');
+
+        // Modal de Téléchargement
+        const downloadModal = document.getElementById('download-modal');
+        const closeDownloadModal = document.getElementById('close-download-modal');
+        const btnCloseModalFooter = document.getElementById('btn-close-modal-footer');
+        const modalDownloadTitle = document.getElementById('modal-download-title');
+        const modalDownloadSubtitle = document.getElementById('modal-download-subtitle');
+        const modalStatusIcon = document.getElementById('modal-status-icon');
+        const modalProgressContainer = document.getElementById('modal-progress-container');
+        const modalProgressBar = document.getElementById('modal-progress-bar');
+        const btnCopyIg = document.getElementById('btn-copy-ig');
+        const copyIgText = document.getElementById('copy-ig-text');
+
+        // Filtres
         function applyFilters() {
             visiblePhotos = photosData.filter(p => {
                 const matchRace = currentRaceFilter === 'all' || p.race === currentRaceFilter;
@@ -331,7 +545,264 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
             });
         });
 
-        // Gestion de la Lightbox
+        // Gestion de la sélection
+        function updateSelectionUI() {
+            const count = selectedIndices.size;
+
+            // Mise à jour de chaque carte photo
+            photoCards.forEach(card => {
+                const idx = parseInt(card.getAttribute('data-index') || '0', 10);
+                const selectBtn = card.querySelector('.photo-select-btn');
+                const checkIcon = selectBtn ? selectBtn.querySelector('i') : null;
+                const isSelected = selectedIndices.has(idx);
+
+                if (isSelected) {
+                    card.classList.add('ring-2', 'ring-brand', 'border-brand');
+                    if (selectBtn) {
+                        selectBtn.classList.add('bg-brand', 'text-dark', 'border-brand');
+                        selectBtn.classList.remove('bg-dark/80', 'text-white', 'border-white/20');
+                    }
+                    if (checkIcon) checkIcon.classList.remove('opacity-0');
+                } else {
+                    card.classList.remove('ring-2', 'ring-brand', 'border-brand');
+                    if (selectBtn) {
+                        selectBtn.classList.remove('bg-brand', 'text-dark', 'border-brand');
+                        selectBtn.classList.add('bg-dark/80', 'text-white', 'border-white/20');
+                    }
+                    if (checkIcon) checkIcon.classList.add('opacity-0');
+                }
+            });
+
+            // Mise à jour du bouton sélection dans la lightbox si ouverte
+            if (visiblePhotos.length > 0 && visiblePhotos[currentIndex]) {
+                const currentPhoto = visiblePhotos[currentIndex];
+                const realIdx = photosData.findIndex(p => p.id === currentPhoto.id);
+                const isCurrentSelected = selectedIndices.has(realIdx);
+                if (lbSelectText) {
+                    lbSelectText.textContent = isCurrentSelected ? 'Sélectionnée' : 'Sélectionner';
+                }
+                if (lbSelectToggle) {
+                    if (isCurrentSelected) {
+                        lbSelectToggle.classList.add('bg-brand', 'text-dark', 'border-brand');
+                        lbSelectToggle.classList.remove('bg-white/10', 'text-white', 'border-white/10');
+                    } else {
+                        lbSelectToggle.classList.remove('bg-brand', 'text-dark', 'border-brand');
+                        lbSelectToggle.classList.add('bg-white/10', 'text-white', 'border-white/10');
+                    }
+                }
+            }
+
+            // Mise à jour de la barre flottante
+            if (selectionBar) {
+                if (count > 0) {
+                    selectionBar.classList.remove('translate-y-36', 'opacity-0', 'pointer-events-none');
+                    selectionBar.classList.add('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                    if (selectionCountBadge) selectionCountBadge.textContent = count.toString();
+                    if (selectionLabel) {
+                        selectionLabel.textContent = count > 1 ? `${count} photos sélectionnées` : '1 photo sélectionnée';
+                    }
+                } else {
+                    selectionBar.classList.add('translate-y-36', 'opacity-0', 'pointer-events-none');
+                    selectionBar.classList.remove('translate-y-0', 'opacity-100', 'pointer-events-auto');
+                }
+            }
+        }
+
+        function toggleSelectPhoto(idx) {
+            if (selectedIndices.has(idx)) {
+                selectedIndices.delete(idx);
+            } else {
+                selectedIndices.add(idx);
+            }
+            updateSelectionUI();
+        }
+
+        // Clic sur le bouton de sélection d'une carte
+        document.querySelectorAll('.photo-select-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const idx = parseInt(btn.getAttribute('data-select-index') || '0', 10);
+                toggleSelectPhoto(idx);
+            });
+        });
+
+        // Tout sélectionner les photos actuellement visibles
+        if (btnSelectAllVisible) {
+            btnSelectAllVisible.addEventListener('click', () => {
+                visiblePhotos.forEach(p => {
+                    const realIdx = photosData.findIndex(item => item.id === p.id);
+                    if (realIdx >= 0) selectedIndices.add(realIdx);
+                });
+                updateSelectionUI();
+            });
+        }
+
+        // Effacer la sélection
+        if (btnClearSelection) {
+            btnClearSelection.addEventListener('click', () => {
+                selectedIndices.clear();
+                updateSelectionUI();
+            });
+        }
+
+        // Bascule de sélection depuis la Lightbox
+        if (lbSelectToggle) {
+            lbSelectToggle.addEventListener('click', () => {
+                if (visiblePhotos.length === 0) return;
+                const photo = visiblePhotos[currentIndex];
+                const realIdx = photosData.findIndex(p => p.id === photo.id);
+                if (realIdx >= 0) toggleSelectPhoto(realIdx);
+            });
+        }
+
+        // Téléchargement sécurisé et garanti en JPG
+        async function downloadSinglePhotoJpg(url, filename) {
+            const cleanBase = (filename || 'photo-trail-des-mines').replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_\-\. ]/g, '_').trim();
+            const safeName = `${cleanBase || 'photo'}.jpg`;
+            const downloadUrl = `/api/download-photo?url=${encodeURIComponent(url)}&name=${encodeURIComponent(safeName)}`;
+
+            const res = await fetch(downloadUrl);
+            if (!res.ok) throw new Error('Erreur lors du téléchargement de l\'image');
+
+            const blob = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = safeName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 2000);
+        }
+
+        // Affichage de la popup & exécution du téléchargement
+        async function startDownloadProcess(photosToDownload) {
+            if (!photosToDownload || photosToDownload.length === 0 || isDownloading) return;
+            isDownloading = true;
+
+            const isMulti = photosToDownload.length > 1;
+
+            // Préparation de la popup
+            if (modalStatusIcon) {
+                modalStatusIcon.className = "fa-solid fa-circle-notch fa-spin text-2xl";
+            }
+            if (modalDownloadTitle) {
+                modalDownloadTitle.textContent = isMulti
+                    ? "Vos images sont en cours de téléchargement..."
+                    : "Votre image est en cours de téléchargement...";
+            }
+            if (modalDownloadSubtitle) {
+                modalDownloadSubtitle.textContent = isMulti
+                    ? `Préparation de 0 sur ${photosToDownload.length} photo(s) HD en .JPG...`
+                    : "Format Haute Définition (.JPG) • Prête dans un instant";
+            }
+            if (modalProgressContainer) {
+                if (isMulti) {
+                    modalProgressContainer.classList.remove('hidden');
+                    if (modalProgressBar) modalProgressBar.style.width = '0%';
+                } else {
+                    modalProgressContainer.classList.add('hidden');
+                }
+            }
+
+            // Ouverture de la popup
+            if (downloadModal) {
+                downloadModal.classList.remove('hidden');
+                setTimeout(() => downloadModal.classList.remove('opacity-0'), 10);
+            }
+
+            // Exécution du téléchargement
+            try {
+                for (let i = 0; i < photosToDownload.length; i++) {
+                    const p = photosToDownload[i];
+                    if (isMulti && modalDownloadSubtitle) {
+                        modalDownloadSubtitle.textContent = `Téléchargement de la photo ${i + 1} sur ${photosToDownload.length} en .JPG...`;
+                        if (modalProgressBar) {
+                            modalProgressBar.style.width = `${Math.round(((i + 1) / photosToDownload.length) * 100)}%`;
+                        }
+                    }
+
+                    const name = p.filename || `Photo-${p.id || (i + 1)}.jpg`;
+                    await downloadSinglePhotoJpg(p.urlHd, name);
+
+                    // Pause courte entre fichiers pour les lots multiples
+                    if (isMulti && i < photosToDownload.length - 1) {
+                        await new Promise(r => setTimeout(r, 450));
+                    }
+                }
+
+                // Succès
+                if (modalStatusIcon) {
+                    modalStatusIcon.className = "fa-solid fa-circle-check text-2xl text-brand";
+                }
+                if (modalDownloadTitle) {
+                    modalDownloadTitle.textContent = isMulti
+                        ? "Vos images ont été téléchargées !"
+                        : "Votre image a été téléchargée !";
+                }
+                if (modalDownloadSubtitle) {
+                    modalDownloadSubtitle.textContent = isMulti
+                        ? `Les ${photosToDownload.length} photos HD en .JPG sont bien enregistrées dans vos téléchargements.`
+                        : "Format Haute Définition (.JPG) enregistré dans vos téléchargements.";
+                }
+            } catch (err) {
+                console.error('Erreur téléchargement photos:', err);
+                if (modalDownloadSubtitle) {
+                    modalDownloadSubtitle.textContent = "Une erreur est survenue lors de la conversion. Veuillez réessayer.";
+                }
+            } finally {
+                isDownloading = false;
+            }
+        }
+
+        // Fermeture de la popup
+        function closeDownloadModalFunc() {
+            if (!downloadModal) return;
+            downloadModal.classList.add('opacity-0');
+            setTimeout(() => {
+                downloadModal.classList.add('hidden');
+            }, 300);
+        }
+
+        if (closeDownloadModal) closeDownloadModal.addEventListener('click', closeDownloadModalFunc);
+        if (btnCloseModalFooter) btnCloseModalFooter.addEventListener('click', closeDownloadModalFunc);
+
+        // Copier le tag Instagram
+        if (btnCopyIg) {
+            btnCopyIg.addEventListener('click', () => {
+                const toCopy = btnCopyIg.getAttribute('data-copy') || '@pierre_coutherut_photo';
+                navigator.clipboard.writeText(toCopy).then(() => {
+                    if (copyIgText) copyIgText.textContent = "Copié !";
+                    setTimeout(() => {
+                        if (copyIgText) copyIgText.textContent = "Copier le tag";
+                    }, 2000);
+                }).catch(() => {
+                    if (copyIgText) copyIgText.textContent = toCopy;
+                });
+            });
+        }
+
+        // Clic Télécharger rapide sur la carte photo
+        document.querySelectorAll('.photo-quick-download-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const idx = parseInt(btn.getAttribute('data-quick-index') || '0', 10);
+                const photo = photosData[idx];
+                if (photo) startDownloadProcess([photo]);
+            });
+        });
+
+        // Clic Télécharger la sélection
+        if (btnDownloadSelection) {
+            btnDownloadSelection.addEventListener('click', () => {
+                const list = Array.from(selectedIndices).map(i => photosData[i]).filter(Boolean);
+                if (list.length > 0) {
+                    startDownloadProcess(list);
+                }
+            });
+        }
+
+        // Lightbox
         function updateLightbox(idx) {
             if (visiblePhotos.length === 0) return;
             currentIndex = (idx + visiblePhotos.length) % visiblePhotos.length;
@@ -342,9 +813,18 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
             if (lbCaption) lbCaption.textContent = photo.caption || 'Cliché officiel Trail des Mines';
             if (lbRace) lbRace.textContent = photo.race || '';
             if (lbMoment) lbMoment.textContent = photo.moment || '';
-            if (lbDownload) {
-                lbDownload.href = photo.urlHd;
-                lbDownload.download = photo.filename || `Photo-${photo.id}.webp`;
+
+            const realIdx = photosData.findIndex(p => p.id === photo.id);
+            const isSelected = selectedIndices.has(realIdx);
+            if (lbSelectText) lbSelectText.textContent = isSelected ? 'Sélectionnée' : 'Sélectionner';
+            if (lbSelectToggle) {
+                if (isSelected) {
+                    lbSelectToggle.classList.add('bg-brand', 'text-dark', 'border-brand');
+                    lbSelectToggle.classList.remove('bg-white/10', 'text-white', 'border-white/10');
+                } else {
+                    lbSelectToggle.classList.remove('bg-brand', 'text-dark', 'border-brand');
+                    lbSelectToggle.classList.add('bg-white/10', 'text-white', 'border-white/10');
+                }
             }
         }
 
@@ -366,13 +846,27 @@ const description = `Photos officielles prises par ${gallery.photographerName} l
             }, 300);
         }
 
+        // Clic sur une carte pour ouvrir la lightbox (sauf si clic sur bouton sélection ou download)
         photoCards.forEach(card => {
-            card.addEventListener('click', () => {
+            card.addEventListener('click', (e) => {
+                const target = e.target;
+                if (target.closest('.photo-select-btn') || target.closest('.photo-quick-download-btn')) {
+                    return;
+                }
                 const idx = parseInt(card.getAttribute('data-index') || '0', 10);
                 const photo = photosData[idx];
                 if (photo) openLightbox(photo);
             });
         });
+
+        // Téléchargement depuis la Lightbox
+        if (lbDownload) {
+            lbDownload.addEventListener('click', () => {
+                if (visiblePhotos.length === 0) return;
+                const photo = visiblePhotos[currentIndex];
+                if (photo) startDownloadProcess([photo]);
+            });
+        }
 
         if (lbClose) lbClose.addEventListener('click', closeLightbox);
         if (lbPrev) lbPrev.addEventListener('click', () => updateLightbox(currentIndex - 1));

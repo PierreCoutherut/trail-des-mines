@@ -6,6 +6,7 @@ import Layout from '../../layouts/Layout.astro';
 import { getAllEditionsSync } from '../../lib/db';
 import { getAdmins, verifyToken } from '../../lib/auth';
 import { getReglementSync } from '../../lib/reglement';
+import { CONTACT_SUBJECTS, getContactRetentionMonths, listContacts, type ContactEntry } from '../../lib/contacts';
 
 // Vérification de session côté serveur
 const cookieHeader = Astro.request.headers.get('cookie') || '';
@@ -28,6 +29,13 @@ const totalPhotos = editions.reduce(
 );
 const allPhotographers = Array.from(new Set(editions.flatMap(e => e.galleries.map(g => g.photographerSlug))));
 const adminsList = currentUser ? getAdmins().map(a => ({ id: a.id, username: a.username, role: a.role, createdAt: a.createdAt })) : [];
+let contactEntries: ContactEntry[] = [];
+let contactLoadError = false;
+if (currentUser) {
+  try { contactEntries = listContacts(); } catch { contactLoadError = true; }
+}
+const unreadContacts = contactEntries.filter(contact => !contact.readAt).length;
+const formatContactDate = (value: string) => new Date(value).toLocaleString('fr-FR', { timeZone: 'Europe/Paris', dateStyle: 'medium', timeStyle: 'short' });
 ---
 
 <Layout title="Administration - Trail des Mines" description="Espace d'administration des éditions, résultats et galeries photos" showCta={false} showSponsors={false}>
@@ -180,6 +188,9 @@ const adminsList = currentUser ? getAdmins().map(a => ({ id: a.id, username: a.u
                     </button>
                     <button data-tab="reglement" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-transparent text-gray-300 hover:text-white hover:bg-white/5">
                         <i class="fa-solid fa-file-contract text-brand"></i> Règlement PDF
+                    </button>
+                    <button data-tab="contacts" class="admin-tab-btn flex-1 min-w-[140px] py-3 px-4 rounded-xl text-xs font-display font-bold uppercase tracking-wider transition flex items-center justify-center gap-2 bg-transparent text-gray-300 hover:text-white hover:bg-white/5">
+                        <i class="fa-regular fa-envelope"></i> Contacts <span id="contact-unread-count">({unreadContacts})</span>
                     </button>
                 </div>
 
@@ -842,6 +853,45 @@ const adminsList = currentUser ? getAdmins().map(a => ({ id: a.id, username: a.u
                 {/* =========================================================================
                     ONGLET 6 : RÈGLEMENT OFFICIEL PDF & DÉCOUPAGE EN CHAPITRES
                     ========================================================================= */}
+                <section id="tab-panel-contacts" class="tab-panel hidden space-y-6" aria-labelledby="admin-contacts-title">
+                    <div>
+                        <h2 id="admin-contacts-title" class="font-display text-2xl font-bold uppercase text-white">Messages de contact</h2>
+                        <p class="text-sm text-gray-300 mt-2">Les demandes envoyées depuis le site sont sauvegardées ici. Le bouton « Répondre par e-mail » ouvre votre messagerie.</p>
+                        <p class="text-sm text-gray-400 mt-2">Conservation : {getContactRetentionMonths()} mois après le dernier échange. Après une réponse, utilisez « Échange effectué aujourd’hui » pour actualiser cette date.</p>
+                    </div>
+                    <p id="admin-contact-status" role="status" aria-live="polite" class="text-sm text-brand"></p>
+                    {contactLoadError ? (
+                        <p role="alert" class="p-5 bg-red-950 text-red-200 rounded-xl">Impossible de lire les messages. Vérifiez le dossier de stockage du serveur puis rechargez la page.</p>
+                    ) : (
+                        <div id="admin-contact-list" class="space-y-4">
+                            <p id="admin-contacts-empty" class:list={['p-8 bg-cardBg rounded-2xl text-gray-300', { hidden: contactEntries.length > 0 }]}>Aucun message pour le moment. Les nouvelles demandes apparaîtront ici.</p>
+                            {contactEntries.map(contact => (
+                                <details class="contact-entry bg-cardBg rounded-2xl p-5 sm:p-6" data-id={contact.id} data-read={Boolean(contact.readAt)}>
+                                    <summary class="cursor-pointer focus-visible:outline-brand focus-visible:outline-offset-4">
+                                        <span class="inline-flex flex-wrap gap-x-4 gap-y-1 items-baseline max-w-full align-middle">
+                                            <strong class="text-white break-words">{contact.firstName} {contact.lastName}</strong>
+                                            <span class="contact-read-label text-sm text-brand">{contact.readAt ? 'Lu' : 'Non lu'}</span>
+                                            <span class="text-sm text-gray-300">{CONTACT_SUBJECTS[contact.subject]}</span>
+                                            <time datetime={contact.createdAt} class="text-sm text-gray-400">{formatContactDate(contact.createdAt)}</time>
+                                        </span>
+                                    </summary>
+                                    <div class="pt-6 space-y-5">
+                                        <p class="text-sm text-gray-300 break-words"><a href={`mailto:${contact.email}`} class="text-brand underline underline-offset-4 break-all">{contact.email}</a>{contact.phone && <span class="block mt-2">Téléphone : {contact.phone}</span>}</p>
+                                        <p class="text-base text-gray-200 whitespace-pre-wrap break-words leading-relaxed">{contact.message}</p>
+                                        <p class="text-sm text-gray-400">Dernier échange : <time class="contact-activity-date" datetime={contact.lastActivityAt}>{formatContactDate(contact.lastActivityAt)}</time></p>
+                                        <div class="flex flex-wrap items-center gap-3">
+                                            <a href={`mailto:${contact.email}?subject=${encodeURIComponent(`Re : Trail des Mines — ${CONTACT_SUBJECTS[contact.subject]}`)}`} class="px-4 py-3 rounded-xl bg-brand text-dark text-sm font-semibold hover:bg-white transition-colors">Répondre par e-mail</a>
+                                            <button type="button" data-contact-action="exchange" class="px-4 py-3 rounded-xl bg-white/10 text-white text-sm hover:bg-white/20 transition-colors">Échange effectué aujourd’hui</button>
+                                            <button type="button" data-contact-action="read" class="px-4 py-3 rounded-xl bg-white/10 text-white text-sm hover:bg-white/20 transition-colors">{contact.readAt ? 'Marquer comme non lu' : 'Marquer comme lu'}</button>
+                                            <button type="button" data-contact-action="delete" class="px-4 py-3 rounded-xl text-red-200 text-sm hover:bg-red-950 transition-colors">Supprimer</button>
+                                        </div>
+                                    </div>
+                                </details>
+                            ))}
+                        </div>
+                    )}
+                </section>
+
                 <div id="tab-panel-reglement" class="tab-panel hidden space-y-8">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
@@ -1339,6 +1389,50 @@ const adminsList = currentUser ? getAdmins().map(a => ({ id: a.id, username: a.u
         // ==========================================
         // 4. Gestion des Éditions (Créer & MODIFIER)
         // ==========================================
+        const contactList = document.getElementById('admin-contact-list');
+        const contactStatus = document.getElementById('admin-contact-status');
+        contactList?.addEventListener('click', async event => {
+            const button = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-contact-action]');
+            const entry = button?.closest<HTMLElement>('.contact-entry');
+            if (!button || !entry || !contactStatus || button.disabled) return;
+            const action = button.dataset.contactAction;
+            if (action === 'delete' && !window.confirm('Supprimer définitivement ce message et ses coordonnées ?')) return;
+            const controls = entry.querySelectorAll<HTMLButtonElement>('button');
+            controls.forEach(control => { control.disabled = true; });
+            contactStatus.textContent = 'Enregistrement en cours…';
+            try {
+                const response = await fetch('/api/contacts', {
+                    method: action === 'delete' ? 'DELETE' : 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: entry.dataset.id, ...(action === 'read' ? { read: entry.dataset.read !== 'true' } : { action }) }),
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'La modification n’a pas été enregistrée.');
+                if (action === 'delete') {
+                    entry.remove();
+                    document.getElementById('admin-contacts-empty')?.classList.toggle('hidden', Boolean(contactList.querySelector('.contact-entry')));
+                    contactStatus.textContent = 'Message supprimé.';
+                } else if (action === 'read') {
+                    entry.dataset.read = String(Boolean(result.contact.readAt));
+                    const label = entry.querySelector('.contact-read-label');
+                    if (label) label.textContent = result.contact.readAt ? 'Lu' : 'Non lu';
+                    button.textContent = result.contact.readAt ? 'Marquer comme non lu' : 'Marquer comme lu';
+                    contactStatus.textContent = 'Statut enregistré.';
+                } else {
+                    const date = entry.querySelector<HTMLTimeElement>('.contact-activity-date');
+                    if (date) {
+                        date.dateTime = result.contact.lastActivityAt;
+                        date.textContent = new Date(result.contact.lastActivityAt).toLocaleString('fr-FR', { timeZone: 'Europe/Paris', dateStyle: 'medium', timeStyle: 'short' });
+                    }
+                    contactStatus.textContent = 'Date du dernier échange actualisée.';
+                }
+                const unread = document.getElementById('contact-unread-count');
+                if (unread) unread.textContent = `(${contactList.querySelectorAll('.contact-entry[data-read="false"]').length})`;
+            } catch (error) {
+                contactStatus.textContent = error instanceof Error ? error.message : 'Action impossible. Réessayez.';
+            } finally { controls.forEach(control => { control.disabled = false; }); }
+        });
+
         const openNewEdBtn = document.getElementById('open-new-edition-btn');
         const edModalForm = document.getElementById('edition-modal-form') as HTMLFormElement | null;
         const edModalTitle = document.getElementById('edition-modal-title');

@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
+[id] { scroll-margin-top: 7rem; }
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
 /* ==========================================================================
    TRAIL DES MINES 2027 - FEUILLE DE STYLE PRINCIPALE
    Identité Visuelle Dark Mode & Système de Design Awwwards

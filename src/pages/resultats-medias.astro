@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeroBackdrop from '../components/PageHeroBackdrop.astro';
 
 const title = "Résultats & Médias - Trail des Mines | Classements & Photos Officielles";
 const description = "Consultez les résultats en direct, classements et galeries photos officielles du Trail des Mines à Champagney. Recherche par dossard et vidéos aftermovie.";
@@ -8,7 +9,8 @@ const description = "Consultez les résultats en direct, classements et galeries
 <Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
 
 <!-- En-tête -->
-    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden min-h-[30rem] flex items-end">
+        <PageHeroBackdrop src="/medias/Index/Pierre-Coutherut_TDM-2024-48.jpg" position="50% 45%" />
         <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto text-center relative z-10 gsap-fade-up">
             <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Chronométrage & Souvenirs</span>
             <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">

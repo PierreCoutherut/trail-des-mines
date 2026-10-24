@@ -1,21 +1,23 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeroBackdrop from '../components/PageHeroBackdrop.astro';
 
-const title = "À Propos - Trail des Mines | Histoire Minière & Genèse de la Course";
-const description = "Découvrez l";
+const title = "Run' In Champagney | À propos du Trail des Mines";
+const description = "Découvrez Run' In Champagney, l'association de course à pied et de trail qui organise le Trail des Mines.";
 ---
 
 <Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
 
 <!-- En-tête -->
-    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] to-dark">
+    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden min-h-[30rem] flex items-end">
+        <PageHeroBackdrop src="/medias/Index/Pierre-Coutherut_TDM-2024-343.jpg" position="50% 46%" />
         <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto text-center relative z-10 gsap-fade-up">
-            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Patrimoine & Racines</span>
+            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Depuis 2018</span>
             <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
-                L'Histoire <span class="text-brand">des Mines</span>
+                Run' In <span class="text-brand">Champagney</span>
             </h1>
             <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
-                Le Trail des Mines n'est pas une simple course à pied : c'est un hommage vibrant aux mineurs de fond qui ont façonné le paysage des Vosges du Sud pendant plus de deux siècles.
+                Une association née de l’envie de courir ensemble, de partager le trail et de faire vivre les sentiers de Champagney.
             </p>
         </div>
     </header>
@@ -25,23 +27,24 @@ const description = "Découvrez l";
         <div class="space-y-12">
             
             <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
-                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Le Bassin Houiller de Ronchamp-Champagney</h2>
+                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Une aventure commencée en 2018</h2>
                 <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                    Découverte au milieu du XVIIIème siècle, la houille a transformé les paisibles vallées de Haute-Saône en un pôle industriel majeur. Pendant plus de 200 ans, des milliers d'hommes et de jeunes garçons — les <em>galibots</em> — sont descendus jusqu'à plus de 1 000 mètres sous terre pour extraire le charbon.
+                    Run’ In Champagney a vu le jour au début de l’année 2018. L’idée de départ était simple : créer un groupe pour pratiquer la course à pied, et plus particulièrement le trail.
                 </p>
                 <p class="text-gray-300 text-sm leading-relaxed">
-                    Le Puits Arthur de Buyer, creusé à Champagney, fut le premier puits en France à franchir la barre mythique des 1 000 mètres de profondeur en 1900. Ses vestiges imposants et ses terrils jalonnent aujourd'hui le tracé des coureurs.
+                    La motivation, la joie et la passion de ses adhérents ont progressivement fait connaître l’association et permis de construire une communauté active autour de la course nature.
                 </p>
             </div>
 
             <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
-                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">La Renaissance par la Course Nature</h2>
+                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Courir à son rythme</h2>
                 <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                    Après la fermeture des puits en 1958, la forêt vosgienne a progressivement reconquis son territoire. Les anciens terrils de schiste noir se sont couverts de bouleaux, de mousses et de sentiers escarpés.
+                    Deux départs sont proposés chaque dimanche matin, avec deux groupes afin de s’adapter au niveau de chacun. Tous les niveaux sont les bienvenus.
                 </p>
                 <p class="text-gray-300 text-sm leading-relaxed">
-                    En créant le Trail des Mines en 2022, l'association <strong>Run in Champagney</strong> a voulu valoriser ce patrimoine industriel unique. Courir sur ces sentiers, c'est fouler la mémoire d'un labeur herculéen, là où chaque dénivelé raconte la sueur et le courage des gueules noires.
+                    L’association organise également le Trail des Mines, un événement qui rassemble coureurs, bénévoles et partenaires autour du patrimoine naturel et minier de Champagney.
                 </p>
+                <a href="https://www.facebook.com/groups/816006128572279" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand px-5 py-3 font-display text-xs font-bold uppercase tracking-wider text-dark transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">Rejoindre le groupe Facebook <span aria-hidden="true">↗</span></a>
             </div>
 
         </div>

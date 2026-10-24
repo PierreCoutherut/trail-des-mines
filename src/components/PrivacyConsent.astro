@@ -1,0 +1,157 @@
+---
+interface Props {
+  clarityProjectId: string;
+}
+const { clarityProjectId } = Astro.props;
+---
+
+<section id="privacy-consent" class="privacy-consent" aria-labelledby="privacy-consent-title" hidden>
+  <div class="privacy-consent-copy">
+    <h2 id="privacy-consent-title" tabindex="-1">Votre vie privée, votre choix</h2>
+    <p>Avec votre accord, Microsoft Clarity nous aide à comprendre la navigation sur le site grâce à des statistiques et des enregistrements de session. Vous pouvez refuser et changer d’avis à tout moment.</p>
+    <a href="/politique-confidentialite">En savoir plus sur vos données</a>
+    <p id="privacy-current-choice" class="privacy-current-choice" hidden></p>
+  </div>
+  <div class="privacy-consent-actions">
+    <button type="button" data-privacy-choice="refuse">Refuser</button>
+    <button type="button" data-privacy-choice="accept">Accepter</button>
+    <button type="button" id="privacy-close" hidden>Fermer</button>
+  </div>
+</section>
+
+<style>
+  .privacy-consent{position:fixed;inset:auto 1rem 1rem;max-width:46rem;margin-inline:auto;z-index:80;padding:1.5rem;border-radius:1rem;background:#15272b;box-shadow:0 14px 48px rgb(0 0 0 / .4);color:#fff}
+  .privacy-consent[hidden],.privacy-consent [hidden]{display:none}
+  h2{margin:0 0 .6rem;font-family:var(--font-display,'Oswald',sans-serif);font-size:1.3rem;font-weight:700;line-height:1.25}
+  p{margin:0 0 .65rem;font-size:.875rem;line-height:1.65;color:#d8e3e5;max-width:70ch}
+  a{font-size:.8125rem;color:#c3d052;text-decoration:underline;text-underline-offset:.2em}
+  .privacy-current-choice{margin:.75rem 0 0;color:#e8efbc;font-size:.8125rem}
+  .privacy-consent-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1.15rem}
+  button{min-height:44px;flex:1;padding:.7rem 1.15rem;border:1px solid #759095;border-radius:.6rem;background:#15272b;color:#fff;font:600 .875rem 'Inter',sans-serif;cursor:pointer;transition:background-color 180ms ease,color 180ms ease}
+  button:hover{background:#b0be42;color:#101d20}
+  button:focus-visible,a:focus-visible{outline:2px solid #c3d052;outline-offset:4px}
+  h2:focus{outline:none}
+  @media(max-width:480px){.privacy-consent{padding:1.15rem;inset:auto .75rem .75rem}.privacy-consent-actions{gap:.5rem}button{padding-inline:.7rem}}
+  @media(prefers-reduced-motion:reduce){button{transition:none}}
+</style>
+
+<script is:inline define:vars={{ clarityProjectId }}>
+  (() => {
+    const storageKey = 'tdm_privacy_consent_v1';
+    const banner = document.getElementById('privacy-consent');
+    const title = document.getElementById('privacy-consent-title');
+    const currentChoice = document.getElementById('privacy-current-choice');
+    const closeButton = document.getElementById('privacy-close');
+    if (!banner) return;
+
+    let returnFocus = null;
+    let clarityStarted = false;
+    let choice = readChoice();
+
+    function readChoice() {
+      try {
+        const stored = JSON.parse(localStorage.getItem(storageKey) || 'null');
+        if (stored && typeof stored.analytics === 'boolean' && Number.isFinite(stored.expiresAt) && stored.expiresAt > Date.now()) return stored;
+        localStorage.removeItem(storageKey);
+      } catch { /* En cas de stockage indisponible, aucun consentement n’est présumé. */ }
+      return null;
+    }
+
+    function clearClarityCookies() {
+      // Ces deux cookies propriétaires peuvent subsister après un retrait de consentement.
+      const domains = ['', location.hostname];
+      const labels = location.hostname.split('.');
+      for (let index = 1; index < labels.length - 1; index++) domains.push(labels.slice(index).join('.'));
+      for (const name of ['_clck', '_clsk']) {
+        for (const domain of domains) {
+          document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax${domain ? `; Domain=${domain}` : ''}`;
+        }
+      }
+    }
+
+    function startClarity() {
+      if (clarityStarted) return;
+      clarityStarted = true;
+      window.clarity = window.clarity || function() { (window.clarity.q = window.clarity.q || []).push(arguments); };
+      // ConsentV2 : mesure d’audience uniquement ; stockage publicitaire toujours refusé.
+      window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+      const script = document.createElement('script');
+      script.id = 'tdm-clarity-script';
+      script.async = true;
+      script.src = `https://www.clarity.ms/tag/${clarityProjectId}`;
+      document.head.appendChild(script);
+    }
+
+    function stopClarity() {
+      if (typeof window.clarity === 'function') {
+        window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'denied' });
+        window.clarity('stop');
+      }
+      document.getElementById('tdm-clarity-script')?.remove();
+      clearClarityCookies();
+    }
+
+    function showSettings(focus = false) {
+      closeButton.hidden = !choice;
+      currentChoice.hidden = !choice;
+      currentChoice.textContent = choice ? `Votre choix actuel : mesure d’audience ${choice.analytics ? 'acceptée' : 'refusée'}.` : '';
+      banner.hidden = false;
+      if (focus) title.focus({ preventScroll: true });
+    }
+
+    function hideSettings() {
+      banner.hidden = true;
+      if (returnFocus?.isConnected) returnFocus.focus({ preventScroll: true });
+      returnFocus = null;
+    }
+
+    banner.querySelectorAll('[data-privacy-choice]').forEach(button => {
+      button.addEventListener('click', () => {
+        const analytics = button.dataset.privacyChoice === 'accept';
+        const expiry = new Date();
+        expiry.setMonth(expiry.getMonth() + 6);
+        choice = { analytics, expiresAt: expiry.getTime() };
+        try { localStorage.setItem(storageKey, JSON.stringify(choice)); } catch {
+          // Éviter qu’un ancien accord persiste si l’enregistrement du refus échoue.
+          try { localStorage.removeItem(storageKey); } catch { /* Stockage indisponible. */ }
+        }
+        hideSettings();
+        if (analytics) startClarity();
+        else {
+          const mustReload = clarityStarted;
+          stopClarity();
+          // Un rechargement supprime aussi les observateurs du script déjà exécuté.
+          if (mustReload) location.reload();
+        }
+      });
+    });
+
+    closeButton.addEventListener('click', hideSettings);
+    document.addEventListener('click', event => {
+      const trigger = event.target instanceof Element ? event.target.closest('[data-open-privacy-settings]') : null;
+      if (!trigger) return;
+      event.preventDefault();
+      returnFocus = trigger;
+      showSettings(true);
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !banner.hidden && choice) hideSettings();
+    });
+    window.addEventListener('storage', event => {
+      if (event.key !== storageKey) return;
+      choice = readChoice();
+      if (choice?.analytics) { startClarity(); hideSettings(); }
+      else {
+        const mustReload = clarityStarted;
+        stopClarity();
+        if (mustReload) location.reload();
+        else if (!choice) showSettings();
+        else hideSettings();
+      }
+    });
+
+    if (choice?.analytics) startClarity();
+    else clearClarityCookies();
+    if (!choice) showSettings();
+  })();
+</script>

@@ -6,6 +6,7 @@ import CtaSection from '../components/CtaSection.astro';
 import NoiseOverlay from '../components/NoiseOverlay.astro';
 import RegistrationModal from '../components/RegistrationModal.astro';
 import SchemaOrg from '../components/SchemaOrg.astro';
+import PrivacyConsent from '../components/PrivacyConsent.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
   loadChart?: boolean;
   showCta?: boolean;
   showSponsors?: boolean;
+  noindex?: boolean;
   customSchema?: Record<string, any> | Array<Record<string, any>>;
 }
 
@@ -27,10 +29,12 @@ const {
   loadChart = false,
   showCta = true,
   showSponsors = true,
+  noindex = false,
   customSchema
 } = Astro.props;
 
 const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://traildesmines.fr').href;
+const isAdmin = Astro.url.pathname === '/admin' || Astro.url.pathname.startsWith('/admin/');
 ---
 
 <!DOCTYPE html>
@@ -42,7 +46,10 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://traildesm
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonicalURL} />
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="robots" content={noindex || isAdmin ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+
+  <!-- Google Search Console Verification -->
+  <meta name="google-site-verification" content="VOTRE_CODE_GOOGLE_SEARCH_CONSOLE" />
 
   <!-- Favicon & Identité Visuelle -->
   <link rel="icon" type="image/png" href="/medias/Logo.png" />
@@ -121,7 +128,10 @@ const canonicalURL = canonical || new URL(Astro.url.pathname, 'https://traildesm
 
   <RegistrationModal />
 
+  <!-- Microsoft Clarity : chargé uniquement après accord explicite. -->
+  {!isAdmin && <PrivacyConsent clarityProjectId="v7ebppgwfj" />}
+
   <!-- Script global Lenis, GSAP, Navbar auto-hide & Compteur -->
-  <script is:inline src="/js/main.js?v=2"></script>
+  <script is:inline src="/js/main.js?v=3"></script>
 </body>
 </html>

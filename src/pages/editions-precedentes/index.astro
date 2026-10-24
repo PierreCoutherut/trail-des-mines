@@ -2,6 +2,7 @@
 export const prerender = false;
 
 import Layout from '../../layouts/Layout.astro';
+import PageHeroBackdrop from '../../components/PageHeroBackdrop.astro';
 import { getAllEditionsSync } from '../../lib/db';
 
 const title = "Éditions Précédentes - Trail des Mines | Archives & Palmarès Historique";
@@ -15,7 +16,8 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
 <Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
 
     <!-- En-tête Hero -->
-    <header class="pt-36 md:pt-44 pb-16 px-4 relative overflow-hidden bg-gradient-to-b from-[#0a1214] via-dark to-[#0f1b1e]">
+    <header class="pt-36 md:pt-44 pb-16 px-4 relative overflow-hidden min-h-[30rem] flex items-end">
+        <PageHeroBackdrop src="/medias/Index/Pierre-Coutherut_TDM-2024-220.jpg" position="50% 42%" />
         <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto text-center relative z-10">
             <span class="inline-block py-1.5 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">
                 Mémoire & Épopée Minérale
@@ -94,7 +96,7 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <span class="bg-brand/20 text-brand border border-brand/30 px-3.5 py-1 rounded-full text-xs font-mono font-bold">
-                                            {edition.races?.length || 0} course(s) au programme
+                                            {edition.races?.length ? `${edition.races.length} course(s) au programme` : 'Archives à compléter'}
                                         </span>
                                     </div>
                                 </div>
