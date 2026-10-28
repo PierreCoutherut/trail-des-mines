@@ -1,0 +1,159 @@
+---
+import movie from '../data/mine-video.json';
+---
+
+<section id="parcours-a-venir" class="mine-section" aria-labelledby="courses-heading" data-mine-entrance>
+  <div class="mine-stage" data-mine-stage>
+    <div class="mine-film" data-mine-film aria-hidden="true">
+      <video
+        data-mine-video
+        data-src={movie.src}
+        data-last-frame={movie.lastFrame}
+        data-frame-rate={movie.frameRate}
+        poster={movie.startPoster}
+        width={movie.width}
+        height={movie.height}
+        preload="none"
+        muted
+        playsinline
+        disablepictureinpicture
+        tabindex="-1"
+      ></video>
+    </div>
+    <div class="mine-content" data-mine-content><slot /></div>
+    <p class="mine-scroll-hint" data-mine-hint aria-hidden="true">Faites défiler pour entrer <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></p>
+  </div>
+</section>
+
+<style>
+  .mine-section { position: relative; z-index: 3; background: #0a1214; scroll-margin-top: 0; }
+  .mine-stage { position: relative; min-height: 100svh; display: flex; align-items: center; overflow: hidden; background: #0a1214; padding-block: clamp(3rem, 7svh, 6rem); }
+  .mine-film, video { position: absolute; inset: 0; width: 100%; height: 100%; }
+  video { object-fit: cover; object-position: 50% 50%; }
+  .mine-film { display: none; z-index: 1; pointer-events: none; }
+  .mine-content { position: relative; z-index: 2; width: 100%; }
+  .mine-scroll-hint { display: none; position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 3; align-items: center; gap: .75rem; padding: .75rem 1rem; border-radius: 999px; background: rgb(0 0 0 / 65%); color: white; font-size: .875rem; white-space: nowrap; pointer-events: none; }
+  .mine-stage.is-animated .mine-film { display: block; }
+  .mine-stage.is-animated .mine-scroll-hint { display: inline-flex; }
+  @media (prefers-reduced-motion: reduce) {
+    .mine-stage { min-height: min(42rem, 100svh); }
+    .mine-stage.is-animated .mine-film, .mine-stage.is-animated .mine-scroll-hint { display: none; }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    function initMineVideo() {
+      const section = document.querySelector('[data-mine-entrance]');
+      if (!section || !window.gsap || !window.ScrollTrigger) return;
+      const { gsap, ScrollTrigger } = window;
+      gsap.registerPlugin(ScrollTrigger);
+      const stage = section.querySelector('[data-mine-stage]');
+      const film = section.querySelector('[data-mine-film]');
+      const video = section.querySelector('[data-mine-video]');
+      const content = section.querySelector('[data-mine-content]');
+      const hint = section.querySelector('[data-mine-hint]');
+      const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let media;
+      let loading = false;
+      let failed = false;
+      video.muted = true;
+
+      function buildMotion() {
+        if (media || failed || !Number.isFinite(video.duration) || video.readyState < 2) return;
+        // Do not insert a pin behind a visitor who already passed while the file was loading.
+        if (section.getBoundingClientRect().top < -1) return;
+        media = gsap.matchMedia();
+        media.add({ motion: '(prefers-reduced-motion: no-preference)', desktop: '(min-width: 768px)' }, (context) => {
+          if (!context.conditions.motion || failed) return;
+          const fps = Number(video.dataset.frameRate);
+          const lastFrame = Math.min(Number(video.dataset.lastFrame), video.duration - 1 / fps);
+          const playhead = { progress: 0 };
+          let targetTime = 0;
+          let disposed = false;
+
+          // Keep only the newest target while a frame is decoding. No queued seek backlog.
+          const flushSeek = () => {
+            if (disposed || video.seeking || video.readyState < 2 || Math.abs(video.currentTime - targetTime) < 1 / (fps * 2)) return;
+            video.currentTime = targetTime;
+          };
+          const updateFrame = () => {
+            targetTime = Math.min(lastFrame, Math.round(playhead.progress * lastFrame * fps) / fps);
+            flushSeek();
+          };
+          video.addEventListener('seeked', flushSeek);
+          video.pause();
+          gsap.set(content, { opacity: 0, y: 20, pointerEvents: 'none' });
+          gsap.set(film, { opacity: 1 });
+          stage.classList.add('is-animated');
+
+          const timeline = gsap.timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: {
+              id: 'mine-entrance',
+              trigger: section,
+              start: 'top top',
+              end: () => `+=${Math.round(window.innerHeight * (context.conditions.desktop ? 2.5 : 1.8))}`,
+              pin: stage,
+              scrub: .35,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            },
+          });
+          timeline
+            .to(playhead, { progress: 1, duration: .8, onUpdate: updateFrame }, 0)
+            .to(hint, { opacity: 0, duration: .1 }, .03)
+            .to(film, { opacity: 0, duration: .14 }, .78)
+            .to(content, { opacity: 1, y: 0, duration: .08, ease: 'power2.out' }, .92)
+            .set(content, { pointerEvents: 'auto' }, .94);
+          updateFrame();
+
+          // A keyboard user can reach the CTA without waiting through the scroll sequence.
+          const revealForFocus = () => {
+            if (timeline.scrollTrigger.progress >= 1) return;
+            const top = timeline.scrollTrigger.end;
+            if (window.lenis) window.lenis.scrollTo(top, { immediate: true, force: true });
+            else window.scrollTo({ top, behavior: 'instant' });
+            timeline.progress(1);
+            playhead.progress = 1;
+            updateFrame();
+            ScrollTrigger.update();
+          };
+          content.addEventListener('focusin', revealForFocus);
+          return () => {
+            disposed = true;
+            video.pause();
+            video.removeEventListener('seeked', flushSeek);
+            content.removeEventListener('focusin', revealForFocus);
+            stage.classList.remove('is-animated');
+          };
+        });
+        ScrollTrigger.refresh();
+      }
+
+      const loadVideo = () => {
+        if (loading || failed || preference.matches) return;
+        loading = true;
+        observer?.disconnect();
+        video.preload = 'auto';
+        video.src = video.dataset.src;
+        video.load();
+      };
+      video.addEventListener('loadeddata', buildMotion, { once: true });
+      video.addEventListener('error', () => {
+        failed = true;
+        media?.revert();
+        stage.classList.remove('is-animated');
+        video.pause();
+      }, { once: true });
+      const observer = 'IntersectionObserver' in window
+        ? new IntersectionObserver(entries => { if (entries.some(entry => entry.isIntersecting)) loadVideo(); }, { rootMargin: '1000px 0px' })
+        : null;
+      if (observer) observer.observe(section);
+      else loadVideo();
+      preference.addEventListener('change', event => { if (!event.matches) loadVideo(); });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMineVideo, { once: true });
+    else initMineVideo();
+  })();
+</script>

@@ -1,6 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeroBackdrop from '../components/PageHeroBackdrop.astro';
+import { getEditionByYearSync } from '../lib/db';
+
+const galleries2026 = (getEditionByYearSync(2026)?.galleries || [])
+  .filter(gallery => ['pierre-coutherut', 'bermond-elodie'].includes(gallery.photographerSlug))
+  .map(gallery => ({ ...gallery, thumbnail: gallery.subGalleries.flatMap(sub => sub.photos).find(photo => photo.urlThumb)?.urlThumb }));
 
 const title = "Résultats & Médias - Trail des Mines | Classements & Photos Officielles";
 const description = "Consultez les résultats en direct, classements et galeries photos officielles du Trail des Mines à Champagney. Recherche par dossard et vidéos aftermovie.";
@@ -109,33 +114,19 @@ const description = "Consultez les résultats en direct, classements et galeries
             </a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            <a href="/editions-precedentes/2024/galerie/pierre-coutherut" class="bg-cardBg rounded-2xl overflow-hidden border border-white/5 group hover:border-brand/40 transition-all block">
+            {galleries2026.map(gallery => <a href={`/editions-precedentes/2026/galerie/${gallery.photographerSlug}`} class="bg-cardBg rounded-2xl overflow-hidden border border-white/5 group hover:border-brand/40 transition-all block">
                 <div class="aspect-video overflow-hidden relative bg-dark">
-                    <img src="/medias/galeries/2024/pierre-coutherut/pc_1-thumb.webp" alt="Pierre Coutherut - Trail des Mines" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute bottom-3 right-3 bg-dark/80 px-2.5 py-1 rounded text-[10px] text-brand font-mono">Édition 2024</span>
+                    <img src={gallery.thumbnail || '/medias/affiches/affiche-2026-thumb.webp'} alt={`${gallery.photographerName} - Trail des Mines 2026`} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                    <span class="absolute bottom-3 right-3 bg-dark/80 px-2.5 py-1 rounded text-[10px] text-brand font-mono">Édition 2026</span>
                 </div>
                 <div class="p-5">
-                    <h3 class="font-display text-lg font-bold uppercase text-white mb-1">Pierre Coutherut • L'Épopée</h3>
-                    <p class="text-xs text-gray-400 mb-3">Les sentiers boueux, la brume sur les terrils et l'engagement des trailers.</p>
+                    <h3 class="font-display text-lg font-bold uppercase text-white mb-1">{gallery.photographerSlug === 'bermond-elodie' ? 'Élodie Bermond' : gallery.photographerName}</h3>
+                    <p class="text-xs text-gray-400 mb-3">Retrouvez les photographies de l’édition 2026 du Trail des Mines.</p>
                     <span class="text-xs text-brand font-semibold group-hover:underline inline-flex items-center gap-1.5">
                         Explorer la galerie HD <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
                     </span>
                 </div>
-            </a>
-
-            <a href="/editions-precedentes/2024/galerie/elodie-bermond" class="bg-cardBg rounded-2xl overflow-hidden border border-white/5 group hover:border-brand/40 transition-all block">
-                <div class="aspect-video overflow-hidden relative bg-dark">
-                    <img src="/medias/galeries/2024/elodie-bermond/eb_1-thumb.webp" alt="Élodie Bermond - Trail des Mines" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                    <span class="absolute bottom-3 right-3 bg-dark/80 px-2.5 py-1 rounded text-[10px] text-brand font-mono">Édition 2024</span>
-                </div>
-                <div class="p-5">
-                    <h3 class="font-display text-lg font-bold uppercase text-white mb-1">Élodie Bermond • Émotions</h3>
-                    <p class="text-xs text-gray-400 mb-3">La ferveur des bénévoles aux ravitaillements et l'allégresse de l'arrivée.</p>
-                    <span class="text-xs text-brand font-semibold group-hover:underline inline-flex items-center gap-1.5">
-                        Explorer la galerie HD <i class="fa-solid fa-arrow-right text-[10px] transition-transform group-hover:translate-x-1"></i>
-                    </span>
-                </div>
-            </a>
+            </a>)}
 
             <a href="/editions-precedentes/2025" class="bg-cardBg rounded-2xl overflow-hidden border border-white/5 group hover:border-brand/40 transition-all block">
                 <div class="aspect-video overflow-hidden relative bg-dark">

@@ -6,7 +6,7 @@ interface Props {
 const { currentPath = Astro.url.pathname } = Astro.props;
 
 // Helpers pour détecter si une section ou un lien est actif
-const isInfosActive = currentPath.startsWith('/reglement') || currentPath.startsWith('/resultats-medias') || currentPath.startsWith('/editions-precedentes');
+const isEditionsActive = currentPath.startsWith('/editions-precedentes');
 const isAproposActive = currentPath.startsWith('/a-propos') || currentPath.startsWith('/partenaires');
 const isContactActive = currentPath.startsWith('/contact');
 ---
@@ -36,30 +36,15 @@ const isContactActive = currentPath.startsWith('/contact');
         
         <!-- Parcours : À venir -->
         <div class="mobile-link w-full">
-          <a href="/#parcours-a-venir" class="flex items-center justify-center gap-2.5 text-2xl py-2 text-gray-300 hover:text-brand transition-colors font-display uppercase tracking-widest">
+          <a href="/parcours" data-open-courses-modal aria-haspopup="dialog" aria-controls="courses-modal" class="flex items-center justify-center gap-2.5 text-2xl py-2 text-gray-300 hover:text-brand transition-colors font-display uppercase tracking-widest">
             <span>Parcours</span>
             <span class="text-xs font-mono lowercase tracking-normal px-2.5 py-0.5 bg-brand/10 text-brand border border-brand/30 rounded-full">à venir</span>
           </a>
         </div>
 
-        <!-- Accordéon : Infos Pratiques -->
+        <!-- Lien direct : Éditions précédentes -->
         <div class="mobile-link w-full">
-          <button 
-            type="button"
-            class={`accordion-btn flex items-center justify-center gap-3 w-full text-2xl hover:text-brand transition-colors py-2 focus-visible:outline-none focus-visible:text-brand ${isInfosActive ? 'text-brand' : ''}`}
-            aria-expanded={isInfosActive ? "true" : "false"}
-            aria-label="Sous-menu Informations"
-          >
-            <span>Informations</span>
-            <i class={`fa-solid fa-chevron-down text-sm chevron transition-transform duration-300 ${isInfosActive ? 'rotate-180 text-brand' : ''}`} aria-hidden="true"></i>
-          </button>
-          <div class={`accordion-content overflow-hidden flex flex-col items-center transition-all duration-500 ${isInfosActive ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-            <div class="flex flex-col gap-3.5 mt-3 pb-4 border-b border-white/10 w-3/4">
-              <a href="/reglement" class={`text-base py-1 transition-colors ${currentPath === '/reglement' ? 'text-brand font-bold' : 'text-gray-400 hover:text-brand'}`}>Règlement</a>
-              <a href="/resultats-medias" class={`text-base py-1 transition-colors ${currentPath === '/resultats-medias' ? 'text-brand font-bold' : 'text-gray-400 hover:text-brand'}`}>Résultats & Médias</a>
-              <a href="/editions-precedentes" class={`text-base py-1 transition-colors ${currentPath.startsWith('/editions-precedentes') ? 'text-brand font-bold' : 'text-gray-400 hover:text-brand'}`}>Éditions Précédentes</a>
-            </div>
-          </div>
+          <a href="/editions-precedentes" aria-current={isEditionsActive ? 'page' : undefined} class={`block text-2xl py-2 transition-colors ${isEditionsActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}>Éditions précédentes</a>
         </div>
 
         <!-- Accordéon : L'Association -->
@@ -116,39 +101,18 @@ const isContactActive = currentPath.startsWith('/contact');
     </a>
 
     <!-- Liens Desktop -->
-    <div class="hidden xl:flex items-center space-x-6 2xl:space-x-8 text-[11px] font-semibold uppercase tracking-[0.15em] 2xl:tracking-[0.25em] whitespace-nowrap">
+    <div class="hidden xl:flex items-center gap-4 2xl:gap-6 text-[11px] font-semibold uppercase tracking-[0.1em] 2xl:tracking-[0.15em] whitespace-nowrap">
       
       <!-- Parcours (À venir) -->
       <div class="nav-item relative">
-        <a href="/#parcours-a-venir" class="py-4 flex items-center gap-2 text-gray-300 hover:text-brand transition-colors" aria-label="Découvrir le teaser des parcours 2027">
+        <a href="/parcours" data-open-courses-modal aria-haspopup="dialog" aria-controls="courses-modal" class="py-4 flex items-center gap-2 text-gray-300 hover:text-brand transition-colors" aria-label="Parcours 2027 à venir">
           <span>Parcours</span>
           <span class="px-2 py-0.5 text-[9px] font-mono lowercase tracking-normal bg-brand/10 text-brand border border-brand/30 rounded-full">à venir</span>
         </a>
-        <div class="dropdown-wrapper w-56">
-          <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-3 shadow-2xl text-center">
-            <span class="text-xs font-display uppercase tracking-wider text-white font-bold block">Parcours 2027</span>
-            <span class="text-[11px] text-brand font-medium block mt-1">On vous prépare quelque chose de spécial.</span>
-          </div>
-        </div>
       </div>
 
-      <!-- Dropdown Infos Pratiques -->
-      <div class="nav-item relative">
-        <a 
-          href="/reglement"
-          class={`py-4 transition-colors duration-300 block focus-visible:outline-none focus-visible:text-brand ${isInfosActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}
-          aria-haspopup="true"
-        >
-          Informations
-        </a>
-        <div class="dropdown-wrapper w-64">
-          <div class="dropdown-menu bg-cardBg/95 backdrop-blur-md rounded-2xl border border-white/10 p-2 shadow-2xl">
-            <a href="/reglement" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath === '/reglement' ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Règlement</a>
-            <a href="/resultats-medias" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath === '/resultats-medias' ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Résultats & Médias</a>
-            <a href="/editions-precedentes" class={`block px-4 py-2.5 rounded-xl transition-all text-left ${currentPath.startsWith('/editions-precedentes') ? 'bg-brand text-dark font-bold' : 'hover:bg-brand hover:text-dark'}`}>Éditions précédentes</a>
-          </div>
-        </div>
-      </div>
+      <!-- Lien direct : Éditions précédentes -->
+      <a href="/editions-precedentes" aria-current={isEditionsActive ? 'page' : undefined} class={`py-4 transition-colors duration-300 focus-visible:outline-none focus-visible:text-brand ${isEditionsActive ? 'text-brand font-bold' : 'text-gray-300 hover:text-brand'}`}>Éditions précédentes</a>
 
       <!-- Dropdown L'Association -->
       <div class="nav-item relative">
@@ -197,7 +161,7 @@ const isContactActive = currentPath.startsWith('/contact');
 <style>
   .nav-brand { min-width: 0; flex-shrink: 0; }
   .nav-brand-title, .nav-brand-subtitle { white-space: nowrap; }
-  @media (max-width: 379px) {
+  @media (max-width: 479px) {
     #main-nav { padding-inline: .75rem; }
     .nav-brand { gap: .375rem; }
     .nav-brand img { height: 2rem; }

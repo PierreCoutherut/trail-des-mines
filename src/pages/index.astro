@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PreviousEditionBanner from '../components/PreviousEditionBanner.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
 import responsiveImages from '../data/responsive-images.json';
 
 const heroImage = responsiveImages.heroes.home;
+const courseImage = responsiveImages.heroes.partners;
 const sponsorImages = responsiveImages.logos as Record<string, { src: string; srcset: string; width: number; height: number }>;
 const sponsorImage = (src: string) => sponsorImages[src.split('/').pop()!];
 
@@ -89,7 +90,7 @@ const galleryImages = [
 
         <div class="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center hero-anim text-center w-full px-4 pointer-events-none">
             <p class="text-[9px] md:text-xs uppercase tracking-[0.2em] md:tracking-[0.4em] mb-4 md:mb-6 text-white/70 font-semibold max-w-xs md:max-w-none drop-shadow-md">
-                L'épreuve nature au cœur de l'histoire
+                Champagney, Haute Saône
             </p>
             <div class="w-[1px] h-10 md:h-12 bg-gradient-to-b from-brand to-transparent" aria-hidden="true"></div>
         </div>
@@ -124,39 +125,39 @@ const galleryImages = [
     <!-- Bandeau Sponsors sur Fond Blanc (9 logos : 5 en haut, 4 en bas - 70% sur desktop) -->
     <section class="bg-white text-dark py-10 md:py-16 border-b border-gray-200 relative z-10" aria-label="Partenaires et Sponsors officiels">
         <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4 sm:px-6">
-            <div class="flex flex-col gap-[45px] items-center justify-center">
-                <!-- Ligne 1 : 5 logos avec exactement 45px d'écart -->
-                <div class="flex flex-wrap justify-center items-center gap-[45px] w-full">
+            <div class="home-sponsors">
+                <!-- Ligne 1 : 5 logos -->
+                <div class="home-sponsors-row home-sponsors-row-first">
                     {topSponsorsRow1.map((sp) => (
-                        <div class="flex items-center justify-center group transition-all duration-300 hover:scale-105">
+                        <div class="home-sponsor flex items-center justify-center transition-transform duration-300 hover:scale-105">
                             <img
                                 src={sponsorImage(sp.src).src}
                                 srcset={sponsorImage(sp.src).srcset}
-                                sizes="(max-width: 639px) 180px, (max-width: 1023px) 240px, 320px"
+                                sizes="(max-width: 1023px) 18vw, 12vw"
                                 width={sponsorImage(sp.src).width}
                                 height={sponsorImage(sp.src).height}
                                 decoding="async"
                                 alt={sp.alt}
-                                class="h-20 sm:h-24 md:h-28 lg:h-36 w-auto max-w-[260px] sm:max-w-[300px] lg:max-w-[340px] object-contain transition-all duration-300"
+                                class="home-sponsor-image"
                                 loading="lazy"
                             />
                         </div>
                     ))}
                 </div>
 
-                <!-- Ligne 2 : 4 logos avec exactement 45px d'écart (centrés) -->
-                <div class="flex flex-wrap justify-center items-center gap-[45px] w-full">
+                <!-- Ligne 2 : 4 logos centrés, de même largeur que la première ligne -->
+                <div class="home-sponsors-row home-sponsors-row-second">
                     {topSponsorsRow2.map((sp) => (
-                        <div class="flex items-center justify-center group transition-all duration-300 hover:scale-105">
+                        <div class="home-sponsor flex items-center justify-center transition-transform duration-300 hover:scale-105">
                             <img
                                 src={sponsorImage(sp.src).src}
                                 srcset={sponsorImage(sp.src).srcset}
-                                sizes="(max-width: 639px) 180px, (max-width: 1023px) 240px, 320px"
+                                sizes="(max-width: 1023px) 18vw, 12vw"
                                 width={sponsorImage(sp.src).width}
                                 height={sponsorImage(sp.src).height}
                                 decoding="async"
                                 alt={sp.alt}
-                                class="h-20 sm:h-24 md:h-28 lg:h-36 w-auto max-w-[260px] sm:max-w-[300px] lg:max-w-[340px] object-contain transition-all duration-300 rounded-lg"
+                                class="home-sponsor-image"
                                 loading="lazy"
                             />
                         </div>
@@ -177,83 +178,89 @@ const galleryImages = [
         </div>
     </section>
 
-    <!-- Les Courses (Parcours à venir - 70% sur desktop) -->
-    <section id="parcours-a-venir" class="py-16 md:py-24 px-4 bg-cardBg relative border-y border-white/5 rounded-t-[2rem] md:rounded-t-[3rem] overflow-hidden scroll-mt-28" aria-labelledby="courses-heading">
-        <div class="topo-texture pointer-events-none" aria-hidden="true"></div>
-        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto relative z-10">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 md:mb-14 gsap-fade-up gap-4">
-                <div>
-                    <h2 id="courses-heading" class="text-2xl md:text-4xl font-display uppercase font-bold text-white">Parcours : À venir</h2>
-                </div>
-                <div class="text-xs uppercase tracking-widest text-brand font-display">
-                    Tracés officiels bientôt disponibles
-                </div>
+    <!-- Les parcours 2027, en attente de leur dévoilement -->
+    <section id="parcours-a-venir" class="py-16 md:py-24 bg-cardBg scroll-mt-28" aria-labelledby="courses-heading">
+        <div class="content-70 home-courses">
+            <div class="home-courses-copy">
+                <h2 id="courses-heading" class="font-display font-bold uppercase text-white">Parcours 2027 :<br />à venir</h2>
+                <p>Les sentiers gardent encore leurs secrets. Les tracés officiels seront dévoilés très bientôt.</p>
+                <p class="home-courses-date">Rendez-vous le 16 mai à Champagney.</p>
+                <a href="/parcours" data-open-courses-modal aria-haspopup="dialog" aria-controls="courses-modal" class="home-courses-cta">
+                    <span>Découvrir les parcours</span>
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
             </div>
-
-            <!-- Conteneur Parcours À Venir -->
-            <div class="gsap-fade-up">
-                <div class="relative bg-gradient-to-br from-dark/95 via-dark/80 to-dark/95 border border-white/10 rounded-3xl p-8 sm:p-12 md:p-16 overflow-hidden shadow-2xl text-center flex flex-col items-center justify-center">
-                    <div class="absolute -right-8 -bottom-10 opacity-5 pointer-events-none text-white select-none" aria-hidden="true">
-                        <i class="fa-solid fa-person-running text-[16rem]"></i>
-                    </div>
-
-                    <div class="relative z-10 w-full max-w-4xl flex flex-col items-center">
-                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand/10 border border-brand/25 text-brand font-display uppercase tracking-widest text-[10px] md:text-xs font-semibold mb-6">
-                            <span class="w-2 h-2 rounded-full bg-brand animate-pulse" aria-hidden="true"></span>
-                            <span>Prochaine Édition</span>
-                        </div>
-
-                        <h3 class="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold uppercase text-white leading-tight mb-6">
-                            On vous prépare<br><span class="text-brand">quelque chose de spécial.</span>
-                        </h3>
-
-                        <p class="text-gray-300 text-sm sm:text-base md:text-lg font-light leading-relaxed mb-8 max-w-2xl">
-                            Les sentiers gardent encore leurs secrets. Rendez-vous le 16 mai 2027 à Champagney pour écrire la suite ensemble. Les parcours ? On vous en dit plus très bientôt.
-                        </p>
-
-                        <div class="flex flex-wrap items-center justify-center gap-4">
-                            <button type="button" data-open-registration-modal class="btn-registration-trigger inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-brand text-dark font-display font-bold uppercase tracking-widest text-xs hover:bg-white hover:scale-105 transition-all shadow-lg shadow-brand/20 cursor-pointer">
-                                <span>Inscriptions bientôt ouvertes</span>
-                                <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
-                            </button>
-                            <a href="/editions-precedentes" class="inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-display font-bold uppercase tracking-widest text-xs transition-all border border-white/15">
-                                <span>Voir les éditions précédentes</span>
-                                <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <figure class="home-courses-photo photo-credit-host relative m-0 overflow-hidden rounded-2xl">
+                <img src={courseImage.src} srcset={courseImage.srcset} sizes="(min-width: 1024px) 35vw, (min-width: 768px) 50vw, 100vw" width={courseImage.width} height={courseImage.height} alt="Un coureur sur les sentiers du Trail des Mines à Champagney" class="w-full h-full object-cover" loading="lazy" decoding="async" />
+                <PhotoCredit author="Pierre Coutherut" />
+            </figure>
         </div>
     </section>
 
-    <!-- Vidéo Section avec composant Édition Précédente (2026) au-dessus de la vidéo -->
+    <!-- Aftermovie et accès aux éditions précédentes -->
     <section id="video-section" class="py-16 md:py-28 bg-dark relative overflow-hidden flex flex-col items-center" aria-labelledby="video-section-heading">
-
-        <!-- Composant vitrine vers l'Édition Précédente 2026 (70% sur desktop) -->
-        <PreviousEditionBanner className="mb-14 md:mb-20 gsap-fade-up" />
 
         <div class="text-center mb-8 md:mb-12 relative z-10 w-full px-4 gsap-fade-up">
             <div aria-hidden="true" class="font-display text-[12vw] md:text-[9vw] leading-none font-bold uppercase text-outline-white mix-blend-overlay opacity-20 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full pointer-events-none block select-none">
                 AFTERMOVIE
             </div>
-            <h3 id="video-section-heading" class="font-display text-3xl md:text-5xl font-bold uppercase relative z-20">
+            <h2 id="video-section-heading" class="font-display text-3xl md:text-5xl font-bold uppercase relative z-20">
                 Revivez l'édition 2026 en vidéo
-            </h3>
+            </h2>
             <p class="text-gray-400 text-xs sm:text-sm font-sans mt-2 relative z-20 max-w-lg mx-auto">
                 L'aftermovie officiel : ambiance festive, paysages miniers et relances nerveuses dans les Vosges du Sud.
             </p>
         </div>
 
         <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4">
-            <div class="video-container w-full aspect-video relative z-20 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-[0_15px_40px_rgba(176,190,66,0.1)] gsap-fade-up border border-white/10">
+            <div class="video-container w-full aspect-video relative z-20 rounded-2xl md:rounded-[2rem] overflow-hidden gsap-fade-up">
                 <button type="button" data-load-aftermovie class="w-full h-full relative flex items-center justify-center bg-cardBg group" aria-label="Charger et lire l’aftermovie 2026 sur YouTube">
-                    <img src="/medias/Index/Pierre-Coutherut_TDM-2024-2.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-40" loading="lazy" />
+                    <img src="/medias/Index/Pierre-Coutherut_TDM-2024-2.jpg" alt="" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
                     <span class="relative text-white font-display uppercase text-lg md:text-2xl px-6 py-4 rounded-full bg-dark/90 group-hover:bg-brand group-hover:text-dark transition-colors"><i class="fa-solid fa-play mr-3" aria-hidden="true"></i>Lire l’aftermovie 2026</span>
                 </button>
             </div>
         </div>
         <p class="text-gray-400 text-xs text-center mt-4 px-4">En lançant la vidéo, vous chargez le lecteur YouTube et acceptez ses <a href="https://policies.google.com/privacy?hl=fr" class="underline underline-offset-4">règles de confidentialité</a>.</p>
+        <div class="mt-8 md:mt-10 px-4 text-center gsap-fade-up">
+            <a href="/editions-precedentes" class="inline-flex items-center justify-center gap-3 px-7 py-4 rounded-full bg-brand text-dark font-display font-bold uppercase tracking-widest text-xs sm:text-sm hover:bg-white transition-colors">
+                <span>Revivez les éditions précédentes</span>
+                <i class="fa-solid fa-arrow-right shrink-0" aria-hidden="true"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- L'association derrière le Trail des Mines -->
+    <section id="association" class="py-12 md:py-16" aria-labelledby="association-heading">
+        <div class="content-70 mx-auto">
+            <div class="home-association bg-cardBg rounded-3xl overflow-hidden gsap-fade-up">
+                <figure class="home-association-photo photo-credit-host relative m-0">
+                    <img
+                        src="/medias/responsive/home-association-1280.webp"
+                        srcset="/medias/responsive/home-association-640.webp 640w, /medias/responsive/home-association-960.webp 960w, /medias/responsive/home-association-1280.webp 1280w"
+                        sizes="(min-width: 1024px) 29vw, 100vw"
+                        width="1280"
+                        height="853"
+                        alt="Les coureurs réunis sur la ligne de départ du Trail des Mines à Champagney"
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
+                    />
+                    <PhotoCredit author="Pierre Coutherut" />
+                </figure>
+                <div class="home-association-copy">
+                    <h2 id="association-heading" class="font-display font-bold uppercase text-white">Un évènement organisé par Run in Champagney</h2>
+                    <div class="home-association-story text-white">
+                        <p><strong>Run’ In Champagney a vu le jour début 2018.</strong></p>
+                        <p>L’idée de départ était de créer un groupe pour pratiquer la course à pied et plus particulièrement le Trail.</p>
+                        <p>Avec le temps, nous avons réussi à faire parler de notre association notamment grâce à la motivation, la joie et la passion de nos adhérents.</p>
+                    </div>
+                    <a href="/a-propos" class="home-association-link inline-flex items-center gap-3 text-brand font-semibold hover:text-white transition-colors">
+                        <span>Découvrir l’association</span>
+                        <i class="fa-solid fa-arrow-right text-sm" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Localisation du départ -->
@@ -303,7 +310,7 @@ const galleryImages = [
         
         <div class="w-[280vw] md:w-[200vw] flex gap-4 md:gap-8 pl-4 pr-4 h-[32vh] md:h-[48vh] galerie-scroll-track relative z-10">
             {galleryImages.map((img) => (
-                <div class={`h-full w-auto ${img.aspect} rounded-xl md:rounded-[2rem] overflow-hidden group relative`}>
+                <div class={`h-full w-auto ${img.aspect} rounded-xl md:rounded-[2rem] overflow-hidden group photo-credit-host relative`}>
                     <img 
                       src={img.src} 
                       alt={`Trail des Mines - Photographie capturée par ${img.author}`} 
@@ -311,18 +318,46 @@ const galleryImages = [
                       loading="lazy" 
                     />
                     
-                    <!-- Badge Copyright en bas à droite : (c) au repos, révèle le nom du photographe au survol -->
-                    <div class="absolute bottom-3 right-3 z-20 flex items-center gap-1.5 bg-dark/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-white shadow-xl pointer-events-none transition-all duration-300 group-hover:bg-dark/95 group-hover:border-brand">
-                        <span class="text-xs font-bold text-brand" aria-hidden="true">©</span>
-                        <span class="text-[11px] font-sans font-medium tracking-wide max-w-0 overflow-hidden opacity-0 group-hover:max-w-xs group-hover:opacity-100 transition-all duration-500 whitespace-nowrap">
-                            {img.author}
-                        </span>
-                    </div>
+                    <PhotoCredit author={img.author} />
                 </div>
             ))}
         </div>
     </section>
     <style>
+      .home-sponsors { display: flex; flex-direction: column; align-items: center; gap: clamp(1.5rem, 3vw, 2.75rem); }
+      .home-sponsors-row { display: grid; align-items: center; gap: clamp(.5rem, 2vw, 2.75rem); }
+      .home-sponsors-row-first { width: 100%; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .home-sponsors-row-second { width: calc(80% - clamp(.5rem, 2vw, 2.75rem) / 5); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .home-sponsor { min-width: 0; }
+      .home-sponsor-image { display: block; width: 100%; height: clamp(2.5rem, 8vw, 7rem); object-fit: contain; }
+      .home-courses { display: grid; align-items: center; gap: 2rem; }
+      .home-courses-copy { min-width: 0; width: 100%; max-width: 47rem; }
+      .home-courses-copy h2 { font-size: clamp(2rem, 3.8vw, 3.75rem); line-height: 1.1; margin-bottom: 1.5rem; }
+      .home-courses-copy p { max-width: 34rem; font-size: 1rem; line-height: 1.7; color: white; }
+      .home-courses-copy .home-courses-date { margin-top: 1rem; }
+      .home-courses-cta { display: inline-flex; align-items: center; justify-content: space-between; gap: 1.5rem; min-height: 3.5rem; margin-top: 2rem; padding: 1rem 1.5rem; border-radius: .75rem; background: var(--color-brand); color: var(--color-dark); font-weight: 700; font-size: 1rem; transition: background-color .2s; }
+      .home-courses-cta:hover { background: white; }
+      .home-courses-cta i { transition: transform .2s; }
+      .home-courses-cta:hover i { transform: translateX(.25rem); }
+      .home-courses-photo { min-width: 0; aspect-ratio: 4 / 3; }
+      @media (min-width: 768px) {
+        .home-courses { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(2rem, 4vw, 4rem); }
+        .home-courses-photo { aspect-ratio: 4 / 5; }
+      }
+      .home-association { display: grid; }
+      .home-association-photo { aspect-ratio: 16 / 9; min-width: 0; }
+      .home-association-photo img { display: block; object-position: 50% 45%; }
+      .home-association-copy { min-width: 0; padding: clamp(1.5rem, 3vw, 3rem); }
+      .home-association-copy h2 { margin: 0 0 1.5rem; font-size: clamp(1.5rem, 2.3vw, 2.25rem); line-height: 1.2; text-wrap: balance; }
+      .home-association-story { display: grid; gap: 1rem; font-size: 1rem; line-height: 1.7; }
+      .home-association-story p { margin: 0; }
+      .home-association-link { min-height: 2.75rem; margin-top: 1.5rem; text-underline-offset: .3em; }
+      .home-association-link:hover { text-decoration: underline; }
+      @media (min-width: 1024px) {
+        .home-association { grid-template-columns: 42% minmax(0, 1fr); }
+        .home-association-photo { aspect-ratio: auto; }
+        .home-association-photo img { position: absolute; inset: 0; }
+      }
       .departure-content h2 { text-wrap: balance; }
       .departure-content form { min-width: 0; }
       .departure-content input { caret-color: var(--color-dark); }
@@ -332,6 +367,7 @@ const galleryImages = [
         .departure-content form { max-width: 40rem; }
       }
       @media (max-width: 359px) {
+        .home-association-copy h2 { font-size: 1.25rem; }
         .departure-content h2 { font-size: 1.5rem; }
       }
     </style>

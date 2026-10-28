@@ -1,0 +1,96 @@
+[
+  {
+    "path": "/editions-precedentes",
+    "status": 200,
+    "redirected": false,
+    "url": "http://localhost:3001/editions-precedentes",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  },
+  {
+    "path": "/editions-precedentes/2026",
+    "status": 200,
+    "redirected": false,
+    "url": "http://localhost:3001/editions-precedentes/2026",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  },
+  {
+    "path": "/editions-precedentes/2025",
+    "status": 200,
+    "redirected": false,
+    "url": "http://localhost:3001/editions-precedentes/2025",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  },
+  {
+    "path": "/editions-precedentes/2024",
+    "status": 200,
+    "redirected": true,
+    "url": "http://localhost:3001/editions-precedentes",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  },
+  {
+    "path": "/editions-precedentes/2023",
+    "status": 200,
+    "redirected": true,
+    "url": "http://localhost:3001/editions-precedentes",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  },
+  {
+    "path": "/editions-precedentes/2022",
+    "status": 200,
+    "redirected": true,
+    "url": "http://localhost:3001/editions-precedentes",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  },
+  {
+    "path": "/editions-precedentes/2024/galerie/pierre-coutherut",
+    "status": 200,
+    "redirected": true,
+    "url": "http://localhost:3001/editions-precedentes",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  },
+  {
+    "path": "/association",
+    "status": 404,
+    "redirected": false,
+    "url": "http://localhost:3001/association",
+    "archiveYears": []
+  },
+  {
+    "path": "/contact",
+    "status": 200,
+    "redirected": false,
+    "url": "http://localhost:3001/contact",
+    "archiveYears": []
+  },
+  {
+    "path": "/resultats-medias",
+    "status": 200,
+    "redirected": false,
+    "url": "http://localhost:3001/resultats-medias",
+    "archiveYears": [
+      "2026",
+      "2025"
+    ]
+  }
+]

@@ -2,7 +2,8 @@
 export const prerender = false;
 
 import Layout from '../../../../layouts/Layout.astro';
-import { getAllEditionsSync, getPhotographerGallery } from '../../../../lib/db';
+import { getPhotographerGallery } from '../../../../lib/db';
+import { isPublicEdition } from '../../../../lib/public-editions';
 import type { Edition, PhotographerGallery } from '../../../../lib/types';
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const { year, photographer } = Astro.params;
+if (!isPublicEdition(year)) return Astro.redirect('/editions-precedentes');
 let edition = Astro.props.edition;
 let gallery = Astro.props.gallery;
 

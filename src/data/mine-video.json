@@ -1,0 +1,12 @@
+{
+  "source": "Media sources/parcoursEffetDesktop.mp4",
+  "src": "/medias/mine/parcoursEffetDesktop.mp4?v=9838cf006831",
+  "duration": 5.166667,
+  "frameRate": 30,
+  "lastFrame": 5.133333333333334,
+  "width": 1920,
+  "height": 1080,
+  "bytes": 10641139,
+  "sha256": "9838cf006831548058c7f31f091ea57e4611ca8dbb8aaf67f12b250fad249672",
+  "startPoster": "/medias/mine/parcours-start.png?v=9838cf006831"
+}

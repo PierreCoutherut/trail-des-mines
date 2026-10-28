@@ -1,0 +1,16 @@
+---
+interface Props { author: string; }
+const { author } = Astro.props;
+---
+
+<button type="button" class="photo-credit absolute bottom-3 right-3 z-20 flex items-center gap-1.5 bg-dark/80 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-white shadow-xl" aria-label={`Crédit photo : ${author}`}>
+    <span class="text-xs font-bold text-brand" aria-hidden="true">©</span>
+    <span class="photo-credit-name text-[11px] font-sans font-medium tracking-wide whitespace-nowrap" aria-hidden="true">{author}</span>
+</button>
+<style>
+  .photo-credit { cursor: pointer; transition: background-color .3s, border-color .3s; }
+  .photo-credit-name { max-width: 0; opacity: 0; overflow: hidden; transition: max-width .4s, opacity .3s; }
+  .photo-credit:hover, .photo-credit:focus, :global(.photo-credit-host:hover) .photo-credit { background-color: rgb(16 29 32 / 95%); border-color: var(--color-brand); }
+  .photo-credit:hover .photo-credit-name, .photo-credit:focus .photo-credit-name, :global(.photo-credit-host:hover) .photo-credit-name { max-width: 16rem; opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .photo-credit, .photo-credit-name { transition: none; } }
+</style>

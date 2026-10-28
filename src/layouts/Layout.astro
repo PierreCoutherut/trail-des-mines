@@ -5,6 +5,7 @@ import SponsorMarquee from '../components/SponsorMarquee.astro';
 import CtaSection from '../components/CtaSection.astro';
 import NoiseOverlay from '../components/NoiseOverlay.astro';
 import RegistrationModal from '../components/RegistrationModal.astro';
+import CoursesModal from '../components/CoursesModal.astro';
 import SchemaOrg from '../components/SchemaOrg.astro';
 import PrivacyConsent from '../components/PrivacyConsent.astro';
 import '../styles/global.css';
@@ -126,7 +127,8 @@ const isAdmin = Astro.url.pathname === '/admin' || Astro.url.pathname.startsWith
 
   <Footer />
 
-  <RegistrationModal />
+    <RegistrationModal />
+    <CoursesModal />
 
   <!-- Microsoft Clarity : chargé uniquement après accord explicite. -->
   {!isAdmin && <PrivacyConsent clarityProjectId="v7ebppgwfj" />}

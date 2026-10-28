@@ -1,0 +1,13 @@
+# Home: mine entrance scroll video
+
+**Inactive at the user's request.** The home now renders a normal, static course section with text, CTA and photograph. `MineEntrance.astro` is no longer imported by the home, so no mine video, scroll pinning or mine timeline runs. The original video and draft implementation are retained for a possible future treatment. The implementation and validation notes below describe the retired draft.
+
+Source supplied by the user: `Media sources/parcoursEffetDesktop.mp4` (current replacement: approximately 5.17 seconds, 1920 × 1080, 30 fps). `scripts/prepare-mine-video.mjs` copies this file unchanged to `public/medias/mine/parcoursEffetDesktop.mp4` and verifies byte equality. No encoding, resizing, audio stripping or container changes are allowed. The same original is served on desktop and mobile. A lossless PNG first-frame poster is extracted separately. Source path, dimensions and original SHA-256 are recorded in `src/data/mine-video.json`. The video and poster URLs include a source-hash version to invalidate cached media whenever the user replaces the file.
+
+`MineEntrance.astro` pins the course section and maps the first 80% of its GSAP timeline to the full video. At 78–92% the footage fades all the way to zero opacity over `#0a1214`, the exact footer background. At 92–100%, the course text and popup CTA appear on that solid background. Scrolling upward reverses the same timeline; the video never free-runs or plays sound. There is one pending seek target, updated after the previous frame decodes.
+
+Loading begins near the section, and pinning is enabled only once the first frame is ready. Reduced-motion, missing-script and failed-media paths show the solid footer background with immediately readable text and a working CTA. Keyboard focus on the CTA completes the scroll reveal immediately.
+
+The original file remains paused and muted during scroll seeking. The previous re-encoded files and translucent final background have been replaced at the user's explicit request.
+
+Replacement validated at 1440×900 and 390×844: the browser decodes the current 1920×1080 source, seeks through its full 5.17-second duration and reverses to its first frame. Final footage opacity is exactly zero, text opacity is one, and the stage/footer computed backgrounds both equal `rgb(10, 18, 20)`. The original file, public copy and HTTP-served file are byte-identical (current SHA-256 `9838cf006831548058c7f31f091ea57e4611ca8dbb8aaf67f12b250fad249672`). Build passes. Current captures: `.impeccable/review/mine-video/updated-*.png`. Keyboard access, popup CTA and reduced-motion cleanup were verified during the preceding implementation and are unchanged by the media replacement.

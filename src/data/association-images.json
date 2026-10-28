@@ -1,0 +1,47 @@
+{
+  "together": {
+    "src": "/medias/association/together-1920.webp",
+    "srcset": "/medias/association/together-480.webp 480w, /medias/association/together-800.webp 800w, /medias/association/together-1200.webp 1200w, /medias/association/together-1600.webp 1600w, /medias/association/together-1920.webp 1920w",
+    "width": 1920,
+    "height": 1280,
+    "alt": "Les coureurs réunis au départ du Trail des Mines, les bras levés et le sourire aux lèvres",
+    "author": "Noé Soury-Focki",
+    "source": "Media sources\\Noé SOURY-FOCKI-selection\\Noé SOURY-FOCKI\\@noe_sfocki-65.jpg"
+  },
+  "welcome": {
+    "src": "/medias/association/welcome-1200.webp",
+    "srcset": "/medias/association/welcome-480.webp 480w, /medias/association/welcome-800.webp 800w, /medias/association/welcome-1200.webp 1200w",
+    "width": 1333,
+    "height": 2000,
+    "alt": "Une bénévole en tee-shirt Run in Champagney accueille les coureurs avec leurs médailles",
+    "author": "Élodie Bermond",
+    "source": "Media sources\\Bermond Elodie-selection\\Bermond Elodie\\IMG_7438.jpg"
+  },
+  "trails": {
+    "src": "/medias/association/trails-1200.webp",
+    "srcset": "/medias/association/trails-480.webp 480w, /medias/association/trails-800.webp 800w, /medias/association/trails-1200.webp 1200w",
+    "width": 2000,
+    "height": 1336,
+    "alt": "Des coureuses et coureurs partagent un sentier ombragé dans la forêt de Champagney",
+    "author": "Élodie Bermond",
+    "source": "Media sources\\Bermond Elodie-selection\\Bermond Elodie\\IMG_7139.jpg"
+  },
+  "volunteers": {
+    "src": "/medias/association/volunteers-1200.webp",
+    "srcset": "/medias/association/volunteers-480.webp 480w, /medias/association/volunteers-800.webp 800w, /medias/association/volunteers-1200.webp 1200w",
+    "width": 1920,
+    "height": 1280,
+    "alt": "Des bénévoles en tee-shirts turquoise partagent un moment convivial autour d’une table",
+    "author": "Noé Soury-Focki",
+    "source": "Media sources\\Noé SOURY-FOCKI-selection\\Noé SOURY-FOCKI\\@noe_sfocki-79.jpg"
+  },
+  "organisation": {
+    "src": "/medias/association/organisation-1200.webp",
+    "srcset": "/medias/association/organisation-480.webp 480w, /medias/association/organisation-800.webp 800w, /medias/association/organisation-1200.webp 1200w",
+    "width": 1920,
+    "height": 1280,
+    "alt": "L’équipe bénévole prépare l’accueil et les dossards du Trail des Mines",
+    "author": "Noé Soury-Focki",
+    "source": "Media sources\\Noé SOURY-FOCKI-selection\\Noé SOURY-FOCKI\\@noe_sfocki-1.jpg"
+  }
+}

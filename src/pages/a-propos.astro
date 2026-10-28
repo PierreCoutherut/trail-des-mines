@@ -1,55 +1,172 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import PageHeroBackdrop from '../components/PageHeroBackdrop.astro';
+import PhotoCredit from '../components/PhotoCredit.astro';
+import photos from '../data/association-images.json';
 
-const title = "Run' In Champagney | À propos du Trail des Mines";
-const description = "Découvrez Run' In Champagney, l'association de course à pied et de trail qui organise le Trail des Mines.";
+const title = "Run’ In Champagney — Courir ensemble depuis 2018 | Trail des Mines";
+const description = "Depuis 2018, Run’ In Champagney réunit les passionnés de course à pied et de trail. Découvrez notre histoire, notre esprit collectif et l’association derrière le Trail des Mines.";
+const facebook = 'https://www.facebook.com/groups/816006128572279';
 ---
 
-<Layout title={title} description={description} loadLeaflet={false} loadChart={false}>
+<Layout title={title} description={description} loadLeaflet={false} loadChart={false} showCta={false} showSponsors={false}>
 
-<!-- En-tête -->
-    <header class="pt-36 md:pt-48 pb-16 px-4 relative overflow-hidden min-h-[30rem] flex items-end">
-        <PageHeroBackdrop src="/medias/Index/Pierre-Coutherut_TDM-2024-343.jpg" position="50% 46%" />
-        <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto text-center relative z-10 gsap-fade-up">
-            <span class="inline-block py-1 px-4 rounded-full bg-brand/10 border border-brand/30 text-brand font-display font-bold text-xs uppercase tracking-widest mb-4">Depuis 2018</span>
-            <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-bold uppercase tracking-tight text-white mb-4">
-                Run' In <span class="text-brand">Champagney</span>
-            </h1>
-            <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
-                Une association née de l’envie de courir ensemble, de partager le trail et de faire vivre les sentiers de Champagney.
-            </p>
+    <header class="club-hero club-shell">
+        <h1 class="club-title hero-anim">Run’ In<br />Champagney</h1>
+        <div class="club-hero-grid">
+            <div class="club-hero-copy hero-anim">
+                <p class="club-lead">Courir ensemble.<br />Partager les sentiers.</p>
+                <p>Depuis 2018, notre association rassemble les envies de course à pied et de trail à Champagney, en Haute-Saône.</p>
+                <div class="club-actions">
+                    <a href={facebook} target="_blank" rel="noopener noreferrer" class="club-button">Rejoindre le groupe <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <a href="#notre-histoire" class="club-text-link">Découvrir notre histoire <i class="fa-solid fa-arrow-down" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <figure class="club-hero-photo club-photo photo-credit-host">
+                <img src={photos.together.src} srcset={photos.together.srcset} sizes="(min-width: 1024px) 46vw, 100vw" width={photos.together.width} height={photos.together.height} alt={photos.together.alt} loading="eager" fetchpriority="high" />
+                <PhotoCredit author={photos.together.author} />
+            </figure>
         </div>
     </header>
 
-    <!-- Récit Historique -->
-    <section class="py-12 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto">
-        <div class="space-y-12">
-            
-            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
-                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Une aventure commencée en 2018</h2>
-                <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                    Run’ In Champagney a vu le jour au début de l’année 2018. L’idée de départ était simple : créer un groupe pour pratiquer la course à pied, et plus particulièrement le trail.
-                </p>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                    La motivation, la joie et la passion de ses adhérents ont progressivement fait connaître l’association et permis de construire une communauté active autour de la course nature.
-                </p>
-            </div>
-
-            <div class="bg-cardBg rounded-3xl p-8 border border-white/10 shadow-xl">
-                <h2 class="font-display text-2xl font-bold uppercase text-brand mb-4">Courir à son rythme</h2>
-                <p class="text-gray-300 text-sm leading-relaxed mb-4">
-                    Deux départs sont proposés chaque dimanche matin, avec deux groupes afin de s’adapter au niveau de chacun. Tous les niveaux sont les bienvenus.
-                </p>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                    L’association organise également le Trail des Mines, un événement qui rassemble coureurs, bénévoles et partenaires autour du patrimoine naturel et minier de Champagney.
-                </p>
-                <a href="https://www.facebook.com/groups/816006128572279" target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-brand px-5 py-3 font-display text-xs font-bold uppercase tracking-wider text-dark transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand">Rejoindre le groupe Facebook <span aria-hidden="true">↗</span></a>
-            </div>
-
+    <section id="notre-histoire" class="club-story club-shell club-section" aria-labelledby="club-story-title">
+        <div class="gsap-fade-up">
+            <h2 id="club-story-title">Une idée simple.<br />Courir ensemble.</h2>
+            <p class="club-story-date">L’histoire commence début 2018.</p>
+        </div>
+        <div class="club-prose gsap-fade-up">
+            <p>Run’ In Champagney est née d’une envie : créer un groupe pour pratiquer la course à pied, et plus particulièrement le trail. Se retrouver, sortir, découvrir un sentier et partager l’effort. Une idée simple, qui prend tout son sens quand on la vit à plusieurs.</p>
+            <p>Au fil du temps, la motivation, la joie et la passion de nos adhérents ont fait connaître l’association. Ce sont ces liens, construits au fil des sorties et des rencontres, qui donnent au collectif son énergie.</p>
+            <p>Aujourd’hui encore, nous tenons à cet esprit de départ. Courir reste une aventure personnelle, mais elle devient plus riche quand on peut échanger, s’encourager et prendre plaisir à avancer ensemble.</p>
         </div>
     </section>
 
-    <!-- Mega Footer -->
+    <section class="club-spirit club-section" aria-labelledby="club-spirit-title">
+        <div class="club-shell club-spirit-grid">
+            <figure class="club-welcome-photo club-photo photo-credit-host">
+                <img src={photos.welcome.src} srcset={photos.welcome.srcset} sizes="(min-width: 1024px) 29vw, 100vw" width={photos.welcome.width} height={photos.welcome.height} alt={photos.welcome.alt} loading="lazy" decoding="async" />
+                <PhotoCredit author={photos.welcome.author} />
+            </figure>
+            <div class="club-spirit-copy gsap-fade-up">
+                <h2 id="club-spirit-title">La passion du trail.<br />Le plaisir du partage.</h2>
+                <p class="club-lead-small">Les kilomètres comptent. Les personnes avec qui on les partage aussi.</p>
+                <dl class="club-values">
+                    <div><dt>Courir à son rythme</dt><dd>Chacun arrive avec ses envies et son expérience. L’essentiel, c’est de trouver le plaisir de courir, de prendre confiance et de partager un bout de chemin.</dd></div>
+                    <div><dt>Garder le sourire</dt><dd>Un encouragement dans une montée, une discussion sur le sentier, le bonheur de se retrouver : la convivialité fait partie de notre façon de vivre la course.</dd></div>
+                    <div><dt>Faire ensemble</dt><dd>L’association vit grâce à l’implication de ses adhérents. Leur enthousiasme nourrit les rencontres et les projets qui font avancer Run’ In Champagney.</dd></div>
+                </dl>
+            </div>
+        </div>
+    </section>
+
+    <section class="club-moments club-shell club-section" aria-labelledby="club-moments-title">
+        <div class="club-moments-heading gsap-fade-up">
+            <h2 id="club-moments-title">Sur les chemins.<br />Et bien au-delà.</h2>
+            <p>Dans les forêts de Champagney comme autour du Trail des Mines, nous partageons bien plus qu’une pratique sportive : des rencontres, des sourires et le plaisir de faire partie d’un collectif.</p>
+        </div>
+        <div class="club-moments-grid">
+            <figure class="club-trails-photo club-photo photo-credit-host">
+                <img src={photos.trails.src} srcset={photos.trails.srcset} sizes="(min-width: 1024px) 42vw, 100vw" width={photos.trails.width} height={photos.trails.height} alt={photos.trails.alt} loading="lazy" decoding="async" />
+                <PhotoCredit author={photos.trails.author} />
+            </figure>
+            <figure class="club-volunteers-photo club-photo photo-credit-host">
+                <img src={photos.volunteers.src} srcset={photos.volunteers.srcset} sizes="(min-width: 1024px) 25vw, 100vw" width={photos.volunteers.width} height={photos.volunteers.height} alt={photos.volunteers.alt} loading="lazy" decoding="async" />
+                <PhotoCredit author={photos.volunteers.author} />
+            </figure>
+        </div>
+    </section>
+
+    <section class="club-event club-shell club-section" aria-labelledby="club-event-title">
+        <div class="club-event-copy gsap-fade-up">
+            <h2 id="club-event-title">L’association derrière<br />le Trail des Mines.</h2>
+            <div class="club-prose">
+                <p>Organiser le Trail des Mines, c’est prolonger notre envie de partage à l’échelle d’un événement. Faire découvrir les sentiers de Champagney, accueillir les coureurs et réunir celles et ceux qui aiment la course nature.</p>
+                <p>Du premier accueil aux encouragements sur le parcours, les bénévoles donnent à cette journée son visage et son ambiance. Coureurs, adhérents, partenaires et bonnes volontés se retrouvent autour d’une aventure commune.</p>
+                <p>C’est aussi cela, Run’ In Champagney : le plaisir de courir, et l’envie de permettre aux autres de le vivre à leur tour.</p>
+            </div>
+            <a href="/editions-precedentes" class="club-text-link">Revivez les éditions 2026 et 2025 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <figure class="club-event-photo club-photo photo-credit-host">
+            <img src={photos.organisation.src} srcset={photos.organisation.srcset} sizes="(min-width: 1024px) 32vw, 100vw" width={photos.organisation.width} height={photos.organisation.height} alt={photos.organisation.alt} loading="lazy" decoding="async" />
+            <PhotoCredit author={photos.organisation.author} />
+        </figure>
+    </section>
+
+    <section id="rejoindre" class="club-join club-section" aria-labelledby="club-join-title">
+        <div class="club-shell club-join-grid">
+            <h2 id="club-join-title">Et si on courait<br />ensemble ?</h2>
+            <div>
+                <p>Vous avez envie de découvrir l’association, de partager une sortie ou de donner un coup de main au Trail des Mines ? Le premier pas, c’est de faire connaissance.</p>
+                <p>Retrouvez la vie du groupe sur Facebook, échangez avec nous et renseignez-vous sur les prochains rendez-vous. Pour toute question sur l’association ou pour proposer votre aide, vous pouvez aussi nous écrire.</p>
+                <div class="club-actions">
+                    <a href={facebook} target="_blank" rel="noopener noreferrer" class="club-button club-button-dark">Rejoindre le groupe Facebook <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+                    <a href="/contact" class="club-text-link">Contacter l’association <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .club-shell { width: min(100% - 2rem, 76rem); margin-inline: auto; }
+        .club-section { margin-block: 0; padding-block: clamp(4rem, 8vw, 8rem); }
+        .club-hero { padding-top: clamp(8rem, 12vw, 11rem); padding-bottom: 4rem; }
+        .club-title { margin: 0 0 2rem; font-family: var(--font-display); font-size: clamp(3.3rem, 8.7vw, 8rem); font-weight: 700; text-transform: uppercase; line-height: .98; letter-spacing: -.025em; }
+        h2 { font-family: var(--font-display); font-size: clamp(1.75rem, 3.2vw, 3rem); font-weight: 700; text-transform: uppercase; line-height: 1.15; text-wrap: balance; }
+        p, dd { font-size: 1rem; line-height: 1.75; }
+        p { margin: 0; }
+        .club-hero-grid { display: grid; align-items: end; gap: 2rem; }
+        .club-hero-copy > p + p { margin-top: 1.25rem; }
+        .club-hero-copy .club-lead { font-size: clamp(1.4rem, 2vw, 1.75rem); font-weight: 600; line-height: 1.4; }
+        .club-photo { position: relative; margin: 0; min-width: 0; overflow: hidden; border-radius: 1rem; }
+        .club-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+        .club-hero-photo { aspect-ratio: 3 / 2; }
+        .club-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.5rem; margin-top: 1.75rem; }
+        .club-button { display: inline-flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 3.5rem; padding: .875rem 1.25rem; border-radius: .75rem; background: var(--color-brand); color: var(--color-dark); font-weight: 700; line-height: 1.4; transition: background-color .2s; }
+        .club-button:hover { background: white; }
+        .club-button:active { transform: translateY(1px); }
+        .club-button i, .club-text-link i { flex-shrink: 0; font-size: .875rem; }
+        .club-text-link { display: inline-flex; gap: .75rem; align-items: center; min-height: 2.75rem; color: var(--color-brand); font-weight: 600; text-underline-offset: .3em; }
+        .club-text-link:hover { text-decoration: underline; }
+        .club-story, .club-event, .club-join-grid { display: grid; gap: 2rem; align-items: start; }
+        .club-story-date { margin-top: 1.5rem; color: var(--color-brand); font-weight: 600; }
+        .club-prose { display: grid; gap: 1.25rem; }
+        .club-spirit { background: var(--color-card-bg); }
+        .club-spirit-grid { display: grid; gap: 2rem; align-items: center; }
+        .club-welcome-photo { width: min(100%, 28rem); aspect-ratio: 3 / 4; }
+        .club-welcome-photo img { object-position: 50% 40%; }
+        .club-lead-small { margin-top: 1.5rem; font-size: 1.125rem; }
+        .club-values { display: grid; gap: 1.75rem; margin-top: 2rem; }
+        .club-values dt { margin-bottom: .5rem; font-weight: 700; font-size: 1.125rem; color: var(--color-brand); }
+        .club-values dd { margin: 0; }
+        .club-moments-heading { display: grid; align-items: end; gap: 1.5rem; margin-bottom: 2.5rem; }
+        .club-moments-grid { display: grid; gap: 1.5rem; align-items: end; }
+        .club-trails-photo { aspect-ratio: 4 / 3; }
+        .club-volunteers-photo { aspect-ratio: 4 / 3; }
+        .club-event { padding-top: 0; align-items: center; }
+        .club-event-copy h2 { margin-bottom: 1.5rem; }
+        .club-event-copy > a { margin-top: 1.5rem; }
+        .club-event-photo { aspect-ratio: 4 / 5; }
+        .club-event-photo img { object-position: 35% 50%; }
+        .club-join { background: var(--color-brand); color: var(--color-dark); }
+        .club-join p + p { margin-top: 1.25rem; }
+        .club-button-dark { background: var(--color-dark); color: white; }
+        .club-button-dark:hover { background: white; color: var(--color-dark); }
+        .club-join .club-text-link { color: var(--color-dark); }
+        @media (min-width: 768px) {
+            .club-shell { width: min(100% - 4rem, 76rem); }
+            .club-story, .club-join-grid { grid-template-columns: 1fr 1.2fr; gap: 4rem; }
+            .club-spirit-grid { grid-template-columns: .9fr 1.1fr; gap: 3rem; }
+            .club-moments-heading { grid-template-columns: 1fr 1fr; gap: 3rem; }
+            .club-moments-grid { grid-template-columns: 1.4fr 1fr; gap: 2rem; }
+            .club-volunteers-photo { aspect-ratio: 1; margin-bottom: 2.5rem; }
+            .club-event { grid-template-columns: 1.1fr 1fr; gap: 3rem; }
+        }
+        @media (min-width: 1024px) {
+            .club-shell { width: 70%; max-width: 76rem; }
+            .club-hero-grid { grid-template-columns: .8fr 1.4fr; gap: 2.5rem; }
+            .club-hero-photo { aspect-ratio: 3 / 2; }
+            .club-story { gap: 5rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { .club-button:active { transform: none; } }
+    </style>
 
 </Layout>

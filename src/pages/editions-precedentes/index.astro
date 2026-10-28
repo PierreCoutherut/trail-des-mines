@@ -3,12 +3,12 @@ export const prerender = false;
 
 import Layout from '../../layouts/Layout.astro';
 import PageHeroBackdrop from '../../components/PageHeroBackdrop.astro';
-import { getAllEditionsSync } from '../../lib/db';
+import { getPublicEditionsSync } from '../../lib/public-editions';
 
 const title = "Éditions Précédentes - Trail des Mines | Archives & Palmarès Historique";
 const description = "Revivez les éditions passées du Trail des Mines à Champagney : affiches de chaque année, palmarès complet par course et albums photos officiels.";
 
-const editions = getAllEditionsSync();
+const editions = getPublicEditionsSync();
 const totalRaces = editions.reduce((acc, e) => acc + (e.races?.length || 0), 0);
 const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length || 0), 0);
 ---
@@ -26,8 +26,7 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
                 Éditions <span class="text-brand">Précédentes</span>
             </h1>
             <p class="text-gray-300 max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed">
-                Depuis la première foulée des pionniers en 2022, le Trail des Mines s'est forgé une histoire unique. 
-                Retrouvez les affiches officielles, les palmarès complets par épreuve et les galeries photos immortalisées par nos photographes bénévoles.
+                Retrouvez les éditions 2026 et 2025 du Trail des Mines : les affiches officielles, les résultats et les galeries photos disponibles pour revivre ces rendez-vous à Champagney.
             </p>
         </div>
     </header>
@@ -36,9 +35,9 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
     <section class="py-8 px-4 content-70 w-full lg:w-[70%] lg:max-w-none mx-auto -mt-6 relative z-20">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 text-center">
             <div class="bg-cardBg/90 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-xl hover:border-brand/30 transition">
-                <span class="text-xs uppercase tracking-widest text-gray-400 block mb-1">Éditions Réalisées</span>
+                <span class="text-xs uppercase tracking-widest text-gray-400 block mb-1">Éditions à revivre</span>
                 <span class="font-display text-4xl font-bold text-brand">{editions.length}</span>
-                <span class="text-[10px] text-gray-400 block mt-1">2022 à 2025</span>
+                <span class="text-[10px] text-gray-400 block mt-1">2026 et 2025</span>
             </div>
             <div class="bg-cardBg/90 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-xl hover:border-brand/30 transition">
                 <span class="text-xs uppercase tracking-widest text-gray-400 block mb-1">Épreuves Disputées</span>
@@ -155,14 +154,6 @@ const totalGalleries = editions.reduce((acc, e) => acc + (e.galleries?.length ||
                 );
             })}
         </div>
-    </section>
-
-    <!-- Call to action Back-office en bas discret pour l'organisateur -->
-    <section class="py-8 px-4 text-center">
-        <a href="/admin" class="text-[11px] text-gray-500 hover:text-brand transition uppercase tracking-widest inline-flex items-center gap-1.5 font-mono">
-            <i class="fa-solid fa-lock text-[10px]"></i>
-            <span>Espace d'administration du Trail des Mines</span>
-        </a>
     </section>
 
 </Layout>

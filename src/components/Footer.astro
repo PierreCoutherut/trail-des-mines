@@ -1,6 +1,6 @@
 ---
 const groups = [
-  { title: 'Le rendez-vous', links: [['Accueil', '/'], ['Parcours · à venir', '/#parcours-a-venir'], ['Règlement', '/reglement']] },
+  { title: 'Le rendez-vous', links: [['Accueil', '/'], ['Parcours · à venir', '/parcours']] },
   { title: 'Les souvenirs', links: [['Résultats & médias', '/resultats-medias'], ['Éditions précédentes', '/editions-precedentes']] },
   { title: 'Le collectif', links: [['À propos', '/a-propos'], ['Partenaires', '/partenaires'], ['Contact', '/contact']] },
   { title: 'Informations', links: [['Mentions légales', '/mentions-legales'], ['Confidentialité', '/politique-confidentialite'], ['Accessibilité', '/declaration-accessibilite']] },
@@ -21,7 +21,7 @@ const groups = [
     {groups.map(group => (
       <div class="flex flex-col gap-3">
         <h2 class="font-display text-white text-sm md:text-base uppercase tracking-[0.2em] mb-4">{group.title}</h2>
-        {group.links.map(([label, href]) => <a href={href} class="text-gray-400 hover:text-brand text-xs uppercase tracking-wider transition-colors">{label}</a>)}
+        {group.links.map(([label, href]) => <a href={href} data-open-courses-modal={href === '/parcours' ? true : undefined} aria-haspopup={href === '/parcours' ? 'dialog' : undefined} aria-controls={href === '/parcours' ? 'courses-modal' : undefined} class="text-gray-400 hover:text-brand text-xs uppercase tracking-wider transition-colors">{label}</a>)}
         {group.title === 'Informations' && <button type="button" data-open-privacy-settings class="text-gray-400 hover:text-brand text-xs uppercase tracking-wider text-left transition-colors">Préférences de confidentialité</button>}
         {group.title === 'Le rendez-vous' && <button type="button" data-open-registration-modal class="text-brand hover:text-white text-xs uppercase tracking-wider text-left font-bold transition-colors">S’inscrire</button>}
       </div>
