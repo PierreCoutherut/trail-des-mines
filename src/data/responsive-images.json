@@ -16,6 +16,27 @@
     }
   },
   "logos": {
+    "Groupe-2.jpg": {
+      "src": "/medias/responsive/groupe-2-300.webp",
+      "srcset": "/medias/responsive/groupe-2-160.webp 160w, /medias/responsive/groupe-2-300.webp 300w",
+      "width": 300,
+      "height": 300,
+      "shape": "square"
+    },
+    "le resto de marine.jpg": {
+      "src": "/medias/responsive/le-resto-de-marine-294.webp",
+      "srcset": "/medias/responsive/le-resto-de-marine-160.webp 160w, /medias/responsive/le-resto-de-marine-294.webp 294w",
+      "width": 294,
+      "height": 294,
+      "shape": "square"
+    },
+    "pro-du-sport.jpg": {
+      "src": "/medias/responsive/pro-du-sport-340.webp",
+      "srcset": "/medias/responsive/pro-du-sport-160.webp 160w, /medias/responsive/pro-du-sport-320.webp 320w, /medias/responsive/pro-du-sport-340.webp 340w",
+      "width": 340,
+      "height": 340,
+      "shape": "square"
+    },
     "Sponsor (1).jpg": {
       "src": "/medias/responsive/sponsor-1-381.webp",
       "srcset": "/medias/responsive/sponsor-1-160.webp 160w, /medias/responsive/sponsor-1-320.webp 320w, /medias/responsive/sponsor-1-381.webp 381w",

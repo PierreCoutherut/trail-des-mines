@@ -30,7 +30,9 @@ async function variants(source, name, widths, { trim = false, quality = 82 } = {
 manifest.heroes.partners = await variants('public/medias/Index/Pierre-Coutherut_TDM-2024-233.jpg', 'partners-hero', [640, 960, 1440, 1920], { quality: 80 });
 manifest.heroes.home = await variants('public/medias/Index/Elodie-Bermond_bg.webp', 'home-hero', [640, 960, 1440, 1920], { quality: 80 });
 for (const file of (await fs.readdir('public/medias/Sponsors')).filter(file => /\.(png|jpe?g)$/i.test(file))) {
-  const name = file === 'Sponsor.png' ? 'credit-mutuel' : `sponsor-${file.match(/\d+/)[0]}`;
+  const name = file === 'Sponsor.png' ? 'credit-mutuel'
+    : /^Sponsor \(\d+\)\.jpg$/i.test(file) ? `sponsor-${file.match(/\d+/)[0]}`
+    : path.parse(file).name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   manifest.logos[file] = await variants(path.join('public/medias/Sponsors', file), name, [160, 320, 480], { trim: true, quality: 88 });
 }
 await fs.writeFile('src/data/responsive-images.json', JSON.stringify(manifest, null, 2) + '\n');

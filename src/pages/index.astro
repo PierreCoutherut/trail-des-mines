@@ -23,13 +23,14 @@ const videoSchema = {
   "embedUrl": "https://www.youtube.com/embed/O5vLogBuP20"
 };
 
-// Les 9 sponsors officiels pour le bandeau supérieur (Ligne 1 : 5, Ligne 2 : 4)
+// Les 12 sponsors officiels, répartis en deux lignes de six sur grand écran.
 const topSponsorsRow1 = [
   { src: '/medias/Sponsors/Sponsor.png', alt: 'Crédit Mutuel - Partenaire Majeur' },
   { src: '/medias/Sponsors/Sponsor (10).jpg', alt: 'Intermarché Champagney' },
   { src: '/medias/Sponsors/Sponsor (4).jpg', alt: 'Département de la Haute-Saône' },
   { src: '/medias/Sponsors/Sponsor (6).jpg', alt: 'Ville de Champagney' },
   { src: '/medias/Sponsors/Sponsor (8).jpg', alt: 'Communauté de Communes Rahin et Chérimont' },
+  { src: '/medias/Sponsors/pro-du-sport.jpg', alt: 'Pro du Sport Belfort' },
 ];
 
 const topSponsorsRow2 = [
@@ -37,6 +38,8 @@ const topSponsorsRow2 = [
   { src: '/medias/Sponsors/Sponsor (1).jpg', alt: 'Entreprise COTTA' },
   { src: '/medias/Sponsors/Sponsor (9).jpg', alt: 'Transports BASS' },
   { src: '/medias/Sponsors/Sponsor (5).jpg', alt: 'Cryosculpt' },
+  { src: '/medias/Sponsors/Groupe-2.jpg', alt: 'Le Franc Brasseur' },
+  { src: '/medias/Sponsors/le resto de marine.jpg', alt: 'Le Resto de Marine' },
 ];
 
 // Images de la galerie avec extraction automatique du nom du photographe (avant le '_')
@@ -122,18 +125,18 @@ const galleryImages = [
         </div>
     </div>
 
-    <!-- Bandeau Sponsors sur Fond Blanc (9 logos : 5 en haut, 4 en bas - 70% sur desktop) -->
+    <!-- Bandeau Sponsors sur Fond Blanc (12 logos : 2 lignes de 6 sur desktop) -->
     <section class="bg-white text-dark py-10 md:py-16 border-b border-gray-200 relative z-10" aria-label="Partenaires et Sponsors officiels">
         <div class="content-70 w-full lg:w-[70%] lg:max-w-none mx-auto px-4 sm:px-6">
             <div class="home-sponsors">
-                <!-- Ligne 1 : 5 logos -->
-                <div class="home-sponsors-row home-sponsors-row-first">
+                <!-- Ligne 1 : 6 logos -->
+                <div class="home-sponsors-row">
                     {topSponsorsRow1.map((sp) => (
                         <div class="home-sponsor flex items-center justify-center transition-transform duration-300 hover:scale-105">
                             <img
                                 src={sponsorImage(sp.src).src}
                                 srcset={sponsorImage(sp.src).srcset}
-                                sizes="(max-width: 1023px) 18vw, 12vw"
+                                sizes="(max-width: 639px) 28vw, (max-width: 1023px) 14vw, 10vw"
                                 width={sponsorImage(sp.src).width}
                                 height={sponsorImage(sp.src).height}
                                 decoding="async"
@@ -145,14 +148,14 @@ const galleryImages = [
                     ))}
                 </div>
 
-                <!-- Ligne 2 : 4 logos centrés, de même largeur que la première ligne -->
-                <div class="home-sponsors-row home-sponsors-row-second">
+                <!-- Ligne 2 : 6 logos -->
+                <div class="home-sponsors-row">
                     {topSponsorsRow2.map((sp) => (
                         <div class="home-sponsor flex items-center justify-center transition-transform duration-300 hover:scale-105">
                             <img
                                 src={sponsorImage(sp.src).src}
                                 srcset={sponsorImage(sp.src).srcset}
-                                sizes="(max-width: 1023px) 18vw, 12vw"
+                                sizes="(max-width: 639px) 28vw, (max-width: 1023px) 14vw, 10vw"
                                 width={sponsorImage(sp.src).width}
                                 height={sponsorImage(sp.src).height}
                                 decoding="async"
@@ -325,11 +328,13 @@ const galleryImages = [
     </section>
     <style>
       .home-sponsors { display: flex; flex-direction: column; align-items: center; gap: clamp(1.5rem, 3vw, 2.75rem); }
-      .home-sponsors-row { display: grid; align-items: center; gap: clamp(.5rem, 2vw, 2.75rem); }
-      .home-sponsors-row-first { width: 100%; grid-template-columns: repeat(5, minmax(0, 1fr)); }
-      .home-sponsors-row-second { width: calc(80% - clamp(.5rem, 2vw, 2.75rem) / 5); grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .home-sponsors-row { display: grid; width: 100%; grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: center; gap: clamp(.5rem, 2vw, 2.75rem); }
       .home-sponsor { min-width: 0; }
       .home-sponsor-image { display: block; width: 100%; height: clamp(2.5rem, 8vw, 7rem); object-fit: contain; }
+      @media (max-width: 639px) {
+        .home-sponsors-row { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem 1rem; }
+        .home-sponsor-image { height: 4.5rem; }
+      }
       .home-courses { display: grid; align-items: center; gap: 2rem; }
       .home-courses-copy { min-width: 0; width: 100%; max-width: 47rem; }
       .home-courses-copy h2 { font-size: clamp(2rem, 3.8vw, 3.75rem); line-height: 1.1; margin-bottom: 1.5rem; }
